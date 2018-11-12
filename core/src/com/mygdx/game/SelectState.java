@@ -17,7 +17,8 @@ public class SelectState extends State {
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
+
+		System.out.println("Select");
 
 	}
 

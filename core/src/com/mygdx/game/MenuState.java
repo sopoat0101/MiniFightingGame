@@ -14,7 +14,8 @@ public class MenuState extends State {
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
+		
+		System.out.println("Menu");
 
 	}
 

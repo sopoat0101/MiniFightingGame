@@ -1,20 +1,37 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public class PlayingState extends State {
 
+	private SpriteBatch batch;
+	private Sprite sp;
+	
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
+		
+		batch = new SpriteBatch();
+		sp = new Sprite(new Texture(Gdx.files.internal("../core/assets/NoxStand.png")));
 		
 	}
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
+		
+		System.out.println("Playing");
+		
+		batch.begin();
+		
+		sp.draw(batch);
+		
+		batch.end();
 		
 	}
 
