@@ -17,11 +17,13 @@ public abstract class Actor {
 	protected boolean mirror;
 	
 	protected float HP = 500;
+	protected float movespeed = 200;
 	
 	protected float POX = 0;
 	protected float POY = 0;
 	
 	protected float animationtime = 0;
+	protected String cmdlog = "";
 	
 	protected Sprite SActor;
 	protected TextureAtlas pack;
@@ -30,6 +32,24 @@ public abstract class Actor {
 	protected Sprite MSActor;
 	protected TextureAtlas mpack;
 	protected TextureRegion mframe;
+	
+	protected int STATUS = 0;
+	protected final int STAND = 0;
+	protected final int JUMP = 1;
+	protected final int KNEEL = 2;
+	protected final int GUARD = 3;
+	protected final int HIT = 4;
+	
+	protected float DELAY = 0;
+	//animation
+	protected int NOWframe = 0;
+	protected int STframe = 0;
+	protected int ENDframe = 1;
+	protected int animationType = 0;
+	protected int LOOP = 0;
+	protected int ONEWAY = 1;
+	
+	protected Actor Anotherplayer;
 	
 	protected Actor(int bn_front, int bn_back, int bn_jump, int bn_kneel, int bn_punch, int bn_kick, boolean mirror, int player) {
 

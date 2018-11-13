@@ -121,7 +121,6 @@ public class PlayingState extends State {
 		handle();
 
 		// Update Camera
-		camera.update();
 
 		centerPX = Math.abs(PLAYER1.POX - PLAYER2.POX);
 		centerPY = Math.abs(PLAYER1.POY - PLAYER2.POY);
@@ -240,6 +239,8 @@ public class PlayingState extends State {
 
 		PLAYER1.update(dt);
 		PLAYER2.update(dt);
+		
+		camera.update();
 
 	}
 
