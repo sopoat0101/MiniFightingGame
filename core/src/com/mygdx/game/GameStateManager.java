@@ -11,8 +11,8 @@ public class GameStateManager {
 	public static final int SELECT = 100;
 	public static final int PLAYING = 1000;
 
-	private int select_P1;
-	private int select_P2;
+	private static int select_P1;
+	private static int select_P2;
 
 	public GameStateManager() {
 		setState(START);
@@ -53,7 +53,7 @@ public class GameStateManager {
 	}
 
 	public void setSelect_P1(int select_P1) {
-		this.select_P1 = select_P1;
+		GameStateManager.select_P1 = select_P1;
 	}
 
 	public int getSelect_P2() {
@@ -61,7 +61,7 @@ public class GameStateManager {
 	}
 
 	public void setSelect_P2(int select_P2) {
-		this.select_P2 = select_P2;
+		GameStateManager.select_P2 = select_P2;
 	}
 
 }
