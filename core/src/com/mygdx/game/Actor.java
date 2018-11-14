@@ -40,7 +40,13 @@ public abstract class Actor {
 	protected final int GUARD = 3;
 	protected final int HIT = 4;
 	
+	protected boolean isPunch = false;
+	protected boolean isKick = false;
+	
+	protected int JUMPTYPE = 0;
+	
 	protected float DELAY = 0;
+	protected float AIRDELAY = 0;
 	//animation
 	protected int NOWframe = 0;
 	protected int STframe = 0;
@@ -48,6 +54,7 @@ public abstract class Actor {
 	protected int animationType = 0;
 	protected int LOOP = 0;
 	protected int ONEWAY = 1;
+	protected int AUTO = 2;
 	
 	protected Actor Anotherplayer;
 	

@@ -20,7 +20,7 @@ public class Nox extends Actor {
 		SActor = new Sprite(frame);
 		SActor.setPosition(PlayingState.WORLD_WIDTH / 5, PlayingState.GROUND);
 
-		mpack = new TextureAtlas("../core/assets/Actor/Nox/notmirror/Nox.pack");
+		mpack = new TextureAtlas("../core/assets/Actor/Nox/mirror/Nox.pack");
 		mframe = mpack.findRegion("00");
 		MSActor = new Sprite(mframe);
 		MSActor.setPosition(PlayingState.WORLD_WIDTH - PlayingState.WORLD_WIDTH / 5 - MSActor.getWidth(),
@@ -56,7 +56,7 @@ public class Nox extends Actor {
 			SActor.setAlpha(0f);
 
 		}
-		
+
 		SActor.draw(batch);
 		MSActor.draw(batch);
 
@@ -64,28 +64,28 @@ public class Nox extends Actor {
 
 	@Override
 	protected void update(float dt) {
-
+		
 		handle();
 
 		SActor.setPosition(POX, POY);
 		MSActor.setPosition(POX, POY);
-		
+
 		DELAY -= dt;
-		if(DELAY <= 0) {
+		if (DELAY <= 0) {
 			DELAY = 0;
 		}
-		
+
 		if (STATUS == STAND) {
 			stand();
 		}
-		if(STATUS == KNEEL) {
+		if (STATUS == KNEEL) {
 			kneel();
 		}
-		if(STATUS == JUMP) {
+		if (STATUS == JUMP) {
 			jump();
 		}
-		
-		if(DELAY <= 0) {
+
+		if (DELAY <= 0) {
 			action(cmdlog);
 		}
 
@@ -100,19 +100,23 @@ public class Nox extends Actor {
 		}
 		if (InputManager.keyIspressed(BN_KNEEL)) {
 			cmdlog += "C";
-			DELAY = 0.2f;
+			DELAY = 0.1f;
 		}
 		if (InputManager.keyIspressed(BN_FRONT)) {
 			cmdlog += "F";
+			DELAY = 0.1f;
 		}
 		if (InputManager.keyIspressed(BN_BACK)) {
 			cmdlog += "B";
+			DELAY = 0.1f;
 		}
 		if (InputManager.keyIspressed(BN_PUNCH)) {
 			cmdlog += "P";
+			DELAY = 0.1f;
 		}
 		if (InputManager.keyIspressed(BN_KICK)) {
 			cmdlog += "K";
+			DELAY = 0.1f;
 		}
 
 	}
@@ -125,35 +129,57 @@ public class Nox extends Actor {
 
 	@Override
 	protected void action(String combo) {
-		
-		if(combo.equals("C")) {
+
+		if (combo.equals("C")) {
 			STATUS = KNEEL;
 			cmdlog = "";
 			animationtime = 0;
 		}
-		if(combo.equals("J") && STATUS != JUMP) {
+		if (combo.equals("J") && STATUS != JUMP) {
 			STATUS = JUMP;
 			cmdlog = "";
 			animationtime = 0.5f;
+			AIRDELAY = 0.5f;
 		}
-		
+		if (combo.equals("FJ") && STATUS != JUMP) {
+			STATUS = JUMP;
+			cmdlog = "";
+			animationtime = 0.5f;
+			AIRDELAY = 0.5f;
+			JUMPTYPE = 1;
+		}
+		if (combo.equals("BJ") && STATUS != JUMP) {
+			STATUS = JUMP;
+			cmdlog = "";
+			animationtime = 0.5f;
+			AIRDELAY = 0.5f;
+			JUMPTYPE = 2;
+		}
+
+//		System.out.println(cmdlog);
 		cmdlog = "";
 
 	}
 
 	@Override
 	protected void stand() {
-
-		if(animationtime <= 0) {
-			animationtime = 0.3f;
-		}
-		animationType = LOOP;
 		
-		if(InputManager.keyIsdown(BN_FRONT)) {
-			if(animationtime <= 0) {
+//		System.out.println(animationtime);
+		//Punch
+		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
+			
+			isPunch = true;
+		//Kick
+		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch)) {
+			
+			isKick = true;
+		//Move Front
+		} else if (InputManager.keyIsdown(BN_FRONT)  && (!isPunch && !isKick)) {
+			if (animationtime <= 0) {
 				animationtime = 0.1f;
 			}
-			runframe(2, 4);
+			animationType = LOOP;
+			runframe(2, 5);
 			if (mirror) {
 				if (POX > 0) {
 					POX -= movespeed * Gdx.graphics.getDeltaTime();
@@ -163,12 +189,13 @@ public class Nox extends Actor {
 					POX += movespeed * Gdx.graphics.getDeltaTime();
 				}
 			}
-		}
-		else if(InputManager.keyIsdown(BN_BACK)) {
-			if(animationtime <= 0) {
+		//Move Back
+		} else if (InputManager.keyIsdown(BN_BACK)  && (!isPunch && !isKick)) {
+			if (animationtime <= 0) {
 				animationtime = 0.1f;
 			}
-			runframe(2, 4);
+			animationType = LOOP;
+			runframe(5, 8);
 			if (mirror) {
 				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
 						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
@@ -183,42 +210,115 @@ public class Nox extends Actor {
 			} else {
 				POX += 0;
 			}
+		} else {
+			if(isPunch || isKick) {
+				if (animationtime <= 0) {
+					animationtime = 0.05f;
+				}
+				animationType = ONEWAY;
+				if(isPunch) {
+					runframe(14, 16);
+				}else if(isKick) {
+					runframe(17, 19);
+				}
+			}else {
+				if (animationtime <= 0) {
+					animationtime = 0.3f;
+				}
+				animationType = LOOP;
+				runframe(0, 1);
+			}
 		}
-		else {
-			runframe(0, 1);
-		}
-		
+
 	}
 
 	@Override
 	protected void jump() {
+
+		AIRDELAY -= Gdx.graphics.getDeltaTime();
 		
-		animationType = ONEWAY;
-		runframe(8, 9);
+		if (AIRDELAY <= 0) {
+			AIRDELAY = 0;
+		}
 		
-		if(animationtime > 0) {
+		if(InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
+			
+			isPunch = true;
+			animationtime = 0.5f;
+			
+		}else if(InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick)) {
+			
+			isKick = true;
+			animationtime = 0.5f;
+			
+		}else {
+			if(isPunch || isKick) {
+				animationType = ONEWAY;
+				if(isPunch) {
+					runframe(24, 24);
+				}else if(isKick) {
+					runframe(25, 25);
+				}
+			}else {
+				animationType = ONEWAY;
+				runframe(12, 13);
+			}
+		}
+		
+		if (AIRDELAY > 0) {
 			POY += 800 * Gdx.graphics.getDeltaTime();
 		}
-		if(animationtime <= 0) {
+		if (AIRDELAY <= 0) {
 			POY -= 700 * Gdx.graphics.getDeltaTime();
 		}
-		if(POY <= PlayingState.GROUND) {
+		if(JUMPTYPE == 1) {
+			if (mirror) {
+				if (POX > 0) {
+					POX -= 300 * Gdx.graphics.getDeltaTime();
+				}
+			} else if (!mirror) {
+				if (POX + SActor.getWidth() < PlayingState.WORLD_WIDTH) {
+					POX += 300 * Gdx.graphics.getDeltaTime();
+				}
+			}
+		}
+		if(JUMPTYPE == 2) {
+			if (mirror) {
+				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
+						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
+								+ PlayingState.WIDTH / 2) {
+					POX += 300 * Gdx.graphics.getDeltaTime();
+				}
+			} else if (!mirror) {
+				if (POX + SActor.getWidth() / 4 > 0
+						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
+					POX -= 300 * Gdx.graphics.getDeltaTime();
+				}
+			} else {
+				POX += 0;
+			}
+		}
+		if (POY <= PlayingState.GROUND) {
 			POY = PlayingState.GROUND;
+			isPunch = false;
+			isKick = false;
 			STATUS = STAND;
+			JUMPTYPE = 0;
+			cmdlog = "";
 		}
 
 	}
 
 	@Override
 	protected void kneel() {
-		
-		if(animationtime <= 0) {
+
+		if (animationtime <= 0) {
 			animationtime = 0.05f;
 		}
 		animationType = ONEWAY;
-		runframe(5, 7);
-		
-		if(!InputManager.keyIsdown(BN_KNEEL)) {
+		runframe(9, 11);
+
+		if (!InputManager.keyIsdown(BN_KNEEL)) {
 			STATUS = STAND;
 		}
 
@@ -244,20 +344,22 @@ public class Nox extends Actor {
 
 	@Override
 	protected void runframe(int st, int en) {
-		
+
 		animationtime -= Gdx.graphics.getDeltaTime();
-		
-		if(animationtime <= 0) {
+
+		if (animationtime <= 0) {
 			NOWframe++;
 		}
-		if(NOWframe < st) {
+		if (NOWframe < st) {
 			NOWframe = st;
 		}
-		if(NOWframe > en && animationType == LOOP) {
+		if (NOWframe > en && animationType == LOOP) {
 			NOWframe = st;
 		}
-		if(NOWframe > en && animationType == ONEWAY) {
+		if (NOWframe > en && (animationType == ONEWAY || animationType == AUTO)) {
 			NOWframe = en;
+			isPunch = false;
+			isKick = false;
 		}
 		if (mirror) {
 			mframe = mpack.findRegion(String.format("%02d", NOWframe));
@@ -267,7 +369,7 @@ public class Nox extends Actor {
 			frame = pack.findRegion(String.format("%02d", NOWframe));
 			SActor.setRegion(frame);
 		}
-		
+
 	}
 
 	@Override

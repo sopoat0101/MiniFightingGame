@@ -90,7 +90,9 @@ public class PlayingState extends State {
 	@Override
 	public void draw() {
 
-		System.out.println("Playing");
+//		System.out.println("Playing");
+		
+		System.out.println(PLAYER1.STATUS);
 
 		batch.begin();
 
@@ -125,23 +127,26 @@ public class PlayingState extends State {
 		centerPX = Math.abs(PLAYER1.POX - PLAYER2.POX);
 		centerPY = Math.abs(PLAYER1.POY - PLAYER2.POY);
 		// mirror
-		if (PLAYER1.POX > PLAYER2.POX) {
-			PLAYER1.setMIRROR(true);
-			PLAYER2.setMIRROR(false);
+		if (PLAYER1.POX > PLAYER2.POX && (PLAYER1.POY <= GROUND && PLAYER2.POY <= GROUND)) {
 
 			PLAYER1.setBN_BACK(InputManager.KEY_D);
 			PLAYER1.setBN_FRONT(InputManager.KEY_A);
 			PLAYER2.setBN_BACK(InputManager.KEY_LEFT);
 			PLAYER2.setBN_FRONT(InputManager.KEY_RIGHT);
+			
+			PLAYER1.setMIRROR(true);
+			PLAYER2.setMIRROR(false);
 
-		} else if (PLAYER1.POX < PLAYER2.POX) {
-			PLAYER1.setMIRROR(false);
-			PLAYER2.setMIRROR(true);
+		}
+		if (PLAYER2.POX > PLAYER1.POX && (PLAYER1.POY <= GROUND && PLAYER2.POY <= GROUND)) {
 
 			PLAYER1.setBN_BACK(InputManager.KEY_A);
 			PLAYER1.setBN_FRONT(InputManager.KEY_D);
 			PLAYER2.setBN_BACK(InputManager.KEY_RIGHT);
 			PLAYER2.setBN_FRONT(InputManager.KEY_LEFT);
+			
+			PLAYER1.setMIRROR(false);
+			PLAYER2.setMIRROR(true);
 
 		}
 		// camera control
