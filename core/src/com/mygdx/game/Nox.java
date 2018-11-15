@@ -64,7 +64,7 @@ public class Nox extends Actor {
 
 	@Override
 	protected void update(float dt) {
-		
+
 		handle();
 
 		SActor.setPosition(POX, POY);
@@ -130,7 +130,7 @@ public class Nox extends Actor {
 	@Override
 	protected void action(String combo) {
 
-		if (combo.equals("C")) {
+		if (combo.equals("C") && STATUS == STAND) {
 			STATUS = KNEEL;
 			cmdlog = "";
 			animationtime = 0;
@@ -163,18 +163,18 @@ public class Nox extends Actor {
 
 	@Override
 	protected void stand() {
-		
+
 //		System.out.println(animationtime);
-		//Punch
+		// Punch
 		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
-			
+
 			isPunch = true;
-		//Kick
+			// Kick
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch)) {
-			
+
 			isKick = true;
-		//Move Front
-		} else if (InputManager.keyIsdown(BN_FRONT)  && (!isPunch && !isKick)) {
+			// Move Front
+		} else if (InputManager.keyIsdown(BN_FRONT) && (!isPunch && !isKick)) {
 			if (animationtime <= 0) {
 				animationtime = 0.1f;
 			}
@@ -189,8 +189,8 @@ public class Nox extends Actor {
 					POX += movespeed * Gdx.graphics.getDeltaTime();
 				}
 			}
-		//Move Back
-		} else if (InputManager.keyIsdown(BN_BACK)  && (!isPunch && !isKick)) {
+			// Move Back
+		} else if (InputManager.keyIsdown(BN_BACK) && (!isPunch && !isKick)) {
 			if (animationtime <= 0) {
 				animationtime = 0.1f;
 			}
@@ -211,17 +211,17 @@ public class Nox extends Actor {
 				POX += 0;
 			}
 		} else {
-			if(isPunch || isKick) {
+			if (isPunch || isKick) {
 				if (animationtime <= 0) {
 					animationtime = 0.05f;
 				}
 				animationType = ONEWAY;
-				if(isPunch) {
+				if (isPunch) {
 					runframe(14, 16);
-				}else if(isKick) {
+				} else if (isKick) {
 					runframe(17, 19);
 				}
-			}else {
+			} else {
 				if (animationtime <= 0) {
 					animationtime = 0.3f;
 				}
@@ -236,42 +236,42 @@ public class Nox extends Actor {
 	protected void jump() {
 
 		AIRDELAY -= Gdx.graphics.getDeltaTime();
-		
+
 		if (AIRDELAY <= 0) {
 			AIRDELAY = 0;
 		}
-		
-		if(InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
-			
+
+		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
+
 			isPunch = true;
 			animationtime = 0.5f;
-			
-		}else if(InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick)) {
-			
+
+		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick)) {
+
 			isKick = true;
 			animationtime = 0.5f;
-			
-		}else {
-			if(isPunch || isKick) {
+
+		} else {
+			if (isPunch || isKick) {
 				animationType = ONEWAY;
-				if(isPunch) {
+				if (isPunch) {
 					runframe(24, 24);
-				}else if(isKick) {
+				} else if (isKick) {
 					runframe(25, 25);
 				}
-			}else {
+			} else {
 				animationType = ONEWAY;
 				runframe(12, 13);
 			}
 		}
-		
+
 		if (AIRDELAY > 0) {
 			POY += 800 * Gdx.graphics.getDeltaTime();
 		}
 		if (AIRDELAY <= 0) {
 			POY -= 700 * Gdx.graphics.getDeltaTime();
 		}
-		if(JUMPTYPE == 1) {
+		if (JUMPTYPE == 1) {
 			if (mirror) {
 				if (POX > 0) {
 					POX -= 300 * Gdx.graphics.getDeltaTime();
@@ -282,7 +282,7 @@ public class Nox extends Actor {
 				}
 			}
 		}
-		if(JUMPTYPE == 2) {
+		if (JUMPTYPE == 2) {
 			if (mirror) {
 				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
 						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
@@ -312,11 +312,35 @@ public class Nox extends Actor {
 	@Override
 	protected void kneel() {
 
-		if (animationtime <= 0) {
-			animationtime = 0.05f;
+		if(InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
+			
+			isPunch = true;
+			
 		}
-		animationType = ONEWAY;
-		runframe(9, 11);
+		else if(InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick)) {
+			
+			isKick = true;
+			
+		}
+		else {
+			if (isPunch || isKick) {
+				if (animationtime <= 0) {
+					animationtime = 0.1f;
+				}
+				animationType = ONEWAY;
+				if (isPunch) {
+					runframe(20, 22);
+				} else if (isKick) {
+					runframe(23, 23);
+				}
+			} else {
+				if (animationtime <= 0) {
+					animationtime = 0.05f;
+				}
+				animationType = ONEWAY;
+				runframe(9, 11);
+			}
+		}
 
 		if (!InputManager.keyIsdown(BN_KNEEL)) {
 			STATUS = STAND;
