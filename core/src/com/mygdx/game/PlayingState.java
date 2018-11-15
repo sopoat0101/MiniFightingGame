@@ -91,8 +91,6 @@ public class PlayingState extends State {
 	public void draw() {
 
 //		System.out.println("Playing");
-		
-		System.out.println(PLAYER1.STATUS);
 
 		batch.begin();
 
@@ -111,8 +109,8 @@ public class PlayingState extends State {
 		hp1.draw(batch);
 		hp2.draw(batch);
 		
-		PLAYER1.draw(batch);
 		PLAYER2.draw(batch);
+		PLAYER1.draw(batch);
 
 		batch.end();
 

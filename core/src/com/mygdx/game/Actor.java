@@ -17,7 +17,7 @@ public abstract class Actor {
 	protected boolean mirror;
 	
 	protected float HP = 500;
-	protected float movespeed = 200;
+	protected float movespeed = 300;
 	
 	protected float POX = 0;
 	protected float POY = 0;
@@ -55,6 +55,9 @@ public abstract class Actor {
 	protected int LOOP = 0;
 	protected int ONEWAY = 1;
 	protected int AUTO = 2;
+	
+	//Hit box
+	Hitbox hitbox[];
 	
 	protected Actor Anotherplayer;
 	
