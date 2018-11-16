@@ -37,7 +37,7 @@ public abstract class Actor {
 	protected final int STAND = 0;
 	protected final int JUMP = 1;
 	protected final int KNEEL = 2;
-	protected final int GUARD = 3;
+	protected final int HITING = 3;
 	protected final int HIT = 4;
 	
 	protected boolean isPunch = false;
@@ -57,7 +57,13 @@ public abstract class Actor {
 	protected int AUTO = 2;
 	
 	//Hit box
+	protected int beforeSTATUS = 0;
 	Hitbox hitbox[];
+	protected int HITType = 0;
+	protected final int TOPHIT = 0;
+	protected final int DOWNHIT = 1;
+	protected final int TOPGUARD = 2;
+	protected final int DOWNGUARD = 3;
 	
 	protected Actor Anotherplayer;
 	
@@ -94,11 +100,11 @@ protected abstract void init();
 	
 	protected abstract void kneel();
 	
-	protected abstract void guard(int type);
+	protected abstract void hiting();
 	
 	protected abstract void hit();
 	
-	protected abstract void knockback(float movespeed, int type);
+	protected abstract void knockback(float movespeed);
 	
 	protected abstract void runframe(int st, int en);
 	

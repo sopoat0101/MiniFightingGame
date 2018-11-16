@@ -42,9 +42,12 @@ public class Nox extends Actor {
 
 		POY = PlayingState.GROUND;
 		
-		hitbox = new Hitbox[2];
-		hitbox[0] = new Hitbox("../core/assets/Actor/Nox/hitbox/outlinebody.png", POX, POY);
-		hitbox[1] = new Hitbox("../core/assets/Actor/Nox/hitbox/hitbody.png", POX, POY);
+		hitbox = new Hitbox[5];
+		hitbox[0] = new Hitbox("../core/assets/Actor/Nox/hitbox/outlinebody.png", POX, POY);//Outline Body
+		hitbox[1] = new Hitbox("../core/assets/Actor/Nox/hitbox/hitbody.png", POX, POY);//Hit all Body
+		hitbox[2] = new Hitbox("../core/assets/Actor/Nox/hitbox/topbody.png", POX, POY);//Hit Top Body
+		hitbox[3] = new Hitbox("../core/assets/Actor/Nox/hitbox/downbody.png", POX, POY);//Hit Down BOdy
+		hitbox[4] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);//St punch
 		
 
 	}
@@ -67,6 +70,9 @@ public class Nox extends Actor {
 		
 		hitbox[0].draw(batch);
 		hitbox[1].draw(batch);
+		hitbox[2].draw(batch);
+		hitbox[3].draw(batch);
+		hitbox[4].draw(batch);
 
 	}
 
@@ -82,10 +88,16 @@ public class Nox extends Actor {
 		if(!mirror) {
 			hitbox[0].setPosition(POX+SActor.getWidth()/4 + 20, POY);
 			hitbox[1].setPosition(POX+SActor.getWidth()/4 + 20, POY);
+			hitbox[2].setPosition(POX+SActor.getWidth()/4 + 20, POY + hitbox[2].getHeight());
+			hitbox[3].setPosition(POX+SActor.getWidth()/4 + 20, POY);
+			hitbox[4].setPosition(POX+SActor.getWidth()/2 + 20, POY + hitbox[2].getHeight()+20);
 			
 		}else if(mirror) {
 			hitbox[0].setPosition(POX+SActor.getWidth()/4 + 20, POY);
 			hitbox[1].setPosition(POX+SActor.getWidth()/4 + 50, POY);
+			hitbox[2].setPosition(POX+SActor.getWidth()/4 + 50, POY + hitbox[2].getHeight());
+			hitbox[3].setPosition(POX+SActor.getWidth()/4 + 50, POY);
+			hitbox[4].setPosition(POX+SActor.getWidth()/4 + 50 - hitbox[4].getWidth(), POY + hitbox[2].getHeight()+20);
 		}
 		
 		DELAY -= dt;
@@ -102,12 +114,18 @@ public class Nox extends Actor {
 		if (STATUS == JUMP) {
 			jump();
 		}
+		if (STATUS == HIT) {
+			hit();
+		}
+		if (STATUS == HITING) {
+			hiting();
+		}
 
 		if (DELAY <= 0) {
 			action(cmdlog);
 		}
 
-		//Update hitbox Status
+		//Update hit box Status
 		
 		if(hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == STAND) {
 			if (mirror) {
@@ -141,7 +159,30 @@ public class Nox extends Actor {
 			}
 		}
 		
+		if(hitbox[4].hitwith(Anotherplayer.hitbox[2]) && isPunch && NOWframe == 16 && Anotherplayer.STATUS != KNEEL) {
+			
+			if(InputManager.keyIsdown(Anotherplayer.BN_BACK)) {
+				Anotherplayer.HITType = Anotherplayer.TOPGUARD;
+			}else {
+				Anotherplayer.HITType = Anotherplayer.TOPHIT;
+			}
+			
+			
+//			if(STATUS != HITING) {
+//				beforeSTATUS = STATUS;
+//			}
+//			STATUS = HITING;
+//			DELAY = 0.5f;
+			
+			if(Anotherplayer.STATUS != HIT) {
+				Anotherplayer.beforeSTATUS = Anotherplayer.STATUS;
+			}
+			Anotherplayer.STATUS = Anotherplayer.HIT;
+			Anotherplayer.DELAY = 0.3f;
+			
+		}
 		
+		System.out.println(isPunch);
 	}
 
 	@Override
@@ -402,21 +443,54 @@ public class Nox extends Actor {
 	}
 
 	@Override
-	protected void guard(int type) {
-		// TODO Auto-generated method stub
-
+	protected void hiting() {
+		
+		if(DELAY <= 0) {
+			STATUS = beforeSTATUS;
+			isPunch = false;
+		}
+		
 	}
 
 	@Override
 	protected void hit() {
-		// TODO Auto-generated method stub
+		
+		if(HITType == TOPHIT) {
+			runframe(26, 26);
+		}else if(HITType == TOPGUARD) {
+			runframe(28, 28);
+		}
 
+		knockback(100);
+
+		if(DELAY <= 0) {
+			STATUS = beforeSTATUS;
+			AIRDELAY = 0;
+		}
+		
 	}
 
 	@Override
-	protected void knockback(float movespeed, int type) {
-		// TODO Auto-generated method stub
-
+	protected void knockback(float movespeed) {
+		if (mirror) {
+			if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
+					&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
+							+ PlayingState.WIDTH / 2) {
+				POX += movespeed * Gdx.graphics.getDeltaTime();
+			}else {
+				Anotherplayer.POX -= movespeed * Gdx.graphics.getDeltaTime();
+			}
+		} else if (!mirror) {
+			if (POX + SActor.getWidth() / 4 > 0
+					&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
+				POX -= movespeed * Gdx.graphics.getDeltaTime();
+			}else {
+				Anotherplayer.POX += movespeed * Gdx.graphics.getDeltaTime();
+			}
+		} else {
+			POX += 0;
+		}
+		System.out.println(POX);
 	}
 
 	@Override
