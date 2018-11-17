@@ -37,10 +37,10 @@ public class PlayingState extends State {
 	private Sprite hpback2;
 	private float DELAY = 0;
 
-	float hpP1 = 500;
-	float hpP2 = 500;
-	float hpbackP1 = 500;
-	float hpbackP2 = 500;
+	float hpP1;
+	float hpP2;
+	float hpbackP1;
+	float hpbackP2;
 
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
@@ -84,6 +84,12 @@ public class PlayingState extends State {
 		centerPY = Math.abs(PLAYER1.POY - PLAYER2.POY);
 		cpox = PLAYER1.POX + PLAYER1.SActor.getWidth() / 2 + centerPX / 2;
 		cpoy = centerPY / 2 + HEIGHT / 2;
+		
+		hpP1 = PLAYER1.HP;
+		hpP2 = PLAYER2.HP;
+		
+		hpbackP1 = PLAYER1.HP;
+		hpbackP2 = PLAYER2.HP;
 
 	}
 
@@ -234,6 +240,8 @@ public class PlayingState extends State {
 			}
 		}
 
+		System.out.println(hpP2);
+		
 		hp1.setSize(-1 * hpP1, 20);
 		hp2.setSize(hpP2, 20);
 

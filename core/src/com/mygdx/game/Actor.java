@@ -17,8 +17,8 @@ public abstract class Actor {
 	protected boolean mirror;
 	
 	protected float HP = 500;
+	protected float ATK = 20;
 	protected float movespeed = 300;
-	
 	protected float POX = 0;
 	protected float POY = 0;
 	
@@ -39,6 +39,7 @@ public abstract class Actor {
 	protected final int KNEEL = 2;
 	protected final int HITING = 3;
 	protected final int HIT = 4;
+	protected final int GUARD = 5;
 	
 	protected boolean isPunch = false;
 	protected boolean isKick = false;
@@ -64,6 +65,11 @@ public abstract class Actor {
 	protected final int DOWNHIT = 1;
 	protected final int TOPGUARD = 2;
 	protected final int DOWNGUARD = 3;
+	
+	protected Sprite damage;
+	protected Sprite Mdamage;
+	protected Sprite guard;
+	protected float hitPOY = 0;
 	
 	protected Actor Anotherplayer;
 	
@@ -104,7 +110,11 @@ protected abstract void init();
 	
 	protected abstract void hit();
 	
+	protected abstract void guard();
+	
 	protected abstract void knockback(float movespeed);
+	
+	protected abstract void hitboxchecking();
 	
 	protected abstract void runframe(int st, int en);
 	

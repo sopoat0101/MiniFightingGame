@@ -10,6 +10,8 @@ public class Hitbox {
 	private Texture tex;
 	private Sprite sp;
 	private Rectangle rec;
+	private float poX;
+	private float poY;
 	
 	public Hitbox(String path, float poX, float poY) {
 		
@@ -17,6 +19,8 @@ public class Hitbox {
 		sp = new Sprite(tex);
 		rec = new Rectangle(poX, poY, sp.getWidth(), sp.getHeight());
 		sp.setPosition(poX, poY);
+		this.poX = poX;
+		this.poY = poY;
 		
 	}
 	
@@ -31,8 +35,19 @@ public class Hitbox {
 	public void setPosition(float poX, float poY) {
 		rec.setPosition(poX, poY);
 		sp.setPosition(poX, poY);
+		
+		this.poX = poX;
+		this.poY = poY;
 	}
 	
+	public float getPoX() {
+		return poX;
+	}
+
+	public float getPoY() {
+		return poY;
+	}
+
 	public float getWidth() {
 		return sp.getWidth();
 	}
