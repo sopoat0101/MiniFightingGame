@@ -30,11 +30,11 @@ public class Nox extends Actor {
 		damage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/NoxDam.png")));
 		Mdamage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/MNoxDam.png")));
 		guard = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/NoxGu.png")));
-		
+
 		damage.setAlpha(0f);
 		Mdamage.setAlpha(0f);
 		guard.setAlpha(0f);
-		
+
 		if (mirror == false) {
 			SActor.setAlpha(1f);
 			MSActor.setAlpha(0f);
@@ -50,14 +50,18 @@ public class Nox extends Actor {
 		}
 
 		POY = PlayingState.GROUND;
-		
-		hitbox = new Hitbox[6];
+
+		hitbox = new Hitbox[10];
 		hitbox[0] = new Hitbox("../core/assets/Actor/Nox/hitbox/outlinebody.png", POX, POY);// Outline Body
 		hitbox[1] = new Hitbox("../core/assets/Actor/Nox/hitbox/hitbody.png", POX, POY);// Hit all Body
 		hitbox[2] = new Hitbox("../core/assets/Actor/Nox/hitbox/topbody.png", POX, POY);// Hit Top Body
 		hitbox[3] = new Hitbox("../core/assets/Actor/Nox/hitbox/downbody.png", POX, POY);// Hit Down BOdy
-		hitbox[4] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// St punch
-		hitbox[5] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// St kick
+		hitbox[4] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// ST punch
+		hitbox[5] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// ST kick
+		hitbox[6] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// C punch
+		hitbox[7] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// C kick
+		hitbox[8] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Punch
+		hitbox[9] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Kick
 
 	}
 
@@ -67,55 +71,58 @@ public class Nox extends Actor {
 		if (mirror == false) {
 			SActor.setAlpha(1f);
 			MSActor.setAlpha(0f);
-//			Mdamage.setAlpha(0f);
-//			damage.setAlpha(0f);
 
 		} else if (mirror) {
 			MSActor.setAlpha(1f);
 			SActor.setAlpha(0f);
-//			Mdamage.setAlpha(0f);
-//			damage.setAlpha(0f);
 
 		}
 
 		SActor.draw(batch);
 		MSActor.draw(batch);
 		guard.draw(batch);
-		
+
 		damage.draw(batch);
 		Mdamage.draw(batch);
-		
-		for(Hitbox item: hitbox) {
+
+		for (Hitbox item : hitbox) {
 			item.draw(batch);
 			item.setAlpha(0f);
 		}
+//		hitbox[9].setAlpha(1f);
+
 	}
 
 	@Override
 	protected void update(float dt) {
-
-		handle();
+		if(STATUS != KNOCKOUT && STATUS != STOP) {
+			handle();
+		}
 
 		SActor.setPosition(POX, POY);
 		MSActor.setPosition(POX, POY);
 		// set Hit box Position
 		
-		damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), POY);
-		Mdamage.setPosition(hitbox[2].getPoX() - 50, POY);
-		
+		damage.setAlpha(0f);
+		Mdamage.setAlpha(0f);
+
 		if (!mirror) {
-			
+
 			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
 			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
 			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 20, POY + hitbox[2].getHeight());
 			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
 			hitbox[4].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() + 20);
 			hitbox[5].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() - 60);
-			
+			hitbox[6].setPosition(POX + SActor.getWidth() / 2 + 40, POY + hitbox[2].getHeight() - 60);
+			hitbox[7].setPosition(POX + SActor.getWidth() / 2 + 40, POY);
+			hitbox[8].setPosition(POX + SActor.getWidth() / 2 + 10, POY + hitbox[2].getHeight() - 60);
+			hitbox[9].setPosition(POX + SActor.getWidth() / 2 - 20, POY);
+
 			guard.setPosition(hitbox[0].getPoX() + hitbox[0].getWidth(), POY);
-			
+
 		} else if (mirror) {
-			
+
 			hitbox[0].setPosition(POX + SActor.getWidth() / 4 - 20, POY);
 			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 50, POY);
 			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 50, POY + hitbox[2].getHeight());
@@ -124,23 +131,34 @@ public class Nox extends Actor {
 					POY + hitbox[2].getHeight() + 20);
 			hitbox[5].setPosition(POX + SActor.getWidth() / 4 + 50 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() - 60);
-			
+			hitbox[6].setPosition(POX + SActor.getWidth() / 4 + 40 - hitbox[4].getWidth(),
+					POY + hitbox[2].getHeight() - 60);
+			hitbox[7].setPosition(POX + SActor.getWidth() / 4 + 40 - hitbox[4].getWidth(), POY);
+			hitbox[8].setPosition(POX + SActor.getWidth() / 4 + 60 - hitbox[4].getWidth(),
+					POY + hitbox[2].getHeight() - 60);
+			hitbox[9].setPosition(POX + SActor.getWidth() / 4 + 90 - hitbox[4].getWidth(), POY);
+
 			guard.setPosition(hitbox[0].getPoX() - 5, POY);
 		}
 
-		DELAY -= dt;
+		if(STATUS != STOP) {
+			DELAY -= dt;
+		}
 		if (DELAY <= 0) {
 			DELAY = 0;
 		}
 
 		if (STATUS == STAND) {
 			stand();
+			beforeSTATUS = STAND;
 		}
 		if (STATUS == KNEEL) {
 			kneel();
+			beforeSTATUS = KNEEL;
 		}
 		if (STATUS == JUMP) {
 			jump();
+			beforeSTATUS = JUMP;
 		}
 		if (STATUS == HIT) {
 			hit();
@@ -151,17 +169,32 @@ public class Nox extends Actor {
 		if (STATUS == GUARD) {
 			guard();
 		}
+		if(STATUS == STOP) {
+			
+		}
 
 		if (DELAY <= 0) {
 			action(cmdlog);
 		}
 
-		hitboxchecking();
-		
-		if(HP <= 0) {
-			HP = 0;
+		if(STATUS != STOP) {
+			hitboxchecking();
 		}
-
+		
+		if (HP <= 0) {
+			HP = 0;
+			STATUS = KNOCKOUT;
+			animationType = ONEWAY;
+			
+			if (animationtime <= 0) {
+				animationtime = 0.1f;
+			}
+			runframe(30, 32);
+			damage.setAlpha(0f);
+			Mdamage.setAlpha(0f);
+			
+			Anotherplayer.STATUS = STOP;
+		}
 	}
 
 	@Override
@@ -196,7 +229,10 @@ public class Nox extends Actor {
 
 	@Override
 	protected void dispose() {
-		// TODO Auto-generated method stub
+
+		for (Hitbox item : hitbox) {
+			item.dispose();
+		}
 
 	}
 
@@ -229,15 +265,12 @@ public class Nox extends Actor {
 			JUMPTYPE = 2;
 		}
 
-//		System.out.println(cmdlog);
 		cmdlog = "";
 
 	}
 
 	@Override
 	protected void stand() {
-
-//		System.out.println(animationtime);
 		// Punch
 		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
 
@@ -409,7 +442,7 @@ public class Nox extends Actor {
 					animationtime = 0.05f;
 				}
 				animationType = ONEWAY;
-				runframe(9, 11);
+				runframe(11, 11);
 			}
 		}
 
@@ -432,39 +465,42 @@ public class Nox extends Actor {
 
 	@Override
 	protected void hit() {
-		
+
 		if (HITType == TOPHIT) {
 			runframe(26, 26);
-			
+
 			damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), hitPOY);
 			Mdamage.setPosition(hitbox[2].getPoX() - 50, hitPOY);
-			
-			if(!mirror) {
+
+			if (!mirror) {
 				damage.setAlpha(1f);
-			}else if(mirror) {
+			} else if (mirror) {
 				Mdamage.setAlpha(1f);
 			}
-			
+
 		} else if (HITType == DOWNHIT) {
 			runframe(27, 27);
-			
-			damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), hitbox[5].getPoY());
-			Mdamage.setPosition(hitbox[2].getPoX() - 50, hitbox[5].getPoY());
-			
-			if(!mirror) {
+
+			damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), hitPOY);
+			Mdamage.setPosition(hitbox[2].getPoX() - 50, hitPOY);
+
+			if (!mirror) {
 				damage.setAlpha(1f);
-			}else if(mirror) {
+			} else if (mirror) {
 				Mdamage.setAlpha(1f);
 			}
-			
+
 		}
 
+		if(DELAY >= 0.28f) {
+			HP -= Anotherplayer.ATK;
+		}
+		
 		if (DELAY >= 0.2f) {
 			knockback(400);
 		}
 
 		if (DELAY <= 0) {
-			HP -= Anotherplayer.ATK;
 			damage.setAlpha(0f);
 			Mdamage.setAlpha(0f);
 			STATUS = beforeSTATUS;
@@ -477,13 +513,13 @@ public class Nox extends Actor {
 	protected void guard() {
 
 		guard.setAlpha(1f);
-		
+
 		if (HITType == TOPGUARD) {
 			runframe(28, 28);
-			
+
 		} else if (HITType == DOWNGUARD) {
 			runframe(29, 29);
-			
+
 		}
 
 		if (hitbox[4].hitwith(Anotherplayer.hitbox[0]) && (Anotherplayer.isPunch || Anotherplayer.isKick)) {
@@ -491,9 +527,9 @@ public class Nox extends Actor {
 		}
 
 		if (DELAY <= 0) {
-			
+
 			guard.setAlpha(0f);
-			
+
 			if (HITType == TOPGUARD) {
 				STATUS = STAND;
 			} else if (HITType == DOWNGUARD) {
@@ -521,7 +557,6 @@ public class Nox extends Actor {
 		} else {
 			POX += 0;
 		}
-		System.out.println(POX);
 	}
 
 	@Override
@@ -562,8 +597,7 @@ public class Nox extends Actor {
 		////////////////////////
 		if ((Anotherplayer.isPunch || Anotherplayer.isKick) && InputManager.keyIsdown(BN_BACK)
 				&& Math.abs(POX - Anotherplayer.POX) < SActor.getWidth() && Anotherplayer.STATUS != HITING
-				&& (STATUS == STAND || STATUS == KNEEL)
-				) {
+				&& (STATUS == STAND || STATUS == KNEEL)) {
 
 			if (STATUS == STAND) {
 				HITType = TOPGUARD;
@@ -579,42 +613,134 @@ public class Nox extends Actor {
 
 			Anotherplayer.HITType = Anotherplayer.TOPHIT;
 
-			if (STATUS != HITING) {
-				beforeSTATUS = STATUS;
+			if (STATUS != HITING && STATUS != STOP) {
 				DELAY = 0.3f;
 			}
 			ATK = 20;
 			STATUS = HITING;
 
-			if (Anotherplayer.STATUS != HIT) {
-				Anotherplayer.beforeSTATUS = Anotherplayer.STATUS;
+			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
 				Anotherplayer.DELAY = 0.3f;
+				
+				Anotherplayer.STATUS = Anotherplayer.HIT;
+				Anotherplayer.hitPOY = hitbox[4].getPoY();
 			}
-			Anotherplayer.STATUS = Anotherplayer.HIT;
-			Anotherplayer.hitPOY = hitbox[4].getPoY();
+			
 
-		}else if (hitbox[5].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 19
+		} else if (hitbox[5].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 19
 				&& Anotherplayer.STATUS != GUARD) {
 
 			Anotherplayer.HITType = Anotherplayer.DOWNHIT;
 
-			if (STATUS != HITING) {
-				beforeSTATUS = STATUS;
+			if (STATUS != HITING && STATUS != STOP) {
+				
 				DELAY = 0.3f;
 			}
 			ATK = 20;
 			STATUS = HITING;
 
-			if (Anotherplayer.STATUS != HIT) {
-				Anotherplayer.beforeSTATUS = Anotherplayer.STATUS;
+			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
+				
 				Anotherplayer.DELAY = 0.3f;
+				
+				Anotherplayer.STATUS = Anotherplayer.HIT;
+				Anotherplayer.hitPOY = hitbox[5].getPoY();
 			}
-			Anotherplayer.STATUS = Anotherplayer.HIT;
-			Anotherplayer.hitPOY = hitbox[5].getPoY();
+
+		} else if (hitbox[6].hitwith(Anotherplayer.hitbox[3]) && isPunch && NOWframe == 22
+				&& Anotherplayer.STATUS != GUARD) {
+
+			Anotherplayer.HITType = Anotherplayer.DOWNHIT;
+
+			if (STATUS != HITING && STATUS != STOP) {
+				
+				DELAY = 0.3f;
+			}
+			ATK = 10;
+			STATUS = HITING;
+
+			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
+				
+				Anotherplayer.DELAY = 0.3f;
+				
+				Anotherplayer.STATUS = Anotherplayer.HIT;
+				Anotherplayer.hitPOY = hitbox[6].getPoY();
+			}
+
+		} else if (hitbox[7].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 23
+				&& Anotherplayer.STATUS != GUARD) {
+
+			Anotherplayer.HITType = Anotherplayer.DOWNHIT;
+
+			if (STATUS != HITING && STATUS != STOP) {
+				
+				DELAY = 0.3f;
+			}
+			ATK = 10;
+			STATUS = HITING;
+
+			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
+				
+				Anotherplayer.DELAY = 0.3f;
+				
+				Anotherplayer.STATUS = Anotherplayer.HIT;
+				Anotherplayer.hitPOY = hitbox[7].getPoY();
+			}
+
+		} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[3]) || (hitbox[8].hitwith(Anotherplayer.hitbox[2])))
+				&& isPunch && NOWframe == 24 && Anotherplayer.STATUS != GUARD) {
+
+			if ((hitbox[8].hitwith(Anotherplayer.hitbox[2]))) {
+				Anotherplayer.HITType = Anotherplayer.TOPHIT;
+
+			} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[3]))) {
+				Anotherplayer.HITType = Anotherplayer.DOWNHIT;
+
+			}
+
+			if (STATUS != HITING && STATUS != STOP) {
+				
+				DELAY = 0.3f;
+			}
+			ATK = 15;
+			STATUS = HITING;
+
+			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
+				
+				Anotherplayer.DELAY = 0.3f;
+				
+				Anotherplayer.STATUS = Anotherplayer.HIT;
+				Anotherplayer.hitPOY = hitbox[8].getPoY();
+			}
+
+		} else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]) || (hitbox[9].hitwith(Anotherplayer.hitbox[2])))
+				&& isKick && NOWframe == 25 && Anotherplayer.STATUS != GUARD) {
+
+			if ((hitbox[9].hitwith(Anotherplayer.hitbox[2]))) {
+				Anotherplayer.HITType = Anotherplayer.TOPHIT;
+
+			} else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]))) {
+				Anotherplayer.HITType = Anotherplayer.DOWNHIT;
+
+			}
+
+			if (STATUS != HITING && STATUS != STOP) {
+				
+				DELAY = 0.3f;
+			}
+			ATK = 15;
+			STATUS = HITING;
+
+			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
+				
+				Anotherplayer.DELAY = 0.3f;
+				
+				Anotherplayer.STATUS = Anotherplayer.HIT;
+				Anotherplayer.hitPOY = hitbox[9].getPoY();
+			}
 
 		}
 
-		System.out.println(isPunch);
 	}
 
 	@Override

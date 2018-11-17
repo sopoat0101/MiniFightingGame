@@ -41,6 +41,12 @@ public class PlayingState extends State {
 	float hpP2;
 	float hpbackP1;
 	float hpbackP2;
+	
+	private int STATE = 0;
+	private int PLAY = 0;
+	private int PAUSE = 1;
+	private int RUNGAME = 2;
+	private int REGAME = 3;
 
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
@@ -95,8 +101,6 @@ public class PlayingState extends State {
 
 	@Override
 	public void draw() {
-
-//		System.out.println("Playing");
 
 		batch.begin();
 
@@ -239,8 +243,6 @@ public class PlayingState extends State {
 				hpbackP2 -= 100 * dt;
 			}
 		}
-
-		System.out.println(hpP2);
 		
 		hp1.setSize(-1 * hpP1, 20);
 		hp2.setSize(hpP2, 20);
@@ -253,12 +255,40 @@ public class PlayingState extends State {
 		
 		camera.update();
 
+		
+		//GAMEUPDATE
+		if(STATE == PAUSE) {
+			if(PLAYER1.STATUS != PLAYER1.STOP) {
+				
+				PLAYER1.STATUS_PAUSE_GAME = PLAYER1.STATUS;
+			}
+			PLAYER1.STATUS = PLAYER1.STOP;
+			
+			if(PLAYER2.STATUS != PLAYER2.STOP) {
+				
+				PLAYER2.STATUS_PAUSE_GAME = PLAYER2.STATUS;
+			}
+			PLAYER2.STATUS = PLAYER2.STOP;
+		}
+		
+		System.out.println(PLAYER1.DELAY);
+		
 	}
 
 	@Override
 	public void handle() {
-		if (InputManager.keyIsdown(InputManager.KEY_ESC)) {
-			camera.translate(0f, -5);
+		if (InputManager.keyIspressed(InputManager.KEY_ESC)) {
+			
+			if(STATE == PLAY) {
+				STATE = PAUSE;
+				
+			}else if(STATE == PAUSE) {
+				STATE = PLAY;
+				PLAYER1.STATUS = PLAYER1.STATUS_PAUSE_GAME;
+				PLAYER2.STATUS = PLAYER2.STATUS_PAUSE_GAME;
+
+			}
+			
 		}
 		if (InputManager.keyIsdown(InputManager.KEY_SPACE)) {
 			camera.translate(0f, 5);
@@ -269,7 +299,10 @@ public class PlayingState extends State {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-
+		
+		PLAYER1.dispose();
+		PLAYER2.dispose();
+		
 	}
 
 }
