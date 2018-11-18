@@ -63,6 +63,9 @@ public class Nox extends Actor {
 		hitbox[8] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Punch
 		hitbox[9] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Kick
 
+		SActor.setPosition(POX, POY);
+		MSActor.setPosition(POX, POY);
+		
 	}
 
 	@Override
