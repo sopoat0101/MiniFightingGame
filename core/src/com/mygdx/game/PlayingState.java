@@ -137,7 +137,7 @@ public class PlayingState extends State {
 		stmP1 = PLAYER1.STAMINA;
 		stmP2 = PLAYER2.STAMINA;
 
-		TIME = 10;
+		TIME = 99;
 
 		TANumF = new TextureAtlas("../core/assets/gui/number/number.pack");
 		TRNumF = TANumF.findRegion("9");
