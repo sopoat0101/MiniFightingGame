@@ -24,7 +24,6 @@ public class MenuState extends State {
 		
 		batch = new SpriteBatch();
 		batch.begin();
-		System.out.println("Menu");
 		bg.draw(batch);
 		batch.end();
 		
