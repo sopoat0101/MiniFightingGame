@@ -18,7 +18,7 @@ public class MenuState extends State {
 	public void init() {
 		// TODO Auto-generated method stub
 		bg = new Sprite(new Texture(Gdx.files.internal("../core/assets/background/MenuBackground.png")));
-		playOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1.png")));
+		playOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
 		tutorialOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
 		exitOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
 	}
@@ -30,8 +30,11 @@ public class MenuState extends State {
 		batch.begin();
 		bg.draw(batch);
 		playOption.draw(batch);
+		playOption.setPosition(730f, 550f);
 		tutorialOption.draw(batch);
+		tutorialOption.setPosition(730f, 350f);
 		exitOption.draw(batch);
+		exitOption.setPosition(730f, 150f);
 		batch.end();
 		
 
@@ -51,31 +54,43 @@ public class MenuState extends State {
 		if (InputManager.keyIspressed(InputManager.KEY_DOWN) && playSelected == true) {
 			tutorialSelected = true;
 			playSelected = false;
+			tutorialOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1-2.png")));
+			playOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1.png")));
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_UP) && playSelected == true) {
 			exitSelected = true;
 			playSelected = false;
+			exitOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1-2.png")));
+			playOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1.png")));
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_DOWN) && tutorialSelected == true) {
 			exitSelected = true;
 			tutorialSelected = false;
+			exitOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1-2.png")));
+			tutorialOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_UP) && tutorialSelected == true) {
 			playSelected = true;
 			tutorialSelected = false;
+			playOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
+			tutorialOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_DOWN) && exitSelected == true) {
 			exitSelected = false;
 			playSelected = true;
+			exitOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
+			playOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_UP) && exitSelected == true) {
 			exitSelected = false;
 			tutorialSelected = true;
+			exitOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
+			tutorialOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1-2.png")));
 		}
 		
 
