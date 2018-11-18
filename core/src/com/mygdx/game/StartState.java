@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 public class StartState extends State{
 	private SpriteBatch batch;
 	private Sprite bg, logo, startButton;
+	private float alpha = .0f;
 
 	public StartState(GameStateManager gsm) {
 		super(gsm);
@@ -42,6 +43,9 @@ public class StartState extends State{
 	public void update(float dt) {
 		
 		handle();
+		
+		alpha += dt;
+		startButton.setAlpha((float)Math.abs(Math.sin(alpha)));
 		
 	}
 
