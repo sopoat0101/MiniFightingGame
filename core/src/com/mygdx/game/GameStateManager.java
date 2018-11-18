@@ -30,8 +30,8 @@ public class GameStateManager {
 			gameState = new MenuState(this);
 		} else if (state == SELECT) {
 			gameState = new SelectState(this);
-//		} else if (state == TUTORIAL) {
-//			gameState = new TutorialState(this);
+		} else if (state == TUTORIAL) {
+			gameState = new TutorialState(this);
 		} else if (state == PLAYING) {
 			gameState = new PlayingState(this);
 		}

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MenuState extends State {
 	private SpriteBatch batch;
 	private Sprite bg, playOption, tutorialOption, exitOption;
+	private Texture playTexture1, playTexture12, tutorialTexture1, tutorialTexture12, exitTexture1, exitTexture12;
 	private boolean playSelected = true, tutorialSelected = false, exitSelected = false;
 
 	public MenuState(GameStateManager gsm) {
@@ -29,12 +30,12 @@ public class MenuState extends State {
 		batch = new SpriteBatch();
 		batch.begin();
 		bg.draw(batch);
-		playOption.draw(batch);
 		playOption.setPosition(730f, 550f);
-		tutorialOption.draw(batch);
+		playOption.draw(batch);
 		tutorialOption.setPosition(730f, 350f);
-		exitOption.draw(batch);
+		tutorialOption.draw(batch);
 		exitOption.setPosition(730f, 150f);
+		exitOption.draw(batch);
 		batch.end();
 		
 
