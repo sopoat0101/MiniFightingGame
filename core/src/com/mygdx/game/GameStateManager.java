@@ -9,6 +9,7 @@ public class GameStateManager {
 	public static final int START = 0;
 	public static final int MENU = 10;
 	public static final int SELECT = 100;
+	public static final int TUTORIAL = 50;
 	public static final int PLAYING = 1000;
 
 	private static int select_P1;
@@ -29,6 +30,8 @@ public class GameStateManager {
 			gameState = new MenuState(this);
 		} else if (state == SELECT) {
 			gameState = new SelectState(this);
+//		} else if (state == TUTORIAL) {
+//			gameState = new TutorialState(this);
 		} else if (state == PLAYING) {
 			gameState = new PlayingState(this);
 		}

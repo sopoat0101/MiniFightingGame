@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class StartState extends State{
 	private SpriteBatch batch;
@@ -27,10 +28,12 @@ public class StartState extends State{
 		batch.begin();
 		bg.draw(batch);
 		logo.draw(batch);
+		logo.setPosition(0, 50);
 		startButton.draw(batch);
+		startButton.setPosition(0, -250);
+		
 		
 		batch.end();
-		
 		
 		
 	}
