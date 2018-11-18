@@ -10,7 +10,7 @@ public abstract class State {
 	public State(GameStateManager gsm){
 		this.gsm = gsm;
 	}
-	
+
 	public abstract void init();
 	
 	public abstract void draw();

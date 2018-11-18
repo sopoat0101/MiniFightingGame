@@ -35,18 +35,22 @@ public class PlayingState extends State {
 	private Sprite hp2;
 	private Sprite hpback1;
 	private Sprite hpback2;
+	
+	private Sprite stmbar1;
+	private Sprite stmbar2;
+	
 	private float DELAY = 0;
 
 	float hpP1;
 	float hpP2;
 	float hpbackP1;
 	float hpbackP2;
+	float stmP1;
+	float stmP2;
 	
 	private int STATE = 0;
 	private int PLAY = 0;
 	private int PAUSE = 1;
-	private int RUNGAME = 2;
-	private int REGAME = 3;
 
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
@@ -66,6 +70,9 @@ public class PlayingState extends State {
 		hpback1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/backhp.png")));
 		hpback2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/backhp.png")));
 
+		stmbar1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/stm.png")));
+		stmbar2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/stm.png")));
+		
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
 
 		camera.position.set(WORLD_WIDTH / 2, HEIGHT / 2, 0);
@@ -96,6 +103,9 @@ public class PlayingState extends State {
 		
 		hpbackP1 = PLAYER1.HP;
 		hpbackP2 = PLAYER2.HP;
+		
+		stmP1 = PLAYER1.STAMINA;
+		stmP2 = PLAYER2.STAMINA;
 
 	}
 
@@ -118,6 +128,9 @@ public class PlayingState extends State {
 		
 		hp1.draw(batch);
 		hp2.draw(batch);
+		
+		stmbar1.draw(batch);
+		stmbar2.draw(batch);
 		
 		PLAYER2.draw(batch);
 		PLAYER1.draw(batch);
@@ -200,19 +213,24 @@ public class PlayingState extends State {
 		if (DELAY <= 0) {
 			DELAY = 0;
 		}
+		
 		hpbar1.setPosition(camera.position.x - WIDTH / 2 + 20,
 				camera.position.y + HEIGHT / 2 - hpbar1.getHeight() - 20);
-		hpbar2.setPosition(camera.position.x + WIDTH / 2 - hpbar2.getWidth() - 20,
+		hpbar2.setPosition(camera.position.x + WIDTH / 2 - 20,
 				camera.position.y + HEIGHT / 2 - hpbar2.getHeight() - 20);
 
-		hp1.setPosition(camera.position.x - 80, camera.position.y + HEIGHT / 2 - hpbar1.getHeight() - 11);
+		hp1.setPosition(camera.position.x - 80, camera.position.y + HEIGHT / 2 - hpbar1.getHeight() + 20);
 		hp2.setPosition(camera.position.x + WIDTH / 2 - 500 - 58,
-				camera.position.y + HEIGHT / 2 - hpbar2.getHeight() - 11);
+				camera.position.y + HEIGHT / 2 - hpbar1.getHeight() + 20);
 
-		hpback1.setPosition(camera.position.x - 80, camera.position.y + HEIGHT / 2 - hpbar1.getHeight() - 11);
+		hpback1.setPosition(camera.position.x - 80, camera.position.y + HEIGHT / 2 - hpbar1.getHeight() + 20);
 		hpback2.setPosition(camera.position.x + WIDTH / 2 - 500 - 58,
-				camera.position.y + HEIGHT / 2 - hpbar2.getHeight() - 11);
+				camera.position.y + HEIGHT / 2 - hpbar1.getHeight() + 20);
 
+		stmbar1.setPosition(camera.position.x - WIDTH/2 + 200*3 - 40, camera.position.y + HEIGHT / 2 - hpbar1.getHeight() - 10);
+		stmbar2.setPosition(camera.position.x - WIDTH/2 + 200*3 + 122, camera.position.y + HEIGHT / 2 - hpbar1.getHeight() - 10);
+		
+		
 		// update HP
 		if (hpP1 <= 0) {
 			hpP1 = 0;
@@ -243,13 +261,44 @@ public class PlayingState extends State {
 				hpbackP2 -= 100 * dt;
 			}
 		}
+		//STAMINA
+		if(stmP1 <= 0) {
+			stmP1 = 0;
+		}
+		if(stmP1 > 200) {
+			stmP1 = 200;
+		}
+		if(stmP1 > PLAYER1.STAMINA) {
+			stmP1 -= 100 * dt;
+		}
+		if(stmP1 < PLAYER1.STAMINA && PLAYER1.STMDELAY <= 0) {
+			stmP1 += 100 * dt;
+		}
 		
+		if(stmP2 <= 0) {
+			stmP2 = 0;
+		}
+		if(stmP2 >= 200) {
+			stmP2 = 200;
+		}
+		if(stmP2 > PLAYER2.STAMINA) {
+			stmP2 -= 100 * dt;
+		}
+		if(stmP2 < PLAYER2.STAMINA && PLAYER2.STMDELAY <= 0) {
+			stmP2 += 100 * dt;
+		}
+		//SetSize
 		hp1.setSize(-1 * hpP1, 20);
 		hp2.setSize(hpP2, 20);
 
 		hpback1.setSize(-1 * hpbackP1, 20);
 		hpback2.setSize(hpbackP2, 20);
 
+		hpbar2.setSize(-hpbar1.getWidth(), hpbar1.getHeight());
+		
+		stmbar1.setSize(-1 * stmP1, 15);
+		stmbar2.setSize(stmP2, 15);
+		
 		PLAYER1.update(dt);
 		PLAYER2.update(dt);
 		
@@ -271,7 +320,7 @@ public class PlayingState extends State {
 			PLAYER2.STATUS = PLAYER2.STOP;
 		}
 		
-		System.out.println(PLAYER1.DELAY);
+//		System.out.println(PLAYER1.DELAY);
 		
 	}
 

@@ -18,6 +18,7 @@ public abstract class Actor {
 	
 	protected float HP = 500;
 	protected float ATK = 20;
+	protected float STAMINA = 200;
 	protected float movespeed = 300;
 	protected float POX = 0;
 	protected float POY = 0;
@@ -52,6 +53,7 @@ public abstract class Actor {
 	
 	protected float DELAY = 0;
 	protected float AIRDELAY = 0;
+	protected float STMDELAY = 0;
 	//animation
 	protected int NOWframe = 0;
 	protected int STframe = 0;

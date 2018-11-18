@@ -148,6 +148,14 @@ public class Nox extends Actor {
 			DELAY = 0;
 		}
 
+		if(STATUS != STOP) {
+			STMDELAY -= dt;
+		}
+		if(STMDELAY <= 0) {
+			STMDELAY = 0;
+			STAMINA += 100 * dt;
+		}
+		
 		if (STATUS == STAND) {
 			stand();
 			beforeSTATUS = STAND;
@@ -194,6 +202,12 @@ public class Nox extends Actor {
 			Mdamage.setAlpha(0f);
 			
 			Anotherplayer.STATUS = STOP;
+		}
+		
+		if(STAMINA <= 0) {
+			STAMINA = 0;
+		}else if(STAMINA > 200) {
+			STAMINA = 200;
 		}
 	}
 
@@ -272,12 +286,16 @@ public class Nox extends Actor {
 	@Override
 	protected void stand() {
 		// Punch
-		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
-
+		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 20) {
+			
+			STAMINA -= 20;
+			STMDELAY = 1.5f;
 			isPunch = true;
 			// Kick
-		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch)) {
-
+		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch) && STAMINA >= 20) {
+			
+			STAMINA -= 20;
+			STMDELAY = 1.5f;
 			isKick = true;
 			// Move Front
 		} else if (InputManager.keyIsdown(BN_FRONT) && (!isPunch && !isKick)) {
@@ -347,13 +365,17 @@ public class Nox extends Actor {
 			AIRDELAY = 0;
 		}
 
-		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
-
+		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 30) {
+			
+			STAMINA -= 30;
+			STMDELAY = 1.5f;
 			isPunch = true;
 			animationtime = 0.5f;
 
-		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick)) {
-
+		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick) && STAMINA >= 30) {
+			
+			STAMINA -= 30;
+			STMDELAY = 1.5f;
 			isKick = true;
 			animationtime = 0.5f;
 
@@ -418,12 +440,16 @@ public class Nox extends Actor {
 	@Override
 	protected void kneel() {
 
-		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick)) {
+		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 10) {
 
+			STAMINA -= 10;
+			STMDELAY = 1.5f;
 			isPunch = true;
 
-		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick)) {
+		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick) && STAMINA >= 10) {
 
+			STAMINA -= 10;
+			STMDELAY = 1.5f;
 			isKick = true;
 
 		} else {
@@ -512,6 +538,7 @@ public class Nox extends Actor {
 	@Override
 	protected void guard() {
 
+		STAMINA -= 300 * Gdx.graphics.getDeltaTime();
 		guard.setAlpha(1f);
 
 		if (HITType == TOPGUARD) {
@@ -607,7 +634,7 @@ public class Nox extends Actor {
 			STATUS = GUARD;
 			DELAY = 0.3f;
 		}
-
+		//STAND PUNCH
 		else if (hitbox[4].hitwith(Anotherplayer.hitbox[2]) && isPunch && NOWframe == 16
 				&& Anotherplayer.STATUS != KNEEL && Anotherplayer.STATUS != GUARD) {
 
@@ -626,7 +653,7 @@ public class Nox extends Actor {
 				Anotherplayer.hitPOY = hitbox[4].getPoY();
 			}
 			
-
+		//STAND KICK
 		} else if (hitbox[5].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 19
 				&& Anotherplayer.STATUS != GUARD) {
 
@@ -646,7 +673,7 @@ public class Nox extends Actor {
 				Anotherplayer.STATUS = Anotherplayer.HIT;
 				Anotherplayer.hitPOY = hitbox[5].getPoY();
 			}
-
+		//KNEEL PUNCH
 		} else if (hitbox[6].hitwith(Anotherplayer.hitbox[3]) && isPunch && NOWframe == 22
 				&& Anotherplayer.STATUS != GUARD) {
 
@@ -666,7 +693,7 @@ public class Nox extends Actor {
 				Anotherplayer.STATUS = Anotherplayer.HIT;
 				Anotherplayer.hitPOY = hitbox[6].getPoY();
 			}
-
+		//KNEEL KICK
 		} else if (hitbox[7].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 23
 				&& Anotherplayer.STATUS != GUARD) {
 
@@ -686,7 +713,7 @@ public class Nox extends Actor {
 				Anotherplayer.STATUS = Anotherplayer.HIT;
 				Anotherplayer.hitPOY = hitbox[7].getPoY();
 			}
-
+		//JUMP PUNCH
 		} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[3]) || (hitbox[8].hitwith(Anotherplayer.hitbox[2])))
 				&& isPunch && NOWframe == 24 && Anotherplayer.STATUS != GUARD) {
 
@@ -712,7 +739,7 @@ public class Nox extends Actor {
 				Anotherplayer.STATUS = Anotherplayer.HIT;
 				Anotherplayer.hitPOY = hitbox[8].getPoY();
 			}
-
+		//JUMP KICK
 		} else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]) || (hitbox[9].hitwith(Anotherplayer.hitbox[2])))
 				&& isKick && NOWframe == 25 && Anotherplayer.STATUS != GUARD) {
 
