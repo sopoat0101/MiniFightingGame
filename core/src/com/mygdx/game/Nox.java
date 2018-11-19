@@ -646,7 +646,7 @@ public class Nox extends Actor {
 			if (STATUS != HITING && STATUS != STOP) {
 				DELAY = 0.3f;
 			}
-			ATK = 20;
+			ATK = 30;
 			STATUS = HITING;
 
 			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
@@ -666,7 +666,7 @@ public class Nox extends Actor {
 				
 				DELAY = 0.3f;
 			}
-			ATK = 20;
+			ATK = 30;
 			STATUS = HITING;
 
 			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
@@ -686,7 +686,7 @@ public class Nox extends Actor {
 				
 				DELAY = 0.3f;
 			}
-			ATK = 10;
+			ATK = 20;
 			STATUS = HITING;
 
 			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
@@ -706,7 +706,7 @@ public class Nox extends Actor {
 				
 				DELAY = 0.3f;
 			}
-			ATK = 10;
+			ATK = 20;
 			STATUS = HITING;
 
 			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
@@ -732,7 +732,7 @@ public class Nox extends Actor {
 				
 				DELAY = 0.3f;
 			}
-			ATK = 15;
+			ATK = 25;
 			STATUS = HITING;
 
 			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
@@ -758,7 +758,7 @@ public class Nox extends Actor {
 				
 				DELAY = 0.3f;
 			}
-			ATK = 15;
+			ATK = 25;
 			STATUS = HITING;
 
 			if (Anotherplayer.STATUS != HIT && Anotherplayer.STATUS != Anotherplayer.STOP) {
