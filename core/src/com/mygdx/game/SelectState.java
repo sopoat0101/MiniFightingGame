@@ -1,9 +1,22 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 public class SelectState extends State {
 
-	private int select_P1;
-	private int select_P2;
+	public static int select_P1 = 0;
+	public static int select_P2 = 0;
+	public static final int NOX = 0;
+	public static final int MATO = 1;
+	private Sprite bg, nox1, mato1, nox2, mato2, blank1, blank2, blank3, blank4, frame1, frame2, hero1, hero2;
+	private SpriteBatch batch;
+	private Texture _nox, _mato, locked, noxMain, matoMain;
 
 	public SelectState(GameStateManager gsm) {
 		super(gsm);
@@ -12,13 +25,74 @@ public class SelectState extends State {
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-
+		_nox = new Texture(Gdx.files.internal("../core/assets/gui/select/NoxFrame.png"));
+		_mato = new Texture(Gdx.files.internal("../core/assets/gui/select/MatoFrame.png"));
+		locked = new Texture(Gdx.files.internal("../core/assets/gui/select/dlc.png"));
+		noxMain = new Texture(Gdx.files.internal("../core/assets/Actor/Nox/notmirror/01.png"));
+		matoMain = new Texture(Gdx.files.internal("../core/assets/Actor/Mato/notmirror/01.png"));
+		hero1 = new Sprite(noxMain);
+		hero2 = new Sprite(noxMain);
+		bg = new Sprite(new Texture(Gdx.files.internal("../core/assets/background/MenuBackground.png")));
+		nox1 = new Sprite(_nox);
+		mato1 = new Sprite(_mato);
+		blank1 = new Sprite(locked);
+		blank2 = new Sprite(locked);
+		nox2 = new Sprite(_nox);
+		mato2 = new Sprite(_mato);
+		blank3 = new Sprite(locked);
+		blank4 = new Sprite(locked);
+		frame1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/select/frameP1.png")));
+		frame2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/select/frameP2.png")));
+		
+		nox1.setPosition(25, 100);
+		nox1.setScale(0.5f, 0.5f);
+		mato1.setPosition(25+125, 100);
+		mato1.setScale(0.5f, 0.5f);
+		blank1.setPosition(25+125+125, 100);
+		blank1.setScale(0.5f, 0.5f);
+		blank2.setPosition(25+(125*3), 100);
+		blank2.setScale(0.5f, 0.5f);
+		
+		nox2.setPosition(1050, 100);
+		nox2.setScale(0.5f, 0.5f);
+		nox2.setFlip(true, false);
+		mato2.setPosition(1050-125, 100);
+		mato2.setScale(0.5f, 0.5f);
+		mato2.setFlip(true, false);
+		blank3.setPosition(1050-250, 100);
+		blank3.setScale(0.5f, 0.5f);
+		blank4.setPosition(1050-375, 100);
+		blank4.setScale(0.5f, 0.5f);
+		
+		hero1.setPosition(162.5f, 300);
+		hero2.setPosition(800, 300);
+		hero2.setFlip(true, false);
+		
+		frame1.setPosition(nox1.getX()-5, nox1.getY());
+		frame1.setScale(0.5f);
+		frame2.setPosition(1045, 100);
+		frame2.setScale(0.5f);
 	}
 
 	@Override
 	public void draw() {
-
-		System.out.println("Select");
+		batch = new SpriteBatch();
+		batch.begin();
+		bg.draw(batch);
+		nox1.draw(batch);
+		mato1.draw(batch);
+		blank1.draw(batch);
+		blank2.draw(batch);
+		nox2.draw(batch);
+		mato2.draw(batch);
+		blank3.draw(batch);
+		blank4.draw(batch);
+		frame1.draw(batch);
+		frame2.draw(batch);
+		hero1.draw(batch);
+		hero2.draw(batch);
+		
+		batch.end();
 
 	}
 
@@ -31,6 +105,56 @@ public class SelectState extends State {
 
 	@Override
 	public void handle() {
+		
+		//PLAYER1
+		if (InputManager.keyIspressed(InputManager.KEY_D) && select_P1 == NOX) {
+			frame1.setPosition(mato1.getX()-5, mato1.getY());
+			select_P1 = MATO;
+			hero1.setTexture(matoMain);
+		}
+		
+		else if(InputManager.keyIspressed(InputManager.KEY_A) && select_P1 == NOX) {
+			frame1.setPosition(mato1.getX()-5, mato1.getY());
+			select_P1 = MATO;
+			hero1.setTexture(matoMain);
+		}
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_D) && select_P1 == MATO) {
+			frame1.setPosition(nox1.getX()-5, 100);
+			select_P1 = NOX;
+			hero1.setTexture(noxMain);
+		}
+		
+		else if(InputManager.keyIspressed(InputManager.KEY_A) && select_P1 == MATO) {
+			frame1.setPosition(nox1.getX()-5, 100);
+			select_P1 = NOX;
+			hero1.setTexture(noxMain);
+		}
+		
+		//PLAYER2
+		else if (InputManager.keyIspressed(InputManager.KEY_LEFT) && select_P2 == NOX) {
+			frame2.setPosition(mato2.getX()-5, mato2.getY());
+			select_P2 = MATO;
+			hero2.setTexture(matoMain);
+		}
+		
+		else if(InputManager.keyIspressed(InputManager.KEY_RIGHT) && select_P2 == NOX) {
+			frame2.setPosition(mato2.getX()-5, mato2.getY());
+			select_P2 = MATO;
+			hero2.setTexture(matoMain);
+		}
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_LEFT) && select_P2 == MATO) {
+			frame2.setPosition(nox2.getX()-5, 100);
+			select_P2 = NOX;
+			hero2.setTexture(noxMain);
+		}
+		
+		else if(InputManager.keyIspressed(InputManager.KEY_RIGHT) && select_P2 == MATO) {
+			frame2.setPosition(nox2.getX()-5, 100);
+			select_P2 = NOX;
+			hero2.setTexture(noxMain);
+		}
 
 		if (InputManager.keyIspressed(InputManager.KEY_SPACE)) {
 

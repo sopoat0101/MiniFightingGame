@@ -102,7 +102,8 @@ public class MenuState extends State {
 		
 
 		else if (InputManager.keyIspressed(InputManager.KEY_SPACE) && playSelected == true) {
-
+			
+			bg.setAlpha(0.1f);
 			gsm.setState(GameStateManager.SELECT);
 
 		}
