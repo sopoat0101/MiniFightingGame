@@ -20,7 +20,7 @@ public class InputManager extends InputAdapter {
 	public static final int KEY_DOWN = 10;
 	public static final int KEY_RIGHT = 11;
 	public static final int KEY_O = 12;
-	public static final int KEY_P = 13;
+	public static final int KEY_I = 13;
 
 	private static boolean[] SKEY;
 	private static boolean[] PSKEY;
@@ -91,7 +91,7 @@ public class InputManager extends InputAdapter {
 			SKEY[KEY_O] = true;
 		}
 		if (keycode == Keys.P) {
-			SKEY[KEY_P] = true;
+			SKEY[KEY_I] = true;
 		}
 		return true;
 	}
@@ -139,7 +139,7 @@ public class InputManager extends InputAdapter {
 			SKEY[KEY_O] = false;
 		}
 		if (keycode == Keys.P) {
-			SKEY[KEY_P] = false;
+			SKEY[KEY_I] = false;
 		}
 		return true;
 	}

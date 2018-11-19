@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-public class Nox extends Actor {
+public class Nox extends Actor{
 
 	protected Nox(int bn_front, int bn_back, int bn_jump, int bn_kneel, int bn_punch, int bn_kick, boolean mirror,
 			int player) {
@@ -550,8 +550,6 @@ public class Nox extends Actor {
 
 	@Override
 	protected void guard() {
-
-		STAMINA -= 300 * Gdx.graphics.getDeltaTime();
 		guard.setAlpha(1f);
 
 		if (HITType == TOPGUARD) {
@@ -564,6 +562,8 @@ public class Nox extends Actor {
 
 		if (hitbox[4].hitwith(Anotherplayer.hitbox[0]) && (Anotherplayer.isPunch || Anotherplayer.isKick)) {
 			knockback(400);
+			STAMINA -= 3;
+			STMDELAY = 1f;
 		}
 
 		if (DELAY <= 0) {

@@ -115,7 +115,7 @@ public class PlayingState extends State {
 				InputManager.KEY_V, InputManager.KEY_B, false, 1);
 
 		PLAYER2 = new Nox(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP, InputManager.KEY_DOWN,
-				InputManager.KEY_O, InputManager.KEY_P, true, 2);
+				InputManager.KEY_I, InputManager.KEY_O, true, 2);
 
 		PLAYER1.init();
 		PLAYER2.init();
@@ -377,8 +377,8 @@ public class PlayingState extends State {
 			item.setPosition(camera.position.x - WIDTH / 2, camera.position.y - HEIGHT / 2);
 		}
 		if(STATE != GAMESTART && STATE != WAIT) {
-			PLAYER1.update(dt);
 			PLAYER2.update(dt);
+			PLAYER1.update(dt);
 		}
 
 		camera.update();
