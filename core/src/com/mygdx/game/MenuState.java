@@ -109,7 +109,7 @@ public class MenuState extends State {
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_SPACE) && exitSelected == true) {
 
-			System.exit(1);
+			Gdx.app.exit();
 
 		}
 
