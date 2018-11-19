@@ -22,6 +22,12 @@ public class MenuState extends State {
 		playOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
 		tutorialOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
 		exitOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
+		playTexture1 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1.png")));
+		playTexture12 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
+		tutorialTexture1 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
+		tutorialTexture12 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1-2.png")));
+		exitTexture1 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
+		exitTexture12 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1-2.png")));
 	}
 
 	@Override
@@ -55,43 +61,43 @@ public class MenuState extends State {
 		if (InputManager.keyIspressed(InputManager.KEY_DOWN) && playSelected == true) {
 			tutorialSelected = true;
 			playSelected = false;
-			tutorialOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1-2.png")));
-			playOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1.png")));
+			tutorialOption.setTexture(tutorialTexture12);
+			playOption.setTexture(playTexture1);
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_UP) && playSelected == true) {
 			exitSelected = true;
 			playSelected = false;
-			exitOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1-2.png")));
-			playOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1.png")));
+			exitOption.setTexture(exitTexture12);
+			playOption.setTexture(playTexture1);
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_DOWN) && tutorialSelected == true) {
 			exitSelected = true;
 			tutorialSelected = false;
-			exitOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1-2.png")));
-			tutorialOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
+			exitOption.setTexture(exitTexture12);
+			tutorialOption.setTexture(tutorialTexture1);
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_UP) && tutorialSelected == true) {
 			playSelected = true;
 			tutorialSelected = false;
-			playOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
-			tutorialOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
+			playOption.setTexture(playTexture12);
+			tutorialOption.setTexture(tutorialTexture1);
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_DOWN) && exitSelected == true) {
 			exitSelected = false;
 			playSelected = true;
-			exitOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
-			playOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
+			exitOption.setTexture(exitTexture1);
+			playOption.setTexture(playTexture12);
 		}
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_UP) && exitSelected == true) {
 			exitSelected = false;
 			tutorialSelected = true;
-			exitOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
-			tutorialOption.setTexture(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1-2.png")));
+			exitOption.setTexture(exitTexture1);
+			tutorialOption.setTexture(tutorialTexture12);
 		}
 		
 
@@ -109,7 +115,7 @@ public class MenuState extends State {
 		
 		else if (InputManager.keyIspressed(InputManager.KEY_SPACE) && exitSelected == true) {
 
-			System.exit(1);
+			Gdx.app.exit();
 
 		}
 
