@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-public class Nox extends Actor {
+public class Mato extends Actor {
 
-	protected Nox(int bn_front, int bn_back, int bn_jump, int bn_kneel, int bn_punch, int bn_kick, boolean mirror,
+	protected Mato(int bn_front, int bn_back, int bn_jump, int bn_kneel, int bn_punch, int bn_kick, boolean mirror,
 			int player) {
 		super(bn_front, bn_back, bn_jump, bn_kneel, bn_punch, bn_kick, mirror, player);
 	}
@@ -16,20 +16,20 @@ public class Nox extends Actor {
 	@Override
 	protected void init() {
 
-		pack = new TextureAtlas("../core/assets/Actor/Nox/notmirror/Nox.pack");
+		pack = new TextureAtlas("../core/assets/Actor/Mato/notmirror/Mato.pack");
 		frame = pack.findRegion("00");
 		SActor = new Sprite(frame);
 		SActor.setPosition(PlayingState.WORLD_WIDTH / 5, PlayingState.GROUND);
 
-		mpack = new TextureAtlas("../core/assets/Actor/Nox/mirror/Nox.pack");
+		mpack = new TextureAtlas("../core/assets/Actor/Mato/mirror/Mato.pack");
 		mframe = mpack.findRegion("00");
 		MSActor = new Sprite(mframe);
 		MSActor.setPosition(PlayingState.WORLD_WIDTH - PlayingState.WORLD_WIDTH / 5 - MSActor.getWidth(),
 				PlayingState.GROUND);
 
-		damage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/NoxDam.png")));
-		Mdamage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/MNoxDam.png")));
-		guard = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/NoxGu.png")));
+		damage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Mato/hitbox/NoxDam.png")));
+		Mdamage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Mato/hitbox/MNoxDam.png")));
+		guard = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Mato/hitbox/NoxGu.png")));
 
 		damage.setAlpha(0f);
 		Mdamage.setAlpha(0f);
@@ -52,17 +52,17 @@ public class Nox extends Actor {
 		POY = PlayingState.GROUND;
 
 		hitbox = new Hitbox[10];
-		hitbox[0] = new Hitbox("../core/assets/Actor/Nox/hitbox/outlinebody.png", POX, POY);// Outline Body
-		hitbox[1] = new Hitbox("../core/assets/Actor/Nox/hitbox/hitbody.png", POX, POY);// Hit all Body
-		hitbox[2] = new Hitbox("../core/assets/Actor/Nox/hitbox/topbody.png", POX, POY);// Hit Top Body
-		hitbox[3] = new Hitbox("../core/assets/Actor/Nox/hitbox/downbody.png", POX, POY);// Hit Down BOdy
-		hitbox[4] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// ST punch
-		hitbox[5] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// ST kick
-		hitbox[6] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// C punch
-		hitbox[7] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// C kick
-		hitbox[8] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Punch
-		hitbox[9] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Kick
-
+		hitbox[0] = new Hitbox("../core/assets/Actor/Mato/hitbox/outlinebody.png", POX, POY);// Outline Body
+		hitbox[1] = new Hitbox("../core/assets/Actor/Mato/hitbox/hitbody.png", POX, POY);// Hit all Body
+		hitbox[2] = new Hitbox("../core/assets/Actor/Mato/hitbox/topbody.png", POX, POY);// Hit Top Body
+		hitbox[3] = new Hitbox("../core/assets/Actor/Mato/hitbox/downbody.png", POX, POY);// Hit Down BOdy
+		hitbox[4] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// ST punch
+		hitbox[5] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// ST kick
+		hitbox[6] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// C punch
+		hitbox[7] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// C kick
+		hitbox[8] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// J Punch
+		hitbox[9] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// J Kick
+		
 		SActor.setPosition(POX, POY);
 		MSActor.setPosition(POX, POY);
 
@@ -93,6 +93,8 @@ public class Nox extends Actor {
 			item.setAlpha(0f);
 		}
 
+		hitbox[0].setAlpha(1f);
+		
 	}
 
 	@Override
@@ -197,7 +199,7 @@ public class Nox extends Actor {
 
 			setAnimationTimeLoop(0.1f);
 
-			runframe(30, 32, 1);
+			runframe(0, 0, 1);
 
 			damage.setAlpha(0f);
 			Mdamage.setAlpha(0f);
@@ -292,12 +294,15 @@ public class Nox extends Actor {
 			STAMINA -= 20;
 			STMDELAY = 1.5f;
 			isPunch = true;
+			animationtime = 0.3f;
+			
 			// Kick
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch) && STAMINA >= 20) {
 
 			STAMINA -= 20;
 			STMDELAY = 1.5f;
 			isKick = true;
+			animationtime = 0.3f;
 
 		} else if ((InputManager.keyIsdown(BN_FRONT) && InputManager.keyIspressed(BN_JUMP))
 				|| (InputManager.keyIspressed(BN_FRONT) && InputManager.keyIspressed(BN_JUMP))) {
@@ -311,18 +316,18 @@ public class Nox extends Actor {
 			// Move Front
 		} else if (InputManager.keyIsdown(BN_FRONT) && (!isPunch && !isKick)) {
 
-			setAnimationTimeLoop(0.1f);
+			setAnimationTimeLoop(0.2f);
 
-			runframe(2, 5, 0);
+			runframe(2, 4, 0);
 
 			movement(movespeed, 0);
 
 			// Move Back
 		} else if (InputManager.keyIsdown(BN_BACK) && (!isPunch && !isKick)) {
 
-			setAnimationTimeLoop(0.1f);
+			setAnimationTimeLoop(0.2f);
 
-			runframe(5, 8, 0);
+			runframe(2, 4, 0);
 
 			movement(movespeed, 1);
 
@@ -330,12 +335,12 @@ public class Nox extends Actor {
 
 			if (isPunch || isKick) {
 
-				setAnimationTimeLoop(0.05f);
-
+				setAnimationTimeLoop(0.1f);
+				
 				if (isPunch) {
-					runframe(14, 16, 1);
+					runframe(05, 05, 1);
 				} else if (isKick) {
-					runframe(17, 19, 1);
+					runframe(06, 06, 1);
 				}
 			} else {
 
@@ -356,29 +361,33 @@ public class Nox extends Actor {
 			AIRDELAY = 0;
 		}
 
-		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 30) {
+		if (InputManager.keyIspressed(BN_PUNCH) && canCounter && (!isPunch && !isKick) && STAMINA >= 30 && AIRDELAY > 0) {
 
 			STAMINA -= 30;
 			STMDELAY = 1.5f;
 			isPunch = true;
-			animationtime = 0.5f;
+			animationtime = 0.1f;
 
-		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick) && STAMINA >= 30) {
+		} else if (InputManager.keyIspressed(BN_KICK) && canCounter && (!isPunch && !isKick) && STAMINA >= 30 && AIRDELAY > 0) {
 
 			STAMINA -= 30;
 			STMDELAY = 1.5f;
 			isKick = true;
-			animationtime = 0.5f;
+			animationtime = 0.1f;
 
 		} else {
 			if (isPunch || isKick) {
-				if (isPunch) {
-					runframe(24, 24, 1);
-				} else if (isKick) {
-					runframe(25, 25, 1);
+				
+				setAnimationTimeLoop(0.01f);
+				
+				runframe(11, 13, 1);
+				
+				if(NOWframe == 13) {
+					AIRDELAY = 0;
 				}
+				
 			} else {
-				runframe(12, 13, 1);
+				runframe(10, 10, 1);
 			}
 		}
 
@@ -422,6 +431,7 @@ public class Nox extends Actor {
 			STATUS = STAND;
 			JUMPTYPE = 0;
 			cmdlog = "";
+			canCounter = true;
 		}
 
 	}
@@ -447,15 +457,15 @@ public class Nox extends Actor {
 				setAnimationTimeLoop(0.1f);
 
 				if (isPunch) {
-					runframe(20, 22, 1);
+					runframe(8, 8, 1);
 				} else if (isKick) {
-					runframe(23, 23, 1);
+					runframe(9, 9, 1);
 				}
 			} else {
 
 				setAnimationTimeLoop(0.05f);
 
-				runframe(11, 11, 1);
+				runframe(7, 7, 1);
 			}
 		}
 
@@ -479,8 +489,14 @@ public class Nox extends Actor {
 	@Override
 	protected void hit() {
 
+		if(beforeSTATUS == JUMP) {
+			canCounter = false;
+		}else {
+			canCounter = true;
+		}
+		
 		if (HITType == TOPHIT) {
-			runframe(26, 26, 1);
+			runframe(17, 17, 1);
 
 			damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), hitPOY);
 			Mdamage.setPosition(hitbox[2].getPoX() - 50, hitPOY);
@@ -492,7 +508,7 @@ public class Nox extends Actor {
 			}
 
 		} else if (HITType == DOWNHIT) {
-			runframe(27, 27, 1);
+			runframe(16, 16, 1);
 
 			damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), hitPOY);
 			Mdamage.setPosition(hitbox[2].getPoX() - 50, hitPOY);
@@ -527,10 +543,10 @@ public class Nox extends Actor {
 		guard.setAlpha(1f);
 
 		if (HITType == TOPGUARD) {
-			runframe(28, 28, 1);
+			runframe(14, 14, 1);
 
 		} else if (HITType == DOWNGUARD) {
-			runframe(29, 29, 1);
+			runframe(15, 15, 1);
 
 		}
 
@@ -680,12 +696,14 @@ public class Nox extends Actor {
 			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 20, hitbox[7].getPoY());
 
 			// JUMP PUNCH
-		} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[3]) || (hitbox[8].hitwith(Anotherplayer.hitbox[2])))
-				&& isPunch && NOWframe == 24 && Anotherplayer.STATUS != GUARD) {
+		} else if ((hitbox[5].hitwith(Anotherplayer.hitbox[1]) || (hitbox[8].hitwith(Anotherplayer.hitbox[2])))
+				&& isPunch && NOWframe == 13 && Anotherplayer.STATUS != GUARD) {
 
-			if ((hitbox[8].hitwith(Anotherplayer.hitbox[2]))) {
+			Anotherplayer.AIRDELAY = 0;
+			
+			if ((hitbox[5].hitwith(Anotherplayer.hitbox[1]))) {
 
-				HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 25, hitbox[8].getPoY());
+				HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 25, hitbox[5].getPoY());
 
 			} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[3]))) {
 
@@ -697,6 +715,8 @@ public class Nox extends Actor {
 		} else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]) || (hitbox[9].hitwith(Anotherplayer.hitbox[2])))
 				&& isKick && NOWframe == 25 && Anotherplayer.STATUS != GUARD) {
 
+			Anotherplayer.AIRDELAY = 0;
+			
 			if ((hitbox[9].hitwith(Anotherplayer.hitbox[2]))) {
 
 				HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 25, hitbox[9].getPoY());

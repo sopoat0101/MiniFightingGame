@@ -111,8 +111,12 @@ public class PlayingState extends State {
 
 		camera.position.set(WORLD_WIDTH / 2, HEIGHT / 2, 0);
 
-		PLAYER1 = new Nox(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
+//		PLAYER1 = new Nox(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
+//				InputManager.KEY_V, InputManager.KEY_B, false, 1);
+		
+		PLAYER1 = new Mato(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
 				InputManager.KEY_V, InputManager.KEY_B, false, 1);
+		
 
 		PLAYER2 = new Nox(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP, InputManager.KEY_DOWN,
 				InputManager.KEY_I, InputManager.KEY_O, true, 2);
@@ -446,7 +450,7 @@ public class PlayingState extends State {
 		numberFront.setPosition(camera.position.x - 50, camera.position.y + HEIGHT / 2 - 100);
 		numberBack.setPosition(camera.position.x, camera.position.y + HEIGHT / 2 - 100);
 
-		if (STATE != PAUSE && STATE != GAMESTART) {
+		if (STATE != PAUSE && STATE != GAMESTART && STATE != WAIT) {
 			countDOWN += dt;
 			if (countDOWN >= 1) {
 				countDOWN = 0;
