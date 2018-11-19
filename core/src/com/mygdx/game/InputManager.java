@@ -90,7 +90,7 @@ public class InputManager extends InputAdapter {
 		if (keycode == Keys.O) {
 			SKEY[KEY_O] = true;
 		}
-		if (keycode == Keys.P) {
+		if (keycode == Keys.I) {
 			SKEY[KEY_I] = true;
 		}
 		return true;
@@ -138,7 +138,7 @@ public class InputManager extends InputAdapter {
 		if (keycode == Keys.O) {
 			SKEY[KEY_O] = false;
 		}
-		if (keycode == Keys.P) {
+		if (keycode == Keys.I) {
 			SKEY[KEY_I] = false;
 		}
 		return true;
