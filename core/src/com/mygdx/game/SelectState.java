@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,6 +18,8 @@ public class SelectState extends State {
 	private Sprite bg, nox1, mato1, nox2, mato2, blank1, blank2, blank3, blank4, frame1, frame2, hero1, hero2;
 	private SpriteBatch batch;
 	private Texture _nox, _mato, locked, noxMain, matoMain;
+	private boolean P1_onready = false, P2_onready = false;
+	private Color P1, P2;
 
 	public SelectState(GameStateManager gsm) {
 		super(gsm);
@@ -43,6 +46,8 @@ public class SelectState extends State {
 		blank4 = new Sprite(locked);
 		frame1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/select/frameP1.png")));
 		frame2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/select/frameP2.png")));
+		P1 = new Color(hero1.getColor());
+		P2 = new Color(hero2.getColor());
 		
 		nox1.setPosition(25, 100);
 		nox1.setScale(0.5f, 0.5f);
@@ -107,56 +112,80 @@ public class SelectState extends State {
 	public void handle() {
 		
 		//PLAYER1
-		if (InputManager.keyIspressed(InputManager.KEY_D) && select_P1 == NOX) {
+		if (InputManager.keyIspressed(InputManager.KEY_D) && select_P1 == NOX && P1_onready == false) {
 			frame1.setPosition(mato1.getX()-5, mato1.getY());
 			select_P1 = MATO;
 			hero1.setTexture(matoMain);
 		}
 		
-		else if(InputManager.keyIspressed(InputManager.KEY_A) && select_P1 == NOX) {
+		else if(InputManager.keyIspressed(InputManager.KEY_A) && select_P1 == NOX && P1_onready == false) {
 			frame1.setPosition(mato1.getX()-5, mato1.getY());
 			select_P1 = MATO;
 			hero1.setTexture(matoMain);
 		}
 		
-		else if (InputManager.keyIspressed(InputManager.KEY_D) && select_P1 == MATO) {
+		else if (InputManager.keyIspressed(InputManager.KEY_D) && select_P1 == MATO && P1_onready == false) {
 			frame1.setPosition(nox1.getX()-5, 100);
 			select_P1 = NOX;
 			hero1.setTexture(noxMain);
 		}
 		
-		else if(InputManager.keyIspressed(InputManager.KEY_A) && select_P1 == MATO) {
+		else if(InputManager.keyIspressed(InputManager.KEY_A) && select_P1 == MATO && P1_onready == false) {
 			frame1.setPosition(nox1.getX()-5, 100);
 			select_P1 = NOX;
 			hero1.setTexture(noxMain);
 		}
 		
 		//PLAYER2
-		else if (InputManager.keyIspressed(InputManager.KEY_LEFT) && select_P2 == NOX) {
+		else if (InputManager.keyIspressed(InputManager.KEY_LEFT) && select_P2 == NOX && P2_onready == false) {
 			frame2.setPosition(mato2.getX()-5, mato2.getY());
 			select_P2 = MATO;
 			hero2.setTexture(matoMain);
 		}
 		
-		else if(InputManager.keyIspressed(InputManager.KEY_RIGHT) && select_P2 == NOX) {
+		else if(InputManager.keyIspressed(InputManager.KEY_RIGHT) && select_P2 == NOX && P2_onready == false) {
 			frame2.setPosition(mato2.getX()-5, mato2.getY());
 			select_P2 = MATO;
 			hero2.setTexture(matoMain);
 		}
 		
-		else if (InputManager.keyIspressed(InputManager.KEY_LEFT) && select_P2 == MATO) {
+		else if (InputManager.keyIspressed(InputManager.KEY_LEFT) && select_P2 == MATO && P2_onready == false) {
 			frame2.setPosition(nox2.getX()-5, 100);
 			select_P2 = NOX;
 			hero2.setTexture(noxMain);
 		}
 		
-		else if(InputManager.keyIspressed(InputManager.KEY_RIGHT) && select_P2 == MATO) {
+		else if(InputManager.keyIspressed(InputManager.KEY_RIGHT) && select_P2 == MATO && P2_onready == false) {
 			frame2.setPosition(nox2.getX()-5, 100);
 			select_P2 = NOX;
 			hero2.setTexture(noxMain);
 		}
+		
+		else if((InputManager.keyIspressed(InputManager.KEY_V)) && P1_onready == false) {
+			P1_onready = true;
+			P1 = hero1.getColor();
+			hero1.setColor(Color.BLACK);
+		}
+		
+		else if((InputManager.keyIspressed(InputManager.KEY_I)) && P2_onready == false) {
+			P2_onready = true;
+			P2 = hero2.getColor();
+			hero2.setColor(Color.BLACK);
+		}
+		
+		else if((InputManager.keyIspressed(InputManager.KEY_B)) && P1_onready == true) {
+			P1_onready = false;
+			hero1.setColor(P1);
+		}
+		
+		else if((InputManager.keyIspressed(InputManager.KEY_O)) && P2_onready == true) {
+			P2_onready = false;
+			hero2.setColor(P2);
+		}
+		
+		
 
-		if (InputManager.keyIspressed(InputManager.KEY_SPACE)) {
+		else if (InputManager.keyIspressed(InputManager.KEY_SPACE) && P1_onready == true && P2_onready == true) {
 
 			
 			gsm.setState(GameStateManager.PLAYING);
