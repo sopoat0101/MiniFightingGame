@@ -75,7 +75,7 @@ public class Mato extends Actor {
 
 		for (Hitbox item : hitbox) {
 			item.draw(batch);
-			item.setAlpha(0f);
+			item.setAlpha(1f);
 		}
 
 		hitbox[8].setAlpha(1f);
@@ -370,9 +370,6 @@ public class Mato extends Actor {
 					runframe(12, 14, 1);
 				}
 
-				if (NOWframe == 13) {
-					AIRDELAY = 0;
-				}
 
 			} else {
 				runframe(10, 11, 1);
@@ -676,6 +673,8 @@ public class Mato extends Actor {
 		} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[1]) || (hitbox[8].hitwith(Anotherplayer.hitbox[2])))
 				&& isPunch && NOWframe == 14 && Anotherplayer.STATUS != GUARD) {
 
+			AIRDELAY = 0;
+			
 			Anotherplayer.AIRDELAY = 0;
 
 			if ((hitbox[8].hitwith(Anotherplayer.hitbox[1]))) {

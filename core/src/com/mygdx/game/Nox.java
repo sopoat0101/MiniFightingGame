@@ -21,12 +21,6 @@ public class Nox extends Actor {
 		SActor = new Sprite(frame);
 		SActor.setPosition(PlayingState.WORLD_WIDTH / 5, PlayingState.GROUND);
 
-		mpack = new TextureAtlas("../core/assets/Actor/Nox/mirror/Nox.pack");
-		mframe = mpack.findRegion("00");
-		MSActor = new Sprite(mframe);
-		MSActor.setPosition(PlayingState.WORLD_WIDTH - PlayingState.WORLD_WIDTH / 5 - MSActor.getWidth(),
-				PlayingState.GROUND);
-
 		damage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/NoxDam.png")));
 		Mdamage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/MNoxDam.png")));
 		guard = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/NoxGu.png")));
@@ -35,17 +29,15 @@ public class Nox extends Actor {
 		Mdamage.setAlpha(0f);
 		guard.setAlpha(0f);
 
+		SActor.setFlip(mirror, false);
+		
 		if (mirror == false) {
-			SActor.setAlpha(1f);
-			MSActor.setAlpha(0f);
 
-			POX = PlayingState.WORLD_WIDTH / 4;
+			POX = PlayingState.WORLD_WIDTH/2 - PlayingState.WIDTH/2 - 100;
 
 		} else if (mirror) {
-			MSActor.setAlpha(1f);
-			SActor.setAlpha(0f);
 
-			POX = PlayingState.WORLD_WIDTH - PlayingState.WORLD_WIDTH / 4 - MSActor.getWidth();
+			POX = PlayingState.WORLD_WIDTH/2 + PlayingState.WIDTH/2 - 400;
 
 		}
 
@@ -64,25 +56,14 @@ public class Nox extends Actor {
 		hitbox[9] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Kick
 
 		SActor.setPosition(POX, POY);
-		MSActor.setPosition(POX, POY);
 
 	}
 
 	@Override
 	protected void draw(SpriteBatch batch) {
 
-		if (mirror == false) {
-			SActor.setAlpha(1f);
-			MSActor.setAlpha(0f);
-
-		} else if (mirror) {
-			MSActor.setAlpha(1f);
-			SActor.setAlpha(0f);
-
-		}
-
+		SActor.setFlip(mirror, false);
 		SActor.draw(batch);
-		MSActor.draw(batch);
 		guard.draw(batch);
 
 		damage.draw(batch);
@@ -93,6 +74,8 @@ public class Nox extends Actor {
 			item.setAlpha(0f);
 		}
 
+		hitbox[7].setAlpha(1f);
+		
 	}
 
 	@Override
@@ -100,9 +83,8 @@ public class Nox extends Actor {
 		if (STATUS != KNOCKOUT && STATUS != STOP) {
 			handle();
 		}
-
+		
 		SActor.setPosition(POX, POY);
-		MSActor.setPosition(POX, POY);
 		// set Hit box Position
 
 		damage.setAlpha(0f);
@@ -110,10 +92,10 @@ public class Nox extends Actor {
 
 		if (!mirror) {
 
-			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
-			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
-			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 20, POY + hitbox[2].getHeight());
-			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
+			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 35, POY);
+			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 60, POY);
+			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 60, POY + hitbox[2].getHeight());
+			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + 60, POY);
 			hitbox[4].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() + 20);
 			hitbox[5].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() - 60);
 			hitbox[6].setPosition(POX + SActor.getWidth() / 2 + 40, POY + hitbox[2].getHeight() - 60);
@@ -125,15 +107,15 @@ public class Nox extends Actor {
 
 		} else if (mirror) {
 
-			hitbox[0].setPosition(POX + SActor.getWidth() / 4 - 20, POY);
-			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 50, POY);
-			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 50, POY + hitbox[2].getHeight());
-			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + 50, POY);
-			hitbox[4].setPosition(POX + SActor.getWidth() / 4 + 50 - hitbox[4].getWidth(),
+			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 35, POY);
+			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY);
+			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY + hitbox[2].getHeight());
+			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY);
+			hitbox[4].setPosition(POX + SActor.getWidth() / 4 + 100 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() + 20);
-			hitbox[5].setPosition(POX + SActor.getWidth() / 4 + 50 - hitbox[4].getWidth(),
+			hitbox[5].setPosition(POX + SActor.getWidth() / 4 + 100 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() - 60);
-			hitbox[6].setPosition(POX + SActor.getWidth() / 4 + 40 - hitbox[4].getWidth(),
+			hitbox[6].setPosition(POX + SActor.getWidth() / 4 + 90 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() - 60);
 			hitbox[7].setPosition(POX + SActor.getWidth() / 4 + 40 - hitbox[4].getWidth(), POY);
 			hitbox[8].setPosition(POX + SActor.getWidth() / 4 + 60 - hitbox[4].getWidth(),
@@ -588,23 +570,9 @@ public class Nox extends Actor {
 
 	@Override
 	protected void knockback(float movespeed) {
-		if (mirror) {
-			if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH && POX + SActor.getWidth()
-					- SActor.getWidth() / 4 < PlayingState.camera.position.x + PlayingState.WIDTH / 2) {
-				POX += movespeed * Gdx.graphics.getDeltaTime();
-			} else {
-				Anotherplayer.POX -= (movespeed + 400) * Gdx.graphics.getDeltaTime();
-			}
-		} else if (!mirror) {
-			if (POX + SActor.getWidth() / 4 > 0
-					&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
-				POX -= movespeed * Gdx.graphics.getDeltaTime();
-			} else {
-				Anotherplayer.POX += (movespeed + 400) * Gdx.graphics.getDeltaTime();
-			}
-		} else {
-			POX += 0;
-		}
+		
+		movement(movespeed, 1);
+		
 	}
 
 	@Override
@@ -730,14 +698,9 @@ public class Nox extends Actor {
 			isPunch = false;
 			isKick = false;
 		}
-		if (mirror) {
-			mframe = mpack.findRegion(String.format("%02d", NOWframe));
-			MSActor.setRegion(mframe);
-		}
-		if (!mirror) {
+
 			frame = pack.findRegion(String.format("%02d", NOWframe));
 			SActor.setRegion(frame);
-		}
 
 	}
 
