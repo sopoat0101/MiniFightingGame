@@ -118,7 +118,7 @@ public class PlayingState extends State {
 				InputManager.KEY_V, InputManager.KEY_B, false, 1);
 		
 
-		PLAYER2 = new Nox(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP, InputManager.KEY_DOWN,
+		PLAYER2 = new Mato(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP, InputManager.KEY_DOWN,
 				InputManager.KEY_I, InputManager.KEY_O, true, 2);
 
 		PLAYER1.init();
@@ -243,7 +243,7 @@ public class PlayingState extends State {
 		if (!PLAYER1.mirror) {
 			cpox = PLAYER1.POX + PLAYER1.SActor.getWidth() / 2 + centerPX / 2;
 		} else if (PLAYER1.mirror) {
-			cpox = PLAYER2.POX + PLAYER2.MSActor.getWidth() / 2 + centerPX / 2;
+			cpox = PLAYER2.POX + PLAYER2.SActor.getWidth() / 2 + centerPX / 2;
 		}
 
 		cpoy = centerPY / 2 + HEIGHT / 2;

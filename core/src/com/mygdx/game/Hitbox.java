@@ -28,6 +28,10 @@ public class Hitbox {
 		sp.draw(batch);
 	}
 	
+	public void flib(boolean x, boolean y) {
+		sp.flip(x, y);
+	}
+	
 	public void dispose() {
 		tex.dispose();
 	}

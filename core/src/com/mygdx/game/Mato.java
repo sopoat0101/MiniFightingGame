@@ -19,13 +19,7 @@ public class Mato extends Actor {
 		pack = new TextureAtlas("../core/assets/Actor/Mato/notmirror/Mato.pack");
 		frame = pack.findRegion("00");
 		SActor = new Sprite(frame);
-		SActor.setPosition(PlayingState.WORLD_WIDTH / 5, PlayingState.GROUND);
-
-		mpack = new TextureAtlas("../core/assets/Actor/Mato/mirror/Mato.pack");
-		mframe = mpack.findRegion("00");
-		MSActor = new Sprite(mframe);
-		MSActor.setPosition(PlayingState.WORLD_WIDTH - PlayingState.WORLD_WIDTH / 5 - MSActor.getWidth(),
-				PlayingState.GROUND);
+		
 
 		damage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Mato/hitbox/NoxDam.png")));
 		Mdamage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Mato/hitbox/MNoxDam.png")));
@@ -36,16 +30,12 @@ public class Mato extends Actor {
 		guard.setAlpha(0f);
 
 		if (mirror == false) {
-			SActor.setAlpha(1f);
-			MSActor.setAlpha(0f);
 
-			POX = PlayingState.WORLD_WIDTH / 4;
+			POX = PlayingState.WORLD_WIDTH/2 - PlayingState.WIDTH/2 - 100;
 
 		} else if (mirror) {
-			MSActor.setAlpha(1f);
-			SActor.setAlpha(0f);
 
-			POX = PlayingState.WORLD_WIDTH - PlayingState.WORLD_WIDTH / 4 - MSActor.getWidth();
+			POX = PlayingState.WORLD_WIDTH/2 + PlayingState.WIDTH/2 - 400;
 
 		}
 
@@ -62,27 +52,22 @@ public class Mato extends Actor {
 		hitbox[7] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// C kick
 		hitbox[8] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// J Punch
 		hitbox[9] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// J Kick
+
+		hitbox[4].setSize(150, 60);
+		hitbox[5].setSize(190, 60);
+		hitbox[8].setSize(170, 60);
 		
 		SActor.setPosition(POX, POY);
-		MSActor.setPosition(POX, POY);
-
+		
 	}
 
 	@Override
 	protected void draw(SpriteBatch batch) {
-
-		if (mirror == false) {
-			SActor.setAlpha(1f);
-			MSActor.setAlpha(0f);
-
-		} else if (mirror) {
-			MSActor.setAlpha(1f);
-			SActor.setAlpha(0f);
-
-		}
+		
+		SActor.setAlpha(1f);
+		SActor.setFlip(mirror, false);
 
 		SActor.draw(batch);
-		MSActor.draw(batch);
 		guard.draw(batch);
 
 		damage.draw(batch);
@@ -93,8 +78,8 @@ public class Mato extends Actor {
 			item.setAlpha(0f);
 		}
 
-		hitbox[0].setAlpha(1f);
-		
+		hitbox[8].setAlpha(1f);
+
 	}
 
 	@Override
@@ -104,7 +89,7 @@ public class Mato extends Actor {
 		}
 
 		SActor.setPosition(POX, POY);
-		MSActor.setPosition(POX, POY);
+
 		// set Hit box Position
 
 		damage.setAlpha(0f);
@@ -112,34 +97,34 @@ public class Mato extends Actor {
 
 		if (!mirror) {
 
-			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
-			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
-			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 20, POY + hitbox[2].getHeight());
-			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + 20, POY);
-			hitbox[4].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() + 20);
-			hitbox[5].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() - 60);
+			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 35, POY);
+			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 60, POY);
+			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 60, POY + hitbox[2].getHeight());
+			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + 60, POY);
+			hitbox[4].setPosition(POX + SActor.getWidth() / 2 + 30, POY + hitbox[2].getHeight() + 20);
+			hitbox[5].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() - 100);
 			hitbox[6].setPosition(POX + SActor.getWidth() / 2 + 40, POY + hitbox[2].getHeight() - 60);
 			hitbox[7].setPosition(POX + SActor.getWidth() / 2 + 40, POY);
-			hitbox[8].setPosition(POX + SActor.getWidth() / 2 + 10, POY + hitbox[2].getHeight() - 60);
+			hitbox[8].setPosition(POX + SActor.getWidth() / 2 + 30, POY + hitbox[2].getHeight());
 			hitbox[9].setPosition(POX + SActor.getWidth() / 2 - 20, POY);
 
 			guard.setPosition(hitbox[0].getPoX() + hitbox[0].getWidth(), POY);
 
 		} else if (mirror) {
 
-			hitbox[0].setPosition(POX + SActor.getWidth() / 4 - 20, POY);
-			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 50, POY);
-			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 50, POY + hitbox[2].getHeight());
-			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + 50, POY);
-			hitbox[4].setPosition(POX + SActor.getWidth() / 4 + 50 - hitbox[4].getWidth(),
+			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 35, POY);
+			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY);
+			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY + hitbox[2].getHeight());
+			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY);
+			hitbox[4].setPosition(POX + SActor.getWidth() / 4 + 90 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() + 20);
-			hitbox[5].setPosition(POX + SActor.getWidth() / 4 + 50 - hitbox[4].getWidth(),
+			hitbox[5].setPosition(POX + SActor.getWidth() / 4 + 70 - hitbox[4].getWidth(),
+					POY + hitbox[2].getHeight() - 100);
+			hitbox[6].setPosition(POX + SActor.getWidth() / 4 + 140 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() - 60);
-			hitbox[6].setPosition(POX + SActor.getWidth() / 4 + 40 - hitbox[4].getWidth(),
-					POY + hitbox[2].getHeight() - 60);
-			hitbox[7].setPosition(POX + SActor.getWidth() / 4 + 40 - hitbox[4].getWidth(), POY);
-			hitbox[8].setPosition(POX + SActor.getWidth() / 4 + 60 - hitbox[4].getWidth(),
-					POY + hitbox[2].getHeight() - 60);
+			hitbox[7].setPosition(POX + SActor.getWidth() / 4 + 140 - hitbox[4].getWidth(), POY);
+			hitbox[8].setPosition(POX + SActor.getWidth() / 4 + 80 - hitbox[4].getWidth(),
+					POY + hitbox[2].getHeight());
 			hitbox[9].setPosition(POX + SActor.getWidth() / 4 + 90 - hitbox[4].getWidth(), POY);
 
 			guard.setPosition(hitbox[0].getPoX() - 5, POY);
@@ -295,7 +280,7 @@ public class Mato extends Actor {
 			STMDELAY = 1.5f;
 			isPunch = true;
 			animationtime = 0.3f;
-			
+
 			// Kick
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch) && STAMINA >= 20) {
 
@@ -336,7 +321,7 @@ public class Mato extends Actor {
 			if (isPunch || isKick) {
 
 				setAnimationTimeLoop(0.1f);
-				
+
 				if (isPunch) {
 					runframe(05, 05, 1);
 				} else if (isKick) {
@@ -361,14 +346,16 @@ public class Mato extends Actor {
 			AIRDELAY = 0;
 		}
 
-		if (InputManager.keyIspressed(BN_PUNCH) && canCounter && (!isPunch && !isKick) && STAMINA >= 30 && AIRDELAY > 0) {
+		if (InputManager.keyIspressed(BN_PUNCH) && canCounter && (!isPunch && !isKick) && STAMINA >= 30
+				&& AIRDELAY > 0) {
 
 			STAMINA -= 30;
 			STMDELAY = 1.5f;
 			isPunch = true;
 			animationtime = 0.1f;
 
-		} else if (InputManager.keyIspressed(BN_KICK) && canCounter && (!isPunch && !isKick) && STAMINA >= 30 && AIRDELAY > 0) {
+		} else if (InputManager.keyIspressed(BN_KICK) && canCounter && (!isPunch && !isKick) && STAMINA >= 30
+				&& AIRDELAY > 0) {
 
 			STAMINA -= 30;
 			STMDELAY = 1.5f;
@@ -377,17 +364,18 @@ public class Mato extends Actor {
 
 		} else {
 			if (isPunch || isKick) {
-				
-				setAnimationTimeLoop(0.01f);
-				
-				runframe(11, 13, 1);
-				
-				if(NOWframe == 13) {
+
+				setAnimationTimeLoop(0.1f);
+				if(isPunch) {
+					runframe(12, 14, 1);
+				}
+
+				if (NOWframe == 13) {
 					AIRDELAY = 0;
 				}
-				
+
 			} else {
-				runframe(10, 10, 1);
+				runframe(10, 11, 1);
 			}
 		}
 
@@ -454,7 +442,7 @@ public class Mato extends Actor {
 		} else {
 			if (isPunch || isKick) {
 
-				setAnimationTimeLoop(0.1f);
+				setAnimationTimeLoop(0.3f);
 
 				if (isPunch) {
 					runframe(8, 8, 1);
@@ -489,14 +477,14 @@ public class Mato extends Actor {
 	@Override
 	protected void hit() {
 
-		if(beforeSTATUS == JUMP) {
+		if (beforeSTATUS == JUMP) {
 			canCounter = false;
-		}else {
+		} else {
 			canCounter = true;
 		}
-		
+
 		if (HITType == TOPHIT) {
-			runframe(17, 17, 1);
+			runframe(18, 18, 1);
 
 			damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), hitPOY);
 			Mdamage.setPosition(hitbox[2].getPoX() - 50, hitPOY);
@@ -508,7 +496,7 @@ public class Mato extends Actor {
 			}
 
 		} else if (HITType == DOWNHIT) {
-			runframe(16, 16, 1);
+			runframe(17, 17, 1);
 
 			damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), hitPOY);
 			Mdamage.setPosition(hitbox[2].getPoX() - 50, hitPOY);
@@ -543,10 +531,10 @@ public class Mato extends Actor {
 		guard.setAlpha(1f);
 
 		if (HITType == TOPGUARD) {
-			runframe(14, 14, 1);
+			runframe(15, 15, 1);
 
 		} else if (HITType == DOWNGUARD) {
-			runframe(15, 15, 1);
+			runframe(16, 16, 1);
 
 		}
 
@@ -570,7 +558,7 @@ public class Mato extends Actor {
 
 	@Override
 	protected void movement(float movespeed, int type) {
-		
+
 		if (type == 0) {
 			// moveFront
 			if (mirror) {
@@ -628,20 +616,9 @@ public class Mato extends Actor {
 		// Update hit box Status
 
 		if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == STAND) {
-			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
-						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
-								+ PlayingState.WIDTH / 2) {
-					POX += (movespeed) * Gdx.graphics.getDeltaTime();
-				}
-			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 4 > 0
-						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
-					POX -= (movespeed) * Gdx.graphics.getDeltaTime();
-				}
-			} else {
-				POX += 0;
-			}
+			
+			movement(movespeed, 1);
+			
 		} else if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == JUMP && Anotherplayer.STATUS == JUMP) {
 			if (mirror) {
 				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
@@ -672,38 +649,38 @@ public class Mato extends Actor {
 			DELAY = 0.3f;
 		}
 		// STAND PUNCH
-		else if (hitbox[4].hitwith(Anotherplayer.hitbox[2]) && isPunch && NOWframe == 16
+		else if (hitbox[4].hitwith(Anotherplayer.hitbox[2]) && isPunch && NOWframe == 5
 				&& Anotherplayer.STATUS != KNEEL && Anotherplayer.STATUS != GUARD) {
 
 			HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 30, hitbox[4].getPoY());
 
 			// STAND KICK
-		} else if (hitbox[5].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 19
+		} else if (hitbox[5].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 6
 				&& Anotherplayer.STATUS != GUARD) {
 
 			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 30, hitbox[5].getPoY());
 
 			// KNEEL PUNCH
-		} else if (hitbox[6].hitwith(Anotherplayer.hitbox[3]) && isPunch && NOWframe == 22
+		} else if (hitbox[6].hitwith(Anotherplayer.hitbox[3]) && isPunch && NOWframe == 8
 				&& Anotherplayer.STATUS != GUARD) {
 
 			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 20, hitbox[6].getPoY());
 
 			// KNEEL KICK
-		} else if (hitbox[7].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 23
+		} else if (hitbox[7].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 9
 				&& Anotherplayer.STATUS != GUARD) {
 
 			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 20, hitbox[7].getPoY());
 
 			// JUMP PUNCH
-		} else if ((hitbox[5].hitwith(Anotherplayer.hitbox[1]) || (hitbox[8].hitwith(Anotherplayer.hitbox[2])))
-				&& isPunch && NOWframe == 13 && Anotherplayer.STATUS != GUARD) {
+		} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[1]) || (hitbox[8].hitwith(Anotherplayer.hitbox[2])))
+				&& isPunch && NOWframe == 14 && Anotherplayer.STATUS != GUARD) {
 
 			Anotherplayer.AIRDELAY = 0;
-			
-			if ((hitbox[5].hitwith(Anotherplayer.hitbox[1]))) {
 
-				HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 25, hitbox[5].getPoY());
+			if ((hitbox[8].hitwith(Anotherplayer.hitbox[1]))) {
+
+				HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 25, hitbox[8].getPoY());
 
 			} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[3]))) {
 
@@ -712,22 +689,22 @@ public class Mato extends Actor {
 			}
 
 			// JUMP KICK
-		} else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]) || (hitbox[9].hitwith(Anotherplayer.hitbox[2])))
-				&& isKick && NOWframe == 25 && Anotherplayer.STATUS != GUARD) {
-
-			Anotherplayer.AIRDELAY = 0;
-			
-			if ((hitbox[9].hitwith(Anotherplayer.hitbox[2]))) {
-
-				HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 25, hitbox[9].getPoY());
-
-			} else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]))) {
-
-				HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 25, hitbox[9].getPoY());
-
-			}
-
-		}
+		} //else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]) || (hitbox[9].hitwith(Anotherplayer.hitbox[2])))
+//				&& isKick && NOWframe == 25 && Anotherplayer.STATUS != GUARD) {
+//
+//			Anotherplayer.AIRDELAY = 0;
+//
+//			if ((hitbox[9].hitwith(Anotherplayer.hitbox[2]))) {
+//
+//				HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 25, hitbox[9].getPoY());
+//
+//			} else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]))) {
+//
+//				HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 25, hitbox[9].getPoY());
+//
+//			}
+//
+//		}
 
 	}
 
@@ -750,14 +727,9 @@ public class Mato extends Actor {
 			isPunch = false;
 			isKick = false;
 		}
-		if (mirror) {
-			mframe = mpack.findRegion(String.format("%02d", NOWframe));
-			MSActor.setRegion(mframe);
-		}
-		if (!mirror) {
-			frame = pack.findRegion(String.format("%02d", NOWframe));
-			SActor.setRegion(frame);
-		}
+
+		frame = pack.findRegion(String.format("%02d", NOWframe));
+		SActor.setRegion(frame);
 
 	}
 
