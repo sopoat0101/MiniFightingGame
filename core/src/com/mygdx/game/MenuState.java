@@ -58,42 +58,42 @@ public class MenuState extends State {
 	public void handle() {
 		
 		//SELECT MENU ALGORITHMS
-		if (InputManager.keyIspressed(InputManager.KEY_DOWN) && playSelected == true) {
+		if ((InputManager.keyIspressed(InputManager.KEY_DOWN) || InputManager.keyIspressed(InputManager.KEY_S)) && playSelected == true) {
 			tutorialSelected = true;
 			playSelected = false;
 			tutorialOption.setTexture(tutorialTexture12);
 			playOption.setTexture(playTexture1);
 		}
 		
-		else if (InputManager.keyIspressed(InputManager.KEY_UP) && playSelected == true) {
+		else if ((InputManager.keyIspressed(InputManager.KEY_UP) || InputManager.keyIspressed(InputManager.KEY_W)) && playSelected == true) {
 			exitSelected = true;
 			playSelected = false;
 			exitOption.setTexture(exitTexture12);
 			playOption.setTexture(playTexture1);
 		}
 		
-		else if (InputManager.keyIspressed(InputManager.KEY_DOWN) && tutorialSelected == true) {
+		else if ((InputManager.keyIspressed(InputManager.KEY_DOWN) || InputManager.keyIspressed(InputManager.KEY_S)) && tutorialSelected == true) {
 			exitSelected = true;
 			tutorialSelected = false;
 			exitOption.setTexture(exitTexture12);
 			tutorialOption.setTexture(tutorialTexture1);
 		}
 		
-		else if (InputManager.keyIspressed(InputManager.KEY_UP) && tutorialSelected == true) {
+		else if ((InputManager.keyIspressed(InputManager.KEY_UP) || InputManager.keyIspressed(InputManager.KEY_W)) && tutorialSelected == true) {
 			playSelected = true;
 			tutorialSelected = false;
 			playOption.setTexture(playTexture12);
 			tutorialOption.setTexture(tutorialTexture1);
 		}
 		
-		else if (InputManager.keyIspressed(InputManager.KEY_DOWN) && exitSelected == true) {
+		else if ((InputManager.keyIspressed(InputManager.KEY_DOWN) || InputManager.keyIspressed(InputManager.KEY_S)) && exitSelected == true) {
 			exitSelected = false;
 			playSelected = true;
 			exitOption.setTexture(exitTexture1);
 			playOption.setTexture(playTexture12);
 		}
 		
-		else if (InputManager.keyIspressed(InputManager.KEY_UP) && exitSelected == true) {
+		else if ((InputManager.keyIspressed(InputManager.KEY_UP) || InputManager.keyIspressed(InputManager.KEY_W)) && exitSelected == true) {
 			exitSelected = false;
 			tutorialSelected = true;
 			exitOption.setTexture(exitTexture1);
