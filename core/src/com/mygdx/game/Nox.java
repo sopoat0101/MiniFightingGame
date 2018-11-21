@@ -71,10 +71,10 @@ public class Nox extends Actor {
 
 		for (Hitbox item : hitbox) {
 			item.draw(batch);
-			item.setAlpha(0f);
+			item.setAlpha(1f);
 		}
 
-		hitbox[7].setAlpha(1f);
+		//hitbox[9].setAlpha(1f);
 		
 	}
 
@@ -92,14 +92,14 @@ public class Nox extends Actor {
 
 		if (!mirror) {
 
-			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 35, POY);
+			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 60, POY);
 			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + 60, POY);
 			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + 60, POY + hitbox[2].getHeight());
 			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + 60, POY);
 			hitbox[4].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() + 20);
 			hitbox[5].setPosition(POX + SActor.getWidth() / 2 + 20, POY + hitbox[2].getHeight() - 60);
 			hitbox[6].setPosition(POX + SActor.getWidth() / 2 + 40, POY + hitbox[2].getHeight() - 60);
-			hitbox[7].setPosition(POX + SActor.getWidth() / 2 + 40, POY);
+			hitbox[7].setPosition(POX + SActor.getWidth() / 2 + 20, POY);
 			hitbox[8].setPosition(POX + SActor.getWidth() / 2 + 10, POY + hitbox[2].getHeight() - 60);
 			hitbox[9].setPosition(POX + SActor.getWidth() / 2 - 20, POY);
 
@@ -107,7 +107,7 @@ public class Nox extends Actor {
 
 		} else if (mirror) {
 
-			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 35, POY);
+			hitbox[0].setPosition(POX + SActor.getWidth() / 4 + 45, POY);
 			hitbox[1].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY);
 			hitbox[2].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY + hitbox[2].getHeight());
 			hitbox[3].setPosition(POX + SActor.getWidth() / 4 + hitbox[1].getWidth() + 40, POY);
@@ -117,10 +117,10 @@ public class Nox extends Actor {
 					POY + hitbox[2].getHeight() - 60);
 			hitbox[6].setPosition(POX + SActor.getWidth() / 4 + 90 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() - 60);
-			hitbox[7].setPosition(POX + SActor.getWidth() / 4 + 40 - hitbox[4].getWidth(), POY);
-			hitbox[8].setPosition(POX + SActor.getWidth() / 4 + 60 - hitbox[4].getWidth(),
+			hitbox[7].setPosition(POX + SActor.getWidth() / 4 + 110 - hitbox[4].getWidth(), POY);
+			hitbox[8].setPosition(POX + SActor.getWidth() / 4 + 115 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() - 60);
-			hitbox[9].setPosition(POX + SActor.getWidth() / 4 + 90 - hitbox[4].getWidth(), POY);
+			hitbox[9].setPosition(POX + SActor.getWidth() / 4 + 135 - hitbox[4].getWidth(), POY);
 
 			guard.setPosition(hitbox[0].getPoX() - 5, POY);
 		}
@@ -371,31 +371,14 @@ public class Nox extends Actor {
 			POY -= 850 * Gdx.graphics.getDeltaTime();
 		}
 		if (JUMPTYPE == 1) {
-			if (mirror) {
-				if (POX > 0) {
-					POX -= 450 * Gdx.graphics.getDeltaTime();
-				}
-			} else if (!mirror) {
-				if (POX + SActor.getWidth() < PlayingState.WORLD_WIDTH) {
-					POX += 450 * Gdx.graphics.getDeltaTime();
-				}
-			}
+			
+			movement(movespeed + 150, 0);
+			
 		}
 		if (JUMPTYPE == 2) {
-			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
-						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
-								+ PlayingState.WIDTH / 2) {
-					POX += 450 * Gdx.graphics.getDeltaTime();
-				}
-			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 4 > 0
-						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
-					POX -= 450 * Gdx.graphics.getDeltaTime();
-				}
-			} else {
-				POX += 0;
-			}
+			
+			movement(movespeed + 150, 1);
+		
 		}
 		if (POY <= PlayingState.GROUND) {
 			POY = PlayingState.GROUND;
@@ -580,35 +563,13 @@ public class Nox extends Actor {
 		// Update hit box Status
 
 		if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == STAND) {
-			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
-						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
-								+ PlayingState.WIDTH / 2) {
-					POX += (movespeed) * Gdx.graphics.getDeltaTime();
-				}
-			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 4 > 0
-						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
-					POX -= (movespeed) * Gdx.graphics.getDeltaTime();
-				}
-			} else {
-				POX += 0;
-			}
-		} else if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == JUMP && Anotherplayer.STATUS == JUMP) {
-			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
-						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
-								+ PlayingState.WIDTH / 2) {
-					POX += (450) * Gdx.graphics.getDeltaTime();
-				}
-			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 4 > 0
-						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
-					POX -= (450) * Gdx.graphics.getDeltaTime();
-				}
-			} else {
-				POX += 0;
-			}
+			
+			movement(movespeed, 1);
+			
+		} else if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == JUMP) {
+			
+			movement(movespeed + 150, 1);
+			
 		}
 		////////////////////////
 		if ((Anotherplayer.isPunch || Anotherplayer.isKick) && InputManager.keyIsdown(BN_BACK)

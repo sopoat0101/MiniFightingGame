@@ -75,10 +75,10 @@ public class Mato extends Actor {
 
 		for (Hitbox item : hitbox) {
 			item.draw(batch);
-			item.setAlpha(1f);
+			item.setAlpha(0f);
 		}
 
-		hitbox[8].setAlpha(1f);
+		hitbox[1].setAlpha(1f);
 
 	}
 
@@ -383,31 +383,14 @@ public class Mato extends Actor {
 			POY -= 850 * Gdx.graphics.getDeltaTime();
 		}
 		if (JUMPTYPE == 1) {
-			if (mirror) {
-				if (POX > 0) {
-					POX -= 450 * Gdx.graphics.getDeltaTime();
-				}
-			} else if (!mirror) {
-				if (POX + SActor.getWidth() < PlayingState.WORLD_WIDTH) {
-					POX += 450 * Gdx.graphics.getDeltaTime();
-				}
-			}
+			
+			movement(movespeed + 150, 0);
+		
 		}
 		if (JUMPTYPE == 2) {
-			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
-						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
-								+ PlayingState.WIDTH / 2) {
-					POX += 450 * Gdx.graphics.getDeltaTime();
-				}
-			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 4 > 0
-						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
-					POX -= 450 * Gdx.graphics.getDeltaTime();
-				}
-			} else {
-				POX += 0;
-			}
+			
+			movement(movespeed + 150, 1);
+			
 		}
 		if (POY <= PlayingState.GROUND) {
 			POY = PlayingState.GROUND;
@@ -589,23 +572,9 @@ public class Mato extends Actor {
 
 	@Override
 	protected void knockback(float movespeed) {
-		if (mirror) {
-			if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH && POX + SActor.getWidth()
-					- SActor.getWidth() / 4 < PlayingState.camera.position.x + PlayingState.WIDTH / 2) {
-				POX += movespeed * Gdx.graphics.getDeltaTime();
-			} else {
-				Anotherplayer.POX -= (movespeed + 400) * Gdx.graphics.getDeltaTime();
-			}
-		} else if (!mirror) {
-			if (POX + SActor.getWidth() / 4 > 0
-					&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
-				POX -= movespeed * Gdx.graphics.getDeltaTime();
-			} else {
-				Anotherplayer.POX += (movespeed + 400) * Gdx.graphics.getDeltaTime();
-			}
-		} else {
-			POX += 0;
-		}
+		
+		movement(movespeed, 1);
+
 	}
 
 	@Override
@@ -616,21 +585,10 @@ public class Mato extends Actor {
 			
 			movement(movespeed, 1);
 			
-		} else if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == JUMP && Anotherplayer.STATUS == JUMP) {
-			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
-						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
-								+ PlayingState.WIDTH / 2) {
-					POX += (450) * Gdx.graphics.getDeltaTime();
-				}
-			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 4 > 0
-						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
-					POX -= (450) * Gdx.graphics.getDeltaTime();
-				}
-			} else {
-				POX += 0;
-			}
+		} else if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == JUMP) {
+			
+			movement(movespeed + 150, 1);
+			
 		}
 		////////////////////////
 		if ((Anotherplayer.isPunch || Anotherplayer.isKick) && InputManager.keyIsdown(BN_BACK)
