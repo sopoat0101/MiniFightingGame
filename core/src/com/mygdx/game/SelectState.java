@@ -15,9 +15,9 @@ public class SelectState extends State {
 	public static int select_P2 = 0;
 	public static final int NOX = 0;
 	public static final int MATO = 1;
-	private Sprite bg, nox1, mato1, nox2, mato2, blank1, blank2, blank3, blank4, frame1, frame2, hero1, hero2;
+	private Sprite bg, nox1, mato1, nox2, mato2, blank1, blank2, blank3, blank4, frame1, frame2, hero1, hero2, ready1, ready2;
 	private SpriteBatch batch;
-	private Texture _nox, _mato, locked, noxMain, matoMain;
+	private Texture _nox, _mato, locked, noxMain, matoMain, ready;
 	private boolean P1_onready = false, P2_onready = false;
 	private Color P1, P2;
 
@@ -31,8 +31,9 @@ public class SelectState extends State {
 		_nox = new Texture(Gdx.files.internal("../core/assets/gui/select/NoxFrame.png"));
 		_mato = new Texture(Gdx.files.internal("../core/assets/gui/select/MatoFrame.png"));
 		locked = new Texture(Gdx.files.internal("../core/assets/gui/select/dlc.png"));
-		noxMain = new Texture(Gdx.files.internal("../core/assets/Actor/Nox/notmirror/01.png"));
-		matoMain = new Texture(Gdx.files.internal("../core/assets/Actor/Mato/notmirror/01.png"));
+		noxMain = new Texture(Gdx.files.internal("../core/assets/Actor/Nox/mirror/01.png"));
+		matoMain = new Texture(Gdx.files.internal("../core/assets/Actor/Mato/mirror/01.png"));
+		ready = new Texture("../core/assets/gui/select/readyGUI.png");
 		hero1 = new Sprite(noxMain);
 		hero2 = new Sprite(noxMain);
 		bg = new Sprite(new Texture(Gdx.files.internal("../core/assets/background/MenuBackground.png")));
@@ -44,6 +45,8 @@ public class SelectState extends State {
 		mato2 = new Sprite(_mato);
 		blank3 = new Sprite(locked);
 		blank4 = new Sprite(locked);
+		ready1 = new Sprite(ready);
+		ready2 = new Sprite(ready);
 		frame1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/select/frameP1.png")));
 		frame2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/select/frameP2.png")));
 		P1 = new Color(hero1.getColor());
@@ -71,7 +74,13 @@ public class SelectState extends State {
 		
 		hero1.setPosition(162.5f, 300);
 		hero2.setPosition(800, 300);
-		hero2.setFlip(true, false);
+		hero1.setFlip(true, false);
+		ready1.setRotation(30f);
+		ready2.setRotation(360-30f);
+		ready1.setPosition(-320, 100);
+		ready2.setPosition(320, 100);
+		ready1.setAlpha(0);
+		ready2.setAlpha(0);
 		
 		frame1.setPosition(nox1.getX()-5, nox1.getY());
 		frame1.setScale(0.5f);
@@ -96,6 +105,8 @@ public class SelectState extends State {
 		frame2.draw(batch);
 		hero1.draw(batch);
 		hero2.draw(batch);
+		ready1.draw(batch);
+		ready2.draw(batch);
 		
 		batch.end();
 
@@ -165,22 +176,26 @@ public class SelectState extends State {
 			P1_onready = true;
 			P1 = hero1.getColor();
 			hero1.setColor(Color.BLACK);
+			ready1.setAlpha(1);
 		}
 		
 		else if((InputManager.keyIspressed(InputManager.KEY_I)) && P2_onready == false) {
 			P2_onready = true;
 			P2 = hero2.getColor();
 			hero2.setColor(Color.BLACK);
+			ready2.setAlpha(1);
 		}
 		
 		else if((InputManager.keyIspressed(InputManager.KEY_B)) && P1_onready == true) {
 			P1_onready = false;
 			hero1.setColor(P1);
+			ready1.setAlpha(0);
 		}
 		
 		else if((InputManager.keyIspressed(InputManager.KEY_O)) && P2_onready == true) {
 			P2_onready = false;
 			hero2.setColor(P2);
+			ready2.setAlpha(0);
 		}
 		
 		
