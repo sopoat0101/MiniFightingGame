@@ -71,7 +71,7 @@ public class Nox extends Actor {
 
 		for (Hitbox item : hitbox) {
 			item.draw(batch);
-			item.setAlpha(1f);
+			item.setAlpha(0f);
 		}
 
 		//hitbox[9].setAlpha(1f);

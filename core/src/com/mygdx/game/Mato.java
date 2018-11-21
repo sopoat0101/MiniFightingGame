@@ -78,7 +78,7 @@ public class Mato extends Actor {
 			item.setAlpha(0f);
 		}
 
-		hitbox[1].setAlpha(1f);
+		hitbox[1].setAlpha(0f);
 
 	}
 
@@ -142,7 +142,7 @@ public class Mato extends Actor {
 		}
 		if (STMDELAY <= 0) {
 			STMDELAY = 0;
-			STAMINA += 100 * dt;
+			STAMINA += 70 * dt;
 		}
 		// Status
 		if (STATUS == STAND) {
@@ -276,7 +276,7 @@ public class Mato extends Actor {
 		// Punch
 		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 20) {
 
-			STAMINA -= 20;
+			STAMINA -= 25;
 			STMDELAY = 1.5f;
 			isPunch = true;
 			animationtime = 0.3f;
@@ -284,7 +284,7 @@ public class Mato extends Actor {
 			// Kick
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch) && STAMINA >= 20) {
 
-			STAMINA -= 20;
+			STAMINA -= 25;
 			STMDELAY = 1.5f;
 			isKick = true;
 			animationtime = 0.3f;
@@ -607,25 +607,25 @@ public class Mato extends Actor {
 		else if (hitbox[4].hitwith(Anotherplayer.hitbox[2]) && isPunch && NOWframe == 5
 				&& Anotherplayer.STATUS != KNEEL && Anotherplayer.STATUS != GUARD) {
 
-			HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 30, hitbox[4].getPoY());
+			HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 20, hitbox[4].getPoY());
 
 			// STAND KICK
 		} else if (hitbox[5].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 6
 				&& Anotherplayer.STATUS != GUARD) {
 
-			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 30, hitbox[5].getPoY());
+			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 20, hitbox[5].getPoY());
 
 			// KNEEL PUNCH
 		} else if (hitbox[6].hitwith(Anotherplayer.hitbox[3]) && isPunch && NOWframe == 8
 				&& Anotherplayer.STATUS != GUARD) {
 
-			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 20, hitbox[6].getPoY());
+			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 10, hitbox[6].getPoY());
 
 			// KNEEL KICK
 		} else if (hitbox[7].hitwith(Anotherplayer.hitbox[3]) && isKick && NOWframe == 9
 				&& Anotherplayer.STATUS != GUARD) {
 
-			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 20, hitbox[7].getPoY());
+			HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 10, hitbox[7].getPoY());
 
 			// JUMP PUNCH
 		} else if ((hitbox[8].hitwith(Anotherplayer.hitbox[1]) || (hitbox[8].hitwith(Anotherplayer.hitbox[2])))
