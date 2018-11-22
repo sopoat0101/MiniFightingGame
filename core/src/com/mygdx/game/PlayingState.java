@@ -79,15 +79,15 @@ public class PlayingState extends State {
 	private int pointP1 = 0;
 	private int pointP2 = 0;
 
+	private Sprite tagP1;
+	private Sprite tagP2;
+	
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
 	}
 
 	@Override
 	public void init() {
-
-//		System.out.println("Round " + round);
-//		System.out.println("Figth!");
 
 		batch = new SpriteBatch();
 
@@ -103,6 +103,9 @@ public class PlayingState extends State {
 		stmbar1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/stm.png")));
 		stmbar2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/stm.png")));
 
+		tagP1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/tag/tagP1.png")));
+		tagP2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/tag/tagP2.png")));
+		
 		TEXT = new Sprite[9];
 		for (int i = 0; i < 9; i++) {
 			TEXT[i] = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/status/" + (i) + ".png")));
@@ -197,6 +200,9 @@ public class PlayingState extends State {
 		PLAYER2.draw(batch);
 		PLAYER1.draw(batch);
 
+		tagP1.draw(batch);
+		tagP2.draw(batch);
+		
 		for (Sprite item : TEXT) {
 			item.draw(batch);
 			item.setAlpha(0f);
@@ -491,6 +497,9 @@ public class PlayingState extends State {
 				STATE = WAIT;
 			}
 		}
+		
+		tagP1.setPosition(PLAYER1.POX + PLAYER1.SActor.getWidth()/2 - tagP1.getWidth()/2, GROUND - 90);
+		tagP2.setPosition(PLAYER2.POX + PLAYER2.SActor.getWidth()/2 - tagP2.getWidth()/2, GROUND - 90);
 		
 		if(menu == true) {
 			
