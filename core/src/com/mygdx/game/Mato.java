@@ -265,6 +265,10 @@ public class Mato extends Actor {
 			animationtime = 0.5f;
 			AIRDELAY = 0.5f;
 			JUMPTYPE = 2;
+		}if(combo.equals("CFP") && STATUS == STAND) {
+			STATUS = SKILL;
+			System.out.println("WIND");
+			cmdlog = "";
 		}
 
 		cmdlog = "";
@@ -274,7 +278,7 @@ public class Mato extends Actor {
 	@Override
 	protected void stand() {
 		// Punch
-		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 20) {
+		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 20 && canCounter) {
 
 			STAMINA -= 25;
 			STMDELAY = 1.5f;
@@ -282,7 +286,7 @@ public class Mato extends Actor {
 			animationtime = 0.3f;
 
 			// Kick
-		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch) && STAMINA >= 20) {
+		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch) && STAMINA >= 20 && canCounter) {
 
 			STAMINA -= 25;
 			STMDELAY = 1.5f;
@@ -407,13 +411,13 @@ public class Mato extends Actor {
 	@Override
 	protected void kneel() {
 
-		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 10) {
+		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 10 && canCounter) {
 
 			STAMINA -= 10;
 			STMDELAY = 1.5f;
 			isPunch = true;
 
-		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick) && STAMINA >= 10) {
+		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick) && STAMINA >= 10 && canCounter) {
 
 			STAMINA -= 10;
 			STMDELAY = 1.5f;

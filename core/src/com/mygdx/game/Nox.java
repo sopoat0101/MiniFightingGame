@@ -340,14 +340,14 @@ public class Nox extends Actor {
 
 		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 30) {
 
-			STAMINA -= 30;
+			STAMINA -= 40;
 			STMDELAY = 1.5f;
 			isPunch = true;
 			animationtime = 0.5f;
 
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick) && STAMINA >= 30) {
 
-			STAMINA -= 30;
+			STAMINA -= 40;
 			STMDELAY = 1.5f;
 			isKick = true;
 			animationtime = 0.5f;

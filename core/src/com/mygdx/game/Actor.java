@@ -42,6 +42,7 @@ public abstract class Actor {
 	protected final int HIT = 4;
 	protected final int GUARD = 5;
 	protected final int STOP = 6;
+	protected final int SKILL = 7;
 	protected final int KNOCKOUT = 100;
 
 	protected int STATUS_PAUSE_GAME = 0;

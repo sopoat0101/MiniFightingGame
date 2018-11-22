@@ -75,7 +75,7 @@ public class SelectState extends State {
 		hero1.setPosition(162.5f, 300);
 		hero2.setPosition(800, 300);
 		hero1.setFlip(true, false);
-		ready1.setRotation(30f);
+		ready1.setRotation(360-30f);
 		ready2.setRotation(360-30f);
 		ready1.setPosition(-320, 100);
 		ready2.setPosition(320, 100);
