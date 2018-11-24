@@ -30,10 +30,6 @@ public abstract class Actor {
 	protected TextureAtlas pack;
 	protected TextureRegion frame;
 
-	protected Sprite MSActor;
-	protected TextureAtlas mpack;
-	protected TextureRegion mframe;
-
 	protected int STATUS = 0;
 	protected final int STAND = 0;
 	protected final int JUMP = 1;

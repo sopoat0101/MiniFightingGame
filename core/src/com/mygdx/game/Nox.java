@@ -16,14 +16,14 @@ public class Nox extends Actor {
 	@Override
 	protected void init() {
 
-		pack = new TextureAtlas("../core/assets/Actor/Nox/notmirror/Nox.pack");
+		pack = new TextureAtlas("Actor/Nox/notmirror/Nox.pack");
 		frame = pack.findRegion("00");
 		SActor = new Sprite(frame);
 		SActor.setPosition(PlayingState.WORLD_WIDTH / 5, PlayingState.GROUND);
 
-		damage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/NoxDam.png")));
-		Mdamage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/MNoxDam.png")));
-		guard = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Nox/hitbox/NoxGu.png")));
+		damage = new Sprite(new Texture(Gdx.files.internal("Actor/Nox/hitbox/NoxDam.png")));
+		Mdamage = new Sprite(new Texture(Gdx.files.internal("Actor/Nox/hitbox/MNoxDam.png")));
+		guard = new Sprite(new Texture(Gdx.files.internal("Actor/Nox/hitbox/NoxGu.png")));
 
 		damage.setAlpha(0f);
 		Mdamage.setAlpha(0f);
@@ -44,16 +44,16 @@ public class Nox extends Actor {
 		POY = PlayingState.GROUND;
 
 		hitbox = new Hitbox[10];
-		hitbox[0] = new Hitbox("../core/assets/Actor/Nox/hitbox/outlinebody.png", POX, POY);// Outline Body
-		hitbox[1] = new Hitbox("../core/assets/Actor/Nox/hitbox/hitbody.png", POX, POY);// Hit all Body
-		hitbox[2] = new Hitbox("../core/assets/Actor/Nox/hitbox/topbody.png", POX, POY);// Hit Top Body
-		hitbox[3] = new Hitbox("../core/assets/Actor/Nox/hitbox/downbody.png", POX, POY);// Hit Down BOdy
-		hitbox[4] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// ST punch
-		hitbox[5] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// ST kick
-		hitbox[6] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// C punch
-		hitbox[7] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// C kick
-		hitbox[8] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Punch
-		hitbox[9] = new Hitbox("../core/assets/Actor/Nox/hitbox/stpunch.png", POX, POY);// J Kick
+		hitbox[0] = new Hitbox("Actor/Nox/hitbox/outlinebody.png", POX, POY);// Outline Body
+		hitbox[1] = new Hitbox("Actor/Nox/hitbox/hitbody.png", POX, POY);// Hit all Body
+		hitbox[2] = new Hitbox("Actor/Nox/hitbox/topbody.png", POX, POY);// Hit Top Body
+		hitbox[3] = new Hitbox("Actor/Nox/hitbox/downbody.png", POX, POY);// Hit Down BOdy
+		hitbox[4] = new Hitbox("Actor/Nox/hitbox/stpunch.png", POX, POY);// ST punch
+		hitbox[5] = new Hitbox("Actor/Nox/hitbox/stpunch.png", POX, POY);// ST kick
+		hitbox[6] = new Hitbox("Actor/Nox/hitbox/stpunch.png", POX, POY);// C punch
+		hitbox[7] = new Hitbox("Actor/Nox/hitbox/stpunch.png", POX, POY);// C kick
+		hitbox[8] = new Hitbox("Actor/Nox/hitbox/stpunch.png", POX, POY);// J Punch
+		hitbox[9] = new Hitbox("Actor/Nox/hitbox/stpunch.png", POX, POY);// J Kick
 
 		SActor.setPosition(POX, POY);
 

@@ -18,9 +18,9 @@ public class StartState extends State{
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		bg = new Sprite(new Texture(Gdx.files.internal("../core/assets/background/StartBackground.png")));
-		logo = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/logo/logo.png")));
-		startButton = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/logo/startButton.png")));
+		bg = new Sprite(new Texture(Gdx.files.internal("background/StartBackground.png")));
+		logo = new Sprite(new Texture(Gdx.files.internal("gui/logo/logo.png")));
+		startButton = new Sprite(new Texture(Gdx.files.internal("gui/logo/startButton.png")));
 	}
 
 	@Override

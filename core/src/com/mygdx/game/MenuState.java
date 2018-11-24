@@ -18,16 +18,16 @@ public class MenuState extends State {
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		bg = new Sprite(new Texture(Gdx.files.internal("../core/assets/background/MenuBackground.png")));
-		playOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
-		tutorialOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
-		exitOption = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
-		playTexture1 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1.png")));
-		playTexture12 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/battlemenu1-2.png")));
-		tutorialTexture1 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1.png")));
-		tutorialTexture12 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/tutorialmenu1-2.png")));
-		exitTexture1 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1.png")));
-		exitTexture12 = (new Texture(Gdx.files.internal("../core/assets/gui/menu/exitmenu1-2.png")));
+		bg = new Sprite(new Texture(Gdx.files.internal("background/MenuBackground.png")));
+		playOption = new Sprite(new Texture(Gdx.files.internal("gui/menu/battlemenu1-2.png")));
+		tutorialOption = new Sprite(new Texture(Gdx.files.internal("gui/menu/tutorialmenu1.png")));
+		exitOption = new Sprite(new Texture(Gdx.files.internal("gui/menu/exitmenu1.png")));
+		playTexture1 = (new Texture(Gdx.files.internal("gui/menu/battlemenu1.png")));
+		playTexture12 = (new Texture(Gdx.files.internal("gui/menu/battlemenu1-2.png")));
+		tutorialTexture1 = (new Texture(Gdx.files.internal("gui/menu/tutorialmenu1.png")));
+		tutorialTexture12 = (new Texture(Gdx.files.internal("gui/menu/tutorialmenu1-2.png")));
+		exitTexture1 = (new Texture(Gdx.files.internal("gui/menu/exitmenu1.png")));
+		exitTexture12 = (new Texture(Gdx.files.internal("gui/menu/exitmenu1-2.png")));
 	}
 
 	@Override

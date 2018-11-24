@@ -16,14 +16,14 @@ public class Mato extends Actor {
 	@Override
 	protected void init() {
 
-		pack = new TextureAtlas("../core/assets/Actor/Mato/notmirror/Mato.pack");
+		pack = new TextureAtlas("Actor/Mato/notmirror/Mato.pack");
 		frame = pack.findRegion("00");
 		SActor = new Sprite(frame);
 		
 
-		damage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Mato/hitbox/NoxDam.png")));
-		Mdamage = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Mato/hitbox/MNoxDam.png")));
-		guard = new Sprite(new Texture(Gdx.files.internal("../core/assets/Actor/Mato/hitbox/NoxGu.png")));
+		damage = new Sprite(new Texture(Gdx.files.internal("Actor/Mato/hitbox/NoxDam.png")));
+		Mdamage = new Sprite(new Texture(Gdx.files.internal("Actor/Mato/hitbox/MNoxDam.png")));
+		guard = new Sprite(new Texture(Gdx.files.internal("Actor/Mato/hitbox/NoxGu.png")));
 
 		damage.setAlpha(0f);
 		Mdamage.setAlpha(0f);
@@ -42,16 +42,16 @@ public class Mato extends Actor {
 		POY = PlayingState.GROUND;
 
 		hitbox = new Hitbox[10];
-		hitbox[0] = new Hitbox("../core/assets/Actor/Mato/hitbox/outlinebody.png", POX, POY);// Outline Body
-		hitbox[1] = new Hitbox("../core/assets/Actor/Mato/hitbox/hitbody.png", POX, POY);// Hit all Body
-		hitbox[2] = new Hitbox("../core/assets/Actor/Mato/hitbox/topbody.png", POX, POY);// Hit Top Body
-		hitbox[3] = new Hitbox("../core/assets/Actor/Mato/hitbox/downbody.png", POX, POY);// Hit Down BOdy
-		hitbox[4] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// ST punch
-		hitbox[5] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// ST kick
-		hitbox[6] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// C punch
-		hitbox[7] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// C kick
-		hitbox[8] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// J Punch
-		hitbox[9] = new Hitbox("../core/assets/Actor/Mato/hitbox/stpunch.png", POX, POY);// J Kick
+		hitbox[0] = new Hitbox("Actor/Mato/hitbox/outlinebody.png", POX, POY);// Outline Body
+		hitbox[1] = new Hitbox("Actor/Mato/hitbox/hitbody.png", POX, POY);// Hit all Body
+		hitbox[2] = new Hitbox("Actor/Mato/hitbox/topbody.png", POX, POY);// Hit Top Body
+		hitbox[3] = new Hitbox("Actor/Mato/hitbox/downbody.png", POX, POY);// Hit Down BOdy
+		hitbox[4] = new Hitbox("Actor/Mato/hitbox/stpunch.png", POX, POY);// ST punch
+		hitbox[5] = new Hitbox("Actor/Mato/hitbox/stpunch.png", POX, POY);// ST kick
+		hitbox[6] = new Hitbox("Actor/Mato/hitbox/stpunch.png", POX, POY);// C punch
+		hitbox[7] = new Hitbox("Actor/Mato/hitbox/stpunch.png", POX, POY);// C kick
+		hitbox[8] = new Hitbox("Actor/Mato/hitbox/stpunch.png", POX, POY);// J Punch
+		hitbox[9] = new Hitbox("Actor/Mato/hitbox/stpunch.png", POX, POY);// J Kick
 
 		hitbox[4].setSize(150, 60);
 		hitbox[5].setSize(190, 60);

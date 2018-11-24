@@ -28,15 +28,15 @@ public class SelectState extends State {
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		_nox = new Texture(Gdx.files.internal("../core/assets/gui/select/NoxFrame.png"));
-		_mato = new Texture(Gdx.files.internal("../core/assets/gui/select/MatoFrame.png"));
-		locked = new Texture(Gdx.files.internal("../core/assets/gui/select/dlc.png"));
-		noxMain = new Texture(Gdx.files.internal("../core/assets/Actor/Nox/mirror/01.png"));
-		matoMain = new Texture(Gdx.files.internal("../core/assets/Actor/Mato/mirror/01.png"));
-		ready = new Texture("../core/assets/gui/select/readyGUI.png");
+		_nox = new Texture(Gdx.files.internal("gui/select/NoxFrame.png"));
+		_mato = new Texture(Gdx.files.internal("gui/select/MatoFrame.png"));
+		locked = new Texture(Gdx.files.internal("gui/select/dlc.png"));
+		noxMain = new Texture(Gdx.files.internal("Actor/Nox/mirror/01.png"));
+		matoMain = new Texture(Gdx.files.internal("Actor/Mato/mirror/01.png"));
+		ready = new Texture("gui/select/readyGUI.png");
 		hero1 = new Sprite(noxMain);
 		hero2 = new Sprite(noxMain);
-		bg = new Sprite(new Texture(Gdx.files.internal("../core/assets/background/MenuBackground.png")));
+		bg = new Sprite(new Texture(Gdx.files.internal("background/MenuBackground.png")));
 		nox1 = new Sprite(_nox);
 		mato1 = new Sprite(_mato);
 		blank1 = new Sprite(locked);
@@ -47,8 +47,8 @@ public class SelectState extends State {
 		blank4 = new Sprite(locked);
 		ready1 = new Sprite(ready);
 		ready2 = new Sprite(ready);
-		frame1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/select/frameP1.png")));
-		frame2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/select/frameP2.png")));
+		frame1 = new Sprite(new Texture(Gdx.files.internal("gui/select/frameP1.png")));
+		frame2 = new Sprite(new Texture(Gdx.files.internal("gui/select/frameP2.png")));
 		P1 = new Color(hero1.getColor());
 		P2 = new Color(hero2.getColor());
 		

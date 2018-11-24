@@ -93,30 +93,30 @@ public class PlayingState extends State {
 
 		batch = new SpriteBatch();
 
-		bg = new Sprite(new Texture(Gdx.files.internal("../core/assets/background/playingmap.png")));
+		bg = new Sprite(new Texture(Gdx.files.internal("background/playingmap.png")));
 
-		hpbar1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/hpbar.png")));
-		hpbar2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/hpbar.png")));
-		hp1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/hp.png")));
-		hp2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/hp.png")));
-		hpback1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/backhp.png")));
-		hpback2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/backhp.png")));
+		hpbar1 = new Sprite(new Texture(Gdx.files.internal("gui/playing/hpbar.png")));
+		hpbar2 = new Sprite(new Texture(Gdx.files.internal("gui/playing/hpbar.png")));
+		hp1 = new Sprite(new Texture(Gdx.files.internal("gui/playing/hp.png")));
+		hp2 = new Sprite(new Texture(Gdx.files.internal("gui/playing/hp.png")));
+		hpback1 = new Sprite(new Texture(Gdx.files.internal("gui/playing/backhp.png")));
+		hpback2 = new Sprite(new Texture(Gdx.files.internal("gui/playing/backhp.png")));
 
-		stmbar1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/stm.png")));
-		stmbar2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/playing/stm.png")));
+		stmbar1 = new Sprite(new Texture(Gdx.files.internal("gui/playing/stm.png")));
+		stmbar2 = new Sprite(new Texture(Gdx.files.internal("gui/playing/stm.png")));
 
-		tagP1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/tag/tagP1.png")));
-		tagP2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/tag/tagP2.png")));
+		tagP1 = new Sprite(new Texture(Gdx.files.internal("gui/tag/tagP1.png")));
+		tagP2 = new Sprite(new Texture(Gdx.files.internal("gui/tag/tagP2.png")));
 		
 		wintag = new Sprite[4];
 		
 		for(int i = 0; i< 4 ; i++) {
-			wintag[i] = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/tag/win.png")));
+			wintag[i] = new Sprite(new Texture(Gdx.files.internal("gui/tag/win.png")));
 		}
 		
 		TEXT = new Sprite[9];
 		for (int i = 0; i < 9; i++) {
-			TEXT[i] = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/status/" + (i) + ".png")));
+			TEXT[i] = new Sprite(new Texture(Gdx.files.internal("gui/status/" + (i) + ".png")));
 		}
 
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -164,12 +164,12 @@ public class PlayingState extends State {
 
 		TIME = 99;
 
-		TANumF = new TextureAtlas("../core/assets/gui/number/number.pack");
+		TANumF = new TextureAtlas("gui/number/number.pack");
 		TRNumF = TANumF.findRegion("9");
 		numberFront = new Sprite(TRNumF);
 		numberFront.setSize(50, 100);
 
-		TANumB = new TextureAtlas("../core/assets/gui/number/number.pack");
+		TANumB = new TextureAtlas("gui/number/number.pack");
 		TRNumB = TANumF.findRegion("9");
 		numberBack = new Sprite(TRNumB);
 		numberBack.setSize(50, 100);
