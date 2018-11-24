@@ -82,6 +82,8 @@ public class PlayingState extends State {
 	private Sprite tagP1;
 	private Sprite tagP2;
 	
+	private Sprite[] wintag;
+	
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
 	}
@@ -105,6 +107,12 @@ public class PlayingState extends State {
 
 		tagP1 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/tag/tagP1.png")));
 		tagP2 = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/tag/tagP2.png")));
+		
+		wintag = new Sprite[4];
+		
+		for(int i = 0; i< 4 ; i++) {
+			wintag[i] = new Sprite(new Texture(Gdx.files.internal("../core/assets/gui/tag/win.png")));
+		}
 		
 		TEXT = new Sprite[9];
 		for (int i = 0; i < 9; i++) {
@@ -202,6 +210,12 @@ public class PlayingState extends State {
 
 		tagP1.draw(batch);
 		tagP2.draw(batch);
+		
+		for(Sprite item: wintag) {
+			item.draw(batch);
+			item.setSize(30, 30);
+			item.setAlpha(0f);
+		}
 		
 		for (Sprite item : TEXT) {
 			item.draw(batch);
@@ -432,12 +446,9 @@ public class PlayingState extends State {
 			init();
 		}
 		if (STATE == WAIT) {
-			
-//			if (DELAY >= 1) {
 
-				TEXT[lable].setAlpha(1f);
-				
-//			}
+			TEXT[lable].setAlpha(1f);
+			
 			if(DELAY <= 1) {
 				if (pointP1 >= 2) {
 					lable = 4;
@@ -500,6 +511,20 @@ public class PlayingState extends State {
 		
 		tagP1.setPosition(PLAYER1.POX + PLAYER1.SActor.getWidth()/2 - tagP1.getWidth()/2, GROUND - 90);
 		tagP2.setPosition(PLAYER2.POX + PLAYER2.SActor.getWidth()/2 - tagP2.getWidth()/2, GROUND - 90);
+		
+		wintag[0].setPosition(camera.position.x - WIDTH / 2 + 20, camera.position.y + HEIGHT/2 - 100);
+		wintag[1].setPosition(camera.position.x - WIDTH / 2 + 20 + wintag[0].getWidth() + 20, camera.position.y + HEIGHT/2 - 100);
+		
+		wintag[2].setPosition(camera.position.x + WIDTH / 2 - 20 - wintag[0].getWidth(), camera.position.y + HEIGHT/2 - 100);
+		wintag[3].setPosition(camera.position.x + WIDTH / 2 - 20 - wintag[0].getWidth()*2 - 20, camera.position.y + HEIGHT/2 - 100);
+		
+		for(int i = 0; i < pointP1 ; i++) {
+			wintag[i].setAlpha(1);
+		}
+		
+		for(int i = 0; i < pointP2 ; i++) {
+			wintag[i+2].setAlpha(1);
+		}
 		
 		if(menu == true) {
 			
