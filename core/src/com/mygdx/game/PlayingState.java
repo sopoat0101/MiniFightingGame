@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PlayingState extends State {
 
@@ -23,13 +21,10 @@ public class PlayingState extends State {
 	private int TIME;
 	private float countDOWN = 0;
 
-	private TextureAtlas TANumF;
-	private TextureRegion TRNumF;
-	private Sprite numberFront;
-
-	private TextureAtlas TANumB;
-	private TextureRegion TRNumB;
-	private Sprite numberBack;
+	private Number spriteTime;
+	private Number P1Hit;
+	private Number P2Hit;
+	
 
 	private Actor PLAYER1;
 	private Actor PLAYER2;
@@ -84,6 +79,10 @@ public class PlayingState extends State {
 	
 	private Sprite[] wintag;
 	
+	private Sprite textHit1;
+	
+	private Sprite textHit2;
+	
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
 	}
@@ -122,9 +121,6 @@ public class PlayingState extends State {
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
 
 		camera.position.set(WORLD_WIDTH / 2, HEIGHT / 2, 0);
-
-//		PLAYER1 = new Nox(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
-//				InputManager.KEY_V, InputManager.KEY_B, false, 1);
 		
 		if(SelectState.select_P1 == 0) {
 			PLAYER1 = new Nox(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
@@ -164,16 +160,19 @@ public class PlayingState extends State {
 
 		TIME = 99;
 
-		TANumF = new TextureAtlas("gui/number/number.pack");
-		TRNumF = TANumF.findRegion("9");
-		numberFront = new Sprite(TRNumF);
-		numberFront.setSize(50, 100);
+		spriteTime = new Number();
 
-		TANumB = new TextureAtlas("gui/number/number.pack");
-		TRNumB = TANumF.findRegion("9");
-		numberBack = new Sprite(TRNumB);
-		numberBack.setSize(50, 100);
-
+		//hit
+		textHit1 = new Sprite(new Texture(Gdx.files.internal("gui/tag/hit.png")));
+		textHit1.setAlpha(0);
+		P1Hit = new Number();
+		P1Hit.setAlpha(0);
+		
+		textHit2 = new Sprite(new Texture(Gdx.files.internal("gui/tag/hit.png")));
+		textHit2.setAlpha(0);
+		P2Hit = new Number();
+		P2Hit.setAlpha(0);
+		
 		STATE = GAMESTART;
 		DELAY = 3;
 
@@ -188,8 +187,8 @@ public class PlayingState extends State {
 
 		batch.setProjectionMatrix(camera.combined);
 
-		numberBack.draw(batch);
-		numberFront.draw(batch);
+		spriteTime.draw(batch);
+
 
 		hpbar1.draw(batch);
 		hpbar2.draw(batch);
@@ -210,6 +209,13 @@ public class PlayingState extends State {
 
 		tagP1.draw(batch);
 		tagP2.draw(batch);
+		
+		P1Hit.draw(batch);
+		P2Hit.draw(batch);
+		
+		
+		textHit1.draw(batch);
+		textHit2.draw(batch);
 		
 		for(Sprite item: wintag) {
 			item.draw(batch);
@@ -360,14 +366,39 @@ public class PlayingState extends State {
 			hpP2 -= 100 * dt;
 			DELAY = 0.5f;
 		}
+		
+		if(PLAYER1.STATUS == PLAYER1.HIT) {
+			textHit2.setAlpha(1);
+			P2Hit.setAlpha(1);
+		}
+		if(PLAYER2.STATUS == PLAYER2.HIT) {
+			textHit1.setAlpha(1);
+			P1Hit.setAlpha(1);
+		}
+		
 		if (DELAY <= 0) {
 			if (hpbackP1 > PLAYER1.HP && hpbackP1 >= 0) {
 
 				hpbackP1 -= 100 * dt;
+				
+				PLAYER2.hitCount = 0;
+				
+				for(int i = 100 ; i > 0; i--) {
+					textHit2.setAlpha(i * dt);
+					P2Hit.setAlpha(i * dt);
+				}
 			}
 			if (hpbackP2 > PLAYER2.HP && hpbackP2 >= 0) {
 				hpbackP2 -= 100 * dt;
+				
+				PLAYER1.hitCount = 0;
+				
+				for(int i = 100 ; i > 0; i--) {
+					textHit1.setAlpha(i * dt);
+					P1Hit.setAlpha(i * dt);
+				}
 			}
+			
 		}
 		// STAMINA
 		if (stmP1 <= 0) {
@@ -473,9 +504,8 @@ public class PlayingState extends State {
 
 		}
 		// Timer
-
-		numberFront.setPosition(camera.position.x - 50, camera.position.y + HEIGHT / 2 - 100);
-		numberBack.setPosition(camera.position.x, camera.position.y + HEIGHT / 2 - 100);
+		
+		spriteTime.setPosition(camera.position.x - 50, camera.position.y + HEIGHT / 2 - 100);
 
 		if (STATE != PAUSE && STATE != GAMESTART && STATE != WAIT) {
 			countDOWN += dt;
@@ -486,12 +516,8 @@ public class PlayingState extends State {
 			if (TIME <= 0) {
 				TIME = 0;
 			}
-
-			TRNumF = TANumF.findRegion("" + (((int) TIME / 10)));
-			numberFront.setRegion(TRNumF);
-
-			TRNumB = TANumB.findRegion("" + TIME % 10);
-			numberBack.setRegion(TRNumB);
+			
+			spriteTime.setNumber(TIME);
 
 			if (TIME == 0 && STATE != WAIT & STATE != REGAME) {
 				lable = 8;
@@ -517,6 +543,16 @@ public class PlayingState extends State {
 		
 		wintag[2].setPosition(camera.position.x + WIDTH / 2 - 20 - wintag[0].getWidth(), camera.position.y + HEIGHT/2 - 100);
 		wintag[3].setPosition(camera.position.x + WIDTH / 2 - 20 - wintag[0].getWidth()*2 - 20, camera.position.y + HEIGHT/2 - 100);
+		
+		P1Hit.setNumber(PLAYER1.hitCount);
+
+		P2Hit.setNumber(PLAYER2.hitCount);
+
+		textHit1.setPosition(camera.position.x - WIDTH / 2 + 40 + P1Hit.getWidth(), camera.position.y);
+		P1Hit.setPosition(camera.position.x - WIDTH / 2 + 40, camera.position.y);
+		
+		textHit2.setPosition(camera.position.x + WIDTH / 2 - 40 - P2Hit.getWidth() - textHit2.getWidth(), camera.position.y);
+		P2Hit.setPosition(camera.position.x + WIDTH / 2 - 40 - P2Hit.getWidth(), camera.position.y);
 		
 		for(int i = 0; i < pointP1 ; i++) {
 			wintag[i].setAlpha(1);

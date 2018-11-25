@@ -495,6 +495,7 @@ public class Mato extends Actor {
 
 		if (DELAY >= 0.28f) {
 			HP -= Anotherplayer.ATK;
+			Anotherplayer.hitCount += 1;
 		}
 
 		if (DELAY >= 0.2f) {
