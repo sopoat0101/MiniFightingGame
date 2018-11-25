@@ -16,7 +16,7 @@ public class PlayingState extends State {
 
 	public static OrthographicCamera camera;
 
-	public static float GROUND = 100;
+	public static float GROUND = 150;
 
 	private int TIME;
 	private float countDOWN = 0;
@@ -92,7 +92,7 @@ public class PlayingState extends State {
 
 		batch = new SpriteBatch();
 
-		bg = new Sprite(new Texture(Gdx.files.internal("background/playingmap.png")));
+		bg = new Sprite(new Texture(Gdx.files.internal("background/MAP.png")));
 
 		hpbar1 = new Sprite(new Texture(Gdx.files.internal("gui/playing/hpbar.png")));
 		hpbar2 = new Sprite(new Texture(Gdx.files.internal("gui/playing/hpbar.png")));

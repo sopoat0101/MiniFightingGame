@@ -524,25 +524,25 @@ public class Nox extends Actor {
 		if (type == 0) {
 			// moveFront
 			if (mirror) {
-				if (POX > 0) {
+				if (POX + SActor.getWidth()/3 > 0 + 200) {
 					POX -= movespeed * Gdx.graphics.getDeltaTime();
 				}
 			} else if (!mirror) {
-				if (POX + SActor.getWidth() < PlayingState.WORLD_WIDTH) {
+				if (POX + SActor.getWidth()/2 + 80 < PlayingState.WORLD_WIDTH - 200) {
 					POX += movespeed * Gdx.graphics.getDeltaTime();
 				}
 			}
 		} else if (type == 1) {
 			// moveBack
 			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
-						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
+				if (POX + SActor.getWidth() - SActor.getWidth() / 3 < PlayingState.WORLD_WIDTH -200
+						&& POX + SActor.getWidth() - SActor.getWidth() / 3 < PlayingState.camera.position.x
 								+ PlayingState.WIDTH / 2) {
 					POX += movespeed * Gdx.graphics.getDeltaTime();
 				}
 			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 4 > 0
-						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
+				if (POX + SActor.getWidth() / 3 > 0 + 200
+						&& POX + SActor.getWidth() / 3 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
 					POX -= movespeed * Gdx.graphics.getDeltaTime();
 				}
 			} else {
@@ -557,6 +557,15 @@ public class Nox extends Actor {
 		
 		movement(movespeed, 1);
 		
+		if(!mirror) {
+			if(POX + SActor.getWidth() / 3 <= 0 + 200) {
+				Anotherplayer.movement(movespeed+200, 1);
+			}
+		}else if(mirror) {
+			if(POX + SActor.getWidth() - SActor.getWidth() / 3 >= PlayingState.WORLD_WIDTH -200) {
+				Anotherplayer.movement(movespeed+200, 1);
+			}
+		}
 	}
 
 	@Override

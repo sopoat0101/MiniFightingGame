@@ -19,7 +19,6 @@ public class Mato extends Actor {
 		pack = new TextureAtlas("Actor/Mato/notmirror/Mato.pack");
 		frame = pack.findRegion("00");
 		SActor = new Sprite(frame);
-		
 
 		damage = new Sprite(new Texture(Gdx.files.internal("Actor/Mato/hitbox/NoxDam.png")));
 		Mdamage = new Sprite(new Texture(Gdx.files.internal("Actor/Mato/hitbox/MNoxDam.png")));
@@ -31,11 +30,11 @@ public class Mato extends Actor {
 
 		if (mirror == false) {
 
-			POX = PlayingState.WORLD_WIDTH/2 - PlayingState.WIDTH/2 - 100;
+			POX = PlayingState.WORLD_WIDTH / 2 - PlayingState.WIDTH / 2 - 100;
 
 		} else if (mirror) {
 
-			POX = PlayingState.WORLD_WIDTH/2 + PlayingState.WIDTH/2 - 400;
+			POX = PlayingState.WORLD_WIDTH / 2 + PlayingState.WIDTH / 2 - 400;
 
 		}
 
@@ -56,14 +55,14 @@ public class Mato extends Actor {
 		hitbox[4].setSize(150, 60);
 		hitbox[5].setSize(190, 60);
 		hitbox[8].setSize(170, 60);
-		
+
 		SActor.setPosition(POX, POY);
-		
+
 	}
 
 	@Override
 	protected void draw(SpriteBatch batch) {
-		
+
 		SActor.setAlpha(1f);
 		SActor.setFlip(mirror, false);
 
@@ -123,8 +122,7 @@ public class Mato extends Actor {
 			hitbox[6].setPosition(POX + SActor.getWidth() / 4 + 140 - hitbox[4].getWidth(),
 					POY + hitbox[2].getHeight() - 60);
 			hitbox[7].setPosition(POX + SActor.getWidth() / 4 + 140 - hitbox[4].getWidth(), POY);
-			hitbox[8].setPosition(POX + SActor.getWidth() / 4 + 80 - hitbox[4].getWidth(),
-					POY + hitbox[2].getHeight());
+			hitbox[8].setPosition(POX + SActor.getWidth() / 4 + 80 - hitbox[4].getWidth(), POY + hitbox[2].getHeight());
 			hitbox[9].setPosition(POX + SActor.getWidth() / 4 + 90 - hitbox[4].getWidth(), POY);
 
 			guard.setPosition(hitbox[0].getPoX() - 5, POY);
@@ -265,7 +263,8 @@ public class Mato extends Actor {
 			animationtime = 0.5f;
 			AIRDELAY = 0.5f;
 			JUMPTYPE = 2;
-		}if(combo.equals("CFP") && STATUS == STAND) {
+		}
+		if (combo.equals("CFP") && STATUS == STAND) {
 			STATUS = SKILL;
 			System.out.println("WIND");
 			cmdlog = "";
@@ -370,10 +369,9 @@ public class Mato extends Actor {
 			if (isPunch || isKick) {
 
 				setAnimationTimeLoop(0.1f);
-				if(isPunch) {
+				if (isPunch) {
 					runframe(12, 14, 1);
 				}
-
 
 			} else {
 				runframe(10, 11, 1);
@@ -387,14 +385,14 @@ public class Mato extends Actor {
 			POY -= 850 * Gdx.graphics.getDeltaTime();
 		}
 		if (JUMPTYPE == 1) {
-			
+
 			movement(movespeed + 150, 0);
-		
+
 		}
 		if (JUMPTYPE == 2) {
-			
+
 			movement(movespeed + 150, 1);
-			
+
 		}
 		if (POY <= PlayingState.GROUND) {
 			POY = PlayingState.GROUND;
@@ -547,25 +545,25 @@ public class Mato extends Actor {
 		if (type == 0) {
 			// moveFront
 			if (mirror) {
-				if (POX > 0) {
+				if (POX + SActor.getWidth() / 3 > 0) {
 					POX -= movespeed * Gdx.graphics.getDeltaTime();
 				}
 			} else if (!mirror) {
-				if (POX + SActor.getWidth() < PlayingState.WORLD_WIDTH) {
+				if (POX + SActor.getWidth() / 2 + 80 < PlayingState.WORLD_WIDTH) {
 					POX += movespeed * Gdx.graphics.getDeltaTime();
 				}
 			}
 		} else if (type == 1) {
 			// moveBack
 			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.WORLD_WIDTH
-						&& POX + SActor.getWidth() - SActor.getWidth() / 4 < PlayingState.camera.position.x
+				if (POX + SActor.getWidth() - SActor.getWidth() / 3 < PlayingState.WORLD_WIDTH
+						&& POX + SActor.getWidth() - SActor.getWidth() / 3 < PlayingState.camera.position.x
 								+ PlayingState.WIDTH / 2) {
 					POX += movespeed * Gdx.graphics.getDeltaTime();
 				}
 			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 4 > 0
-						&& POX + SActor.getWidth() / 4 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
+				if (POX + SActor.getWidth() / 3 > 0
+						&& POX + SActor.getWidth() / 3 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
 					POX -= movespeed * Gdx.graphics.getDeltaTime();
 				}
 			} else {
@@ -577,8 +575,18 @@ public class Mato extends Actor {
 
 	@Override
 	protected void knockback(float movespeed) {
-		
+
 		movement(movespeed, 1);
+
+		if (!mirror) {
+			if (POX + SActor.getWidth() / 3 <= 0 + 200) {
+				Anotherplayer.movement(movespeed + 200, 1);
+			}
+		} else if (mirror) {
+			if (POX + SActor.getWidth() - SActor.getWidth() / 3 >= PlayingState.WORLD_WIDTH - 200) {
+				Anotherplayer.movement(movespeed + 200, 1);
+			}
+		}
 
 	}
 
@@ -587,13 +595,13 @@ public class Mato extends Actor {
 		// Update hit box Status
 
 		if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == STAND) {
-			
+
 			movement(movespeed, 1);
-			
+
 		} else if (hitbox[1].hitwith(Anotherplayer.hitbox[1]) && STATUS == JUMP) {
-			
+
 			movement(movespeed + 150, 1);
-			
+
 		}
 		////////////////////////
 		if ((Anotherplayer.isPunch || Anotherplayer.isKick) && InputManager.keyIsdown(BN_BACK)
@@ -609,8 +617,8 @@ public class Mato extends Actor {
 			DELAY = 0.3f;
 		}
 		// STAND PUNCH
-		else if (hitbox[4].hitwith(Anotherplayer.hitbox[2]) && isPunch && NOWframe == 5
-				&& Anotherplayer.STATUS != KNEEL && Anotherplayer.STATUS != GUARD) {
+		else if (hitbox[4].hitwith(Anotherplayer.hitbox[2]) && isPunch && NOWframe == 5 && Anotherplayer.STATUS != KNEEL
+				&& Anotherplayer.STATUS != GUARD) {
 
 			HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 20, hitbox[4].getPoY());
 
@@ -637,7 +645,7 @@ public class Mato extends Actor {
 				&& isPunch && NOWframe == 14 && Anotherplayer.STATUS != GUARD) {
 
 			AIRDELAY = 0;
-			
+
 			Anotherplayer.AIRDELAY = 0;
 
 			if ((hitbox[8].hitwith(Anotherplayer.hitbox[1]))) {
@@ -651,7 +659,8 @@ public class Mato extends Actor {
 			}
 
 			// JUMP KICK
-		} //else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]) || (hitbox[9].hitwith(Anotherplayer.hitbox[2])))
+		} // else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]) ||
+			// (hitbox[9].hitwith(Anotherplayer.hitbox[2])))
 //				&& isKick && NOWframe == 25 && Anotherplayer.STATUS != GUARD) {
 //
 //			Anotherplayer.AIRDELAY = 0;
