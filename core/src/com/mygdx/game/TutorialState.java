@@ -17,7 +17,7 @@ public class TutorialState extends State{
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		bg = new Sprite(new Texture(Gdx.files.internal("../core/assets/background/tutorialBackground.png")));
+		bg = new Sprite(new Texture(Gdx.files.internal("background/tutorialBackground.png")));
 	}
 
 	@Override
