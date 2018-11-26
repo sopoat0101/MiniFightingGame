@@ -182,7 +182,7 @@ public class Mato extends Actor {
 
 			setAnimationTimeLoop(0.1f);
 
-			runframe(0, 0, 1);
+			runframe(19, 21, 1);
 
 			damage.setAlpha(0f);
 			Mdamage.setAlpha(0f);
