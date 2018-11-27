@@ -24,10 +24,16 @@ public class PlayingState extends State {
 	private Number spriteTime;
 	private Number P1Hit;
 	private Number P2Hit;
-	
 
 	private Actor PLAYER1;
 	private Actor PLAYER2;
+
+	private int P1Hitcount;
+	private int P2Hitcount;
+	private int P1Punchcount;
+	private int P2Punchcount;
+	private int P1Kickcount;
+	private int P2Kickcount;
 
 	private float centerPX = 0;
 	private float centerPY = 0;
@@ -76,13 +82,13 @@ public class PlayingState extends State {
 
 	private Sprite tagP1;
 	private Sprite tagP2;
-	
+
 	private Sprite[] wintag;
-	
+
 	private Sprite textHit1;
-	
+
 	private Sprite textHit2;
-	
+
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
 	}
@@ -106,13 +112,13 @@ public class PlayingState extends State {
 
 		tagP1 = new Sprite(new Texture(Gdx.files.internal("gui/tag/tagP1.png")));
 		tagP2 = new Sprite(new Texture(Gdx.files.internal("gui/tag/tagP2.png")));
-		
+
 		wintag = new Sprite[4];
-		
-		for(int i = 0; i< 4 ; i++) {
+
+		for (int i = 0; i < 4; i++) {
 			wintag[i] = new Sprite(new Texture(Gdx.files.internal("gui/tag/win.png")));
 		}
-		
+
 		TEXT = new Sprite[9];
 		for (int i = 0; i < 9; i++) {
 			TEXT[i] = new Sprite(new Texture(Gdx.files.internal("gui/status/" + (i) + ".png")));
@@ -121,21 +127,21 @@ public class PlayingState extends State {
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
 
 		camera.position.set(WORLD_WIDTH / 2, HEIGHT / 2, 0);
-		
-		if(SelectState.select_P1 == 0) {
+
+		if (SelectState.select_P1 == 0) {
 			PLAYER1 = new Nox(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
 					InputManager.KEY_V, InputManager.KEY_B, false, 1);
-		}else if(SelectState.select_P1 == 1) {
+		} else if (SelectState.select_P1 == 1) {
 			PLAYER1 = new Mato(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
 					InputManager.KEY_V, InputManager.KEY_B, false, 1);
 		}
-		
-		if(SelectState.select_P2 == 0) {
+
+		if (SelectState.select_P2 == 0) {
 			PLAYER2 = new Nox(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP, InputManager.KEY_DOWN,
 					InputManager.KEY_I, InputManager.KEY_O, true, 2);
-		}else if(SelectState.select_P2 == 1) {
-			PLAYER2 = new Mato(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP, InputManager.KEY_DOWN,
-					InputManager.KEY_I, InputManager.KEY_O, true, 2);
+		} else if (SelectState.select_P2 == 1) {
+			PLAYER2 = new Mato(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP,
+					InputManager.KEY_DOWN, InputManager.KEY_I, InputManager.KEY_O, true, 2);
 		}
 
 		PLAYER1.init();
@@ -162,17 +168,17 @@ public class PlayingState extends State {
 
 		spriteTime = new Number();
 
-		//hit
+		// hit
 		textHit1 = new Sprite(new Texture(Gdx.files.internal("gui/tag/hit.png")));
 		textHit1.setAlpha(0);
 		P1Hit = new Number();
 		P1Hit.setAlpha(0);
-		
+
 		textHit2 = new Sprite(new Texture(Gdx.files.internal("gui/tag/hit.png")));
 		textHit2.setAlpha(0);
 		P2Hit = new Number();
 		P2Hit.setAlpha(0);
-		
+
 		STATE = GAMESTART;
 		DELAY = 3;
 
@@ -188,7 +194,6 @@ public class PlayingState extends State {
 		batch.setProjectionMatrix(camera.combined);
 
 		spriteTime.draw(batch);
-
 
 		hpbar1.draw(batch);
 		hpbar2.draw(batch);
@@ -209,20 +214,19 @@ public class PlayingState extends State {
 
 		tagP1.draw(batch);
 		tagP2.draw(batch);
-		
+
 		P1Hit.draw(batch);
 		P2Hit.draw(batch);
-		
-		
+
 		textHit1.draw(batch);
 		textHit2.draw(batch);
-		
-		for(Sprite item: wintag) {
+
+		for (Sprite item : wintag) {
 			item.draw(batch);
 			item.setSize(30, 30);
 			item.setAlpha(0f);
 		}
-		
+
 		for (Sprite item : TEXT) {
 			item.draw(batch);
 			item.setAlpha(0f);
@@ -240,7 +244,8 @@ public class PlayingState extends State {
 		centerPX = Math.abs(PLAYER1.POX - PLAYER2.POX);
 		centerPY = Math.abs(PLAYER1.POY - PLAYER2.POY);
 		// mirror
-		if (PLAYER1.POX + PLAYER1.SActor.getWidth()/2 > PLAYER2.POX + PLAYER2.SActor.getWidth()/2 && (PLAYER1.POY <= GROUND)) {
+		if (PLAYER1.POX + PLAYER1.SActor.getWidth() / 2 > PLAYER2.POX + PLAYER2.SActor.getWidth() / 2
+				&& (PLAYER1.POY <= GROUND)) {
 
 			PLAYER1.setBN_BACK(InputManager.KEY_D);
 			PLAYER1.setBN_FRONT(InputManager.KEY_A);
@@ -248,7 +253,8 @@ public class PlayingState extends State {
 			PLAYER1.setMIRROR(true);
 
 		}
-		if (PLAYER1.POX + PLAYER1.SActor.getWidth()/2 < PLAYER2.POX + PLAYER2.SActor.getWidth()/2 && (PLAYER1.POY <= GROUND)) {
+		if (PLAYER1.POX + PLAYER1.SActor.getWidth() / 2 < PLAYER2.POX + PLAYER2.SActor.getWidth() / 2
+				&& (PLAYER1.POY <= GROUND)) {
 
 			PLAYER1.setBN_BACK(InputManager.KEY_A);
 			PLAYER1.setBN_FRONT(InputManager.KEY_D);
@@ -256,25 +262,25 @@ public class PlayingState extends State {
 			PLAYER1.setMIRROR(false);
 
 		}
-		if (PLAYER2.POX + PLAYER2.SActor.getWidth()/2 > PLAYER1.POX + PLAYER1.SActor.getWidth()/2 && (PLAYER2.POY <= GROUND)) {
+		if (PLAYER2.POX + PLAYER2.SActor.getWidth() / 2 > PLAYER1.POX + PLAYER1.SActor.getWidth() / 2
+				&& (PLAYER2.POY <= GROUND)) {
 
 			PLAYER2.setBN_BACK(InputManager.KEY_RIGHT);
 			PLAYER2.setBN_FRONT(InputManager.KEY_LEFT);
 
-
 			PLAYER2.setMIRROR(true);
 
 		}
-		if (PLAYER2.POX + PLAYER2.SActor.getWidth()/2 < PLAYER1.POX + PLAYER1.SActor.getWidth()/2 && (PLAYER2.POY <= GROUND)) {
+		if (PLAYER2.POX + PLAYER2.SActor.getWidth() / 2 < PLAYER1.POX + PLAYER1.SActor.getWidth() / 2
+				&& (PLAYER2.POY <= GROUND)) {
 
 			PLAYER2.setBN_BACK(InputManager.KEY_LEFT);
 			PLAYER2.setBN_FRONT(InputManager.KEY_RIGHT);
 
 			PLAYER2.setMIRROR(false);
 
-
 		}
-		
+
 		// camera control
 		if (!PLAYER1.mirror) {
 			cpox = PLAYER1.POX + PLAYER1.SActor.getWidth() / 2 + centerPX / 2;
@@ -366,39 +372,43 @@ public class PlayingState extends State {
 			hpP2 -= 100 * dt;
 			DELAY = 0.5f;
 		}
-		
-		if(PLAYER1.STATUS == PLAYER1.HIT) {
+
+		if (PLAYER1.STATUS == PLAYER1.HIT) {
 			textHit2.setAlpha(1);
 			P2Hit.setAlpha(1);
 		}
-		if(PLAYER2.STATUS == PLAYER2.HIT) {
+		if (PLAYER2.STATUS == PLAYER2.HIT) {
 			textHit1.setAlpha(1);
 			P1Hit.setAlpha(1);
 		}
-		
+
 		if (DELAY <= 0) {
 			if (hpbackP1 > PLAYER1.HP && hpbackP1 >= 0) {
 
 				hpbackP1 -= 100 * dt;
 				
-				PLAYER2.hitCount = 0;
+				P2Hitcount += PLAYER2.hitCount;
 				
-				for(int i = 100 ; i > 0; i--) {
+				PLAYER2.hitCount = 0;
+
+				for (int i = 100; i > 0; i--) {
 					textHit2.setAlpha(i * dt);
 					P2Hit.setAlpha(i * dt);
 				}
 			}
 			if (hpbackP2 > PLAYER2.HP && hpbackP2 >= 0) {
 				hpbackP2 -= 100 * dt;
+
+				P1Hitcount += PLAYER1.hitCount;
 				
 				PLAYER1.hitCount = 0;
-				
-				for(int i = 100 ; i > 0; i--) {
+
+				for (int i = 100; i > 0; i--) {
 					textHit1.setAlpha(i * dt);
 					P1Hit.setAlpha(i * dt);
 				}
 			}
-			
+
 		}
 		// STAMINA
 		if (stmP1 <= 0) {
@@ -441,7 +451,7 @@ public class PlayingState extends State {
 		for (Sprite item : TEXT) {
 			item.setPosition(camera.position.x - WIDTH / 2, camera.position.y - HEIGHT / 2);
 		}
-		if(STATE != GAMESTART && STATE != WAIT) {
+		if (STATE != GAMESTART && STATE != WAIT) {
 			PLAYER2.update(dt);
 			PLAYER1.update(dt);
 		}
@@ -466,10 +476,10 @@ public class PlayingState extends State {
 			if (DELAY >= 1) {
 				TEXT[round].setAlpha(1f);
 			}
-			if(DELAY <= 0.7) {
+			if (DELAY <= 0.7) {
 				TEXT[0].setAlpha(1f);
 			}
-			if(DELAY <= 0) {
+			if (DELAY <= 0) {
 				STATE = PLAY;
 			}
 		}
@@ -479,8 +489,8 @@ public class PlayingState extends State {
 		if (STATE == WAIT) {
 
 			TEXT[lable].setAlpha(1f);
-			
-			if(DELAY <= 1) {
+
+			if (DELAY <= 1) {
 				if (pointP1 >= 2) {
 					lable = 4;
 				} else if (pointP2 >= 2) {
@@ -489,11 +499,25 @@ public class PlayingState extends State {
 					lable = 6;
 				}
 			}
-			
+
 			if (DELAY <= 0) {
 				round += 1;
-				
-				if (pointP1 >= 2) {
+
+				if (pointP1 >= 2 || pointP2 >= 2) {
+					System.out.println("===========================");
+					System.out.println("PLAYER 1");
+					System.out.println("Pressed Punch Button : "+ P1Punchcount + " time");
+					System.out.println("Pressed Kick  Button : "+ P1Kickcount + " time");
+					System.out.println("Hit Success : "+ P1Hitcount + " time");
+					
+					System.out.println("===========================");
+					System.out.println("PLAYER 2");
+					System.out.println("Pressed Punch Button : "+ P2Punchcount + " time");
+					System.out.println("Pressed Kick  Button : "+ P2Kickcount + " time");
+					System.out.println("Hit Success : "+ P2Hitcount + " time");
+					
+					gsm.setState(GameStateManager.MENU);
+				} else if (pointP1 >= 2) {
 					gsm.setState(GameStateManager.MENU);
 				} else if (pointP2 >= 2) {
 					gsm.setState(GameStateManager.MENU);
@@ -504,7 +528,7 @@ public class PlayingState extends State {
 
 		}
 		// Timer
-		
+
 		spriteTime.setPosition(camera.position.x - 50, camera.position.y + HEIGHT / 2 - 100);
 
 		if (STATE != PAUSE && STATE != GAMESTART && STATE != WAIT) {
@@ -516,7 +540,7 @@ public class PlayingState extends State {
 			if (TIME <= 0) {
 				TIME = 0;
 			}
-			
+
 			spriteTime.setNumber(TIME);
 
 			if (TIME == 0 && STATE != WAIT & STATE != REGAME) {
@@ -526,7 +550,7 @@ public class PlayingState extends State {
 					pointP1 += 1;
 				} else if (PLAYER2.HP > PLAYER1.HP) {
 					pointP2 += 1;
-				} else if(PLAYER2.HP == PLAYER1.HP) {
+				} else if (PLAYER2.HP == PLAYER1.HP) {
 					pointP1 += 1;
 					pointP2 += 1;
 				}
@@ -534,36 +558,40 @@ public class PlayingState extends State {
 				STATE = WAIT;
 			}
 		}
-		
-		tagP1.setPosition(PLAYER1.POX + PLAYER1.SActor.getWidth()/2 - tagP1.getWidth()/2, GROUND - 90);
-		tagP2.setPosition(PLAYER2.POX + PLAYER2.SActor.getWidth()/2 - tagP2.getWidth()/2, GROUND - 90);
-		
-		wintag[0].setPosition(camera.position.x - WIDTH / 2 + 20, camera.position.y + HEIGHT/2 - 100);
-		wintag[1].setPosition(camera.position.x - WIDTH / 2 + 20 + wintag[0].getWidth() + 20, camera.position.y + HEIGHT/2 - 100);
-		
-		wintag[2].setPosition(camera.position.x + WIDTH / 2 - 20 - wintag[0].getWidth(), camera.position.y + HEIGHT/2 - 100);
-		wintag[3].setPosition(camera.position.x + WIDTH / 2 - 20 - wintag[0].getWidth()*2 - 20, camera.position.y + HEIGHT/2 - 100);
-		
+
+		tagP1.setPosition(PLAYER1.POX + PLAYER1.SActor.getWidth() / 2 - tagP1.getWidth() / 2, GROUND - 90);
+		tagP2.setPosition(PLAYER2.POX + PLAYER2.SActor.getWidth() / 2 - tagP2.getWidth() / 2, GROUND - 90);
+
+		wintag[0].setPosition(camera.position.x - WIDTH / 2 + 20, camera.position.y + HEIGHT / 2 - 100);
+		wintag[1].setPosition(camera.position.x - WIDTH / 2 + 20 + wintag[0].getWidth() + 20,
+				camera.position.y + HEIGHT / 2 - 100);
+
+		wintag[2].setPosition(camera.position.x + WIDTH / 2 - 20 - wintag[0].getWidth(),
+				camera.position.y + HEIGHT / 2 - 100);
+		wintag[3].setPosition(camera.position.x + WIDTH / 2 - 20 - wintag[0].getWidth() * 2 - 20,
+				camera.position.y + HEIGHT / 2 - 100);
+
 		P1Hit.setNumber(PLAYER1.hitCount);
 
 		P2Hit.setNumber(PLAYER2.hitCount);
 
 		textHit1.setPosition(camera.position.x - WIDTH / 2 + 40 + P1Hit.getWidth(), camera.position.y);
 		P1Hit.setPosition(camera.position.x - WIDTH / 2 + 40, camera.position.y);
-		
-		textHit2.setPosition(camera.position.x + WIDTH / 2 - 40 - P2Hit.getWidth() - textHit2.getWidth(), camera.position.y);
+
+		textHit2.setPosition(camera.position.x + WIDTH / 2 - 40 - P2Hit.getWidth() - textHit2.getWidth(),
+				camera.position.y);
 		P2Hit.setPosition(camera.position.x + WIDTH / 2 - 40 - P2Hit.getWidth(), camera.position.y);
-		
-		for(int i = 0; i < pointP1 ; i++) {
+
+		for (int i = 0; i < pointP1; i++) {
 			wintag[i].setAlpha(1);
 		}
-		
-		for(int i = 0; i < pointP2 ; i++) {
-			wintag[i+2].setAlpha(1);
+
+		for (int i = 0; i < pointP2; i++) {
+			wintag[i + 2].setAlpha(1);
 		}
-		
-		if(menu == true) {
-			
+
+		if (menu == true) {
+
 		}
 
 	}
@@ -584,6 +612,20 @@ public class PlayingState extends State {
 
 			}
 
+		}
+
+		if (InputManager.keyIspressed(PLAYER1.BN_PUNCH)) {
+			P1Punchcount += 1;
+		}
+		if (InputManager.keyIspressed(PLAYER1.BN_KICK)) {
+			P1Kickcount += 1;
+		}
+
+		if (InputManager.keyIspressed(PLAYER2.BN_PUNCH)) {
+			P2Punchcount += 1;
+		}
+		if (InputManager.keyIspressed(PLAYER2.BN_KICK)) {
+			P2Kickcount += 1;
 		}
 
 	}

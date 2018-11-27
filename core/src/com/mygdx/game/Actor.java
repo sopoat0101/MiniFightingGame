@@ -65,7 +65,7 @@ public abstract class Actor {
 	protected final int DOWNHIT = 1;
 	protected final int TOPGUARD = 2;
 	protected final int DOWNGUARD = 3;
-	protected int hitCount = 0;
+	protected int hitCount;
 	
 	protected Sprite damage;
 	protected Sprite Mdamage;
