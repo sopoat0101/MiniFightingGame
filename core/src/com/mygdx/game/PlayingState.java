@@ -385,31 +385,35 @@ public class PlayingState extends State {
 		if (DELAY <= 0) {
 			if (hpbackP1 > PLAYER1.HP && hpbackP1 >= 0) {
 
-				hpbackP1 -= 100 * dt;
-				
 				P2Hitcount += PLAYER2.hitCount;
-				
-				PLAYER2.hitCount = 0;
 
-				for (int i = 100; i > 0; i--) {
-					textHit2.setAlpha(i * dt);
-					P2Hit.setAlpha(i * dt);
-				}
+				PLAYER2.hitCount = 0;
+				
+				hpbackP1 -= 100 * dt;
+
 			}
 			if (hpbackP2 > PLAYER2.HP && hpbackP2 >= 0) {
-				hpbackP2 -= 100 * dt;
-
+				
 				P1Hitcount += PLAYER1.hitCount;
 				
 				PLAYER1.hitCount = 0;
+				
+				hpbackP2 -= 100 * dt;
 
-				for (int i = 100; i > 0; i--) {
-					textHit1.setAlpha(i * dt);
-					P1Hit.setAlpha(i * dt);
-				}
 			}
 
 		}
+		
+		if(PLAYER1.hitCount <= 0) {
+			textHit1.setAlpha(0);
+			P1Hit.setAlpha(0);
+		}
+		
+		if(PLAYER2.hitCount <= 0) {
+			textHit2.setAlpha(0);
+			P2Hit.setAlpha(0);
+		}
+		
 		// STAMINA
 		if (stmP1 <= 0) {
 			stmP1 = 0;
@@ -506,16 +510,16 @@ public class PlayingState extends State {
 				if (pointP1 >= 2 || pointP2 >= 2) {
 					System.out.println("===========================");
 					System.out.println("PLAYER 1");
-					System.out.println("Pressed Punch Button : "+ P1Punchcount + " time");
-					System.out.println("Pressed Kick  Button : "+ P1Kickcount + " time");
-					System.out.println("Hit Success : "+ P1Hitcount + " time");
-					
+					System.out.println("Pressed Punch Button : " + P1Punchcount + " time");
+					System.out.println("Pressed Kick  Button : " + P1Kickcount + " time");
+					System.out.println("Hit Success : " + P1Hitcount + " time");
+
 					System.out.println("===========================");
 					System.out.println("PLAYER 2");
-					System.out.println("Pressed Punch Button : "+ P2Punchcount + " time");
-					System.out.println("Pressed Kick  Button : "+ P2Kickcount + " time");
-					System.out.println("Hit Success : "+ P2Hitcount + " time");
-					
+					System.out.println("Pressed Punch Button : " + P2Punchcount + " time");
+					System.out.println("Pressed Kick  Button : " + P2Kickcount + " time");
+					System.out.println("Hit Success : " + P2Hitcount + " time");
+
 					gsm.setState(GameStateManager.MENU);
 				} else if (pointP1 >= 2) {
 					gsm.setState(GameStateManager.MENU);

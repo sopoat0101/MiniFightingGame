@@ -584,7 +584,11 @@ public class Nox extends Actor {
 		////////////////////////
 		if ((Anotherplayer.isPunch || Anotherplayer.isKick) && InputManager.keyIsdown(BN_BACK)
 				&& Math.abs(POX - Anotherplayer.POX) < SActor.getWidth() && Anotherplayer.STATUS != HITING
-				&& (STATUS == STAND || STATUS == KNEEL) && STAMINA > 0) {
+				&& (STATUS == STAND || STATUS == KNEEL) && STAMINA > 0 
+				&& !InputManager.keyIsdown(BN_FRONT)
+				&& !InputManager.keyIsdown(BN_JUMP)
+				&& !InputManager.keyIsdown(BN_KICK)
+				&& !InputManager.keyIsdown(BN_PUNCH)) {
 
 			if (STATUS == STAND) {
 				HITType = TOPGUARD;
