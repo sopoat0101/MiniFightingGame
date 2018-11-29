@@ -2,12 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SelectState extends State {
 
@@ -15,7 +12,7 @@ public class SelectState extends State {
 	public static int select_P2 = 0;
 	public static final int NOX = 0;
 	public static final int MATO = 1;
-	private Sprite bg, nox1, mato1, nox2, mato2, blank1, blank2, blank3, blank4, frame1, frame2, hero1, hero2, ready1, ready2;
+	private Sprite bg, nox1, mato1, nox2, mato2, blank1, blank2, blank3, blank4, frame1, frame2, hero1, hero2, ready1, ready2, tutorial, exit;
 	private SpriteBatch batch;
 	private Texture _nox, _mato, locked, noxMain, matoMain, ready;
 	private boolean P1_onready = false, P2_onready = false;
@@ -47,6 +44,8 @@ public class SelectState extends State {
 		blank4 = new Sprite(locked);
 		ready1 = new Sprite(ready);
 		ready2 = new Sprite(ready);
+		tutorial = new Sprite(new Texture(Gdx.files.internal("gui/select/tutorialGUI.png")));
+		exit = new Sprite(new Texture(Gdx.files.internal("gui/select/exitGUI.png")));
 		frame1 = new Sprite(new Texture(Gdx.files.internal("gui/select/frameP1.png")));
 		frame2 = new Sprite(new Texture(Gdx.files.internal("gui/select/frameP2.png")));
 		P1 = new Color(hero1.getColor());
@@ -86,6 +85,10 @@ public class SelectState extends State {
 		frame1.setScale(0.5f);
 		frame2.setPosition(1045, 100);
 		frame2.setScale(0.5f);
+		
+		tutorial.setPosition(0, 0f);
+		
+		exit.setPosition(0, 720-exit.getHeight()-10);
 	}
 
 	@Override
@@ -107,6 +110,8 @@ public class SelectState extends State {
 		hero2.draw(batch);
 		ready1.draw(batch);
 		ready2.draw(batch);
+		tutorial.draw(batch);
+		exit.draw(batch);
 		
 		batch.end();
 
@@ -204,6 +209,13 @@ public class SelectState extends State {
 
 			
 			gsm.setState(GameStateManager.PLAYING);
+
+		}
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_ESC)){
+
+			
+			gsm.setState(GameStateManager.MENU);
 
 		}
 

@@ -39,6 +39,9 @@ public class CreditState extends State{
 	@Override
 	public void handle() {
 		// TODO Auto-generated method stub
+		if (InputManager.keyIspressed(InputManager.KEY_ESC)) {
+			gsm.setState(GameStateManager.MENU);
+		}
 	}
 
 	@Override

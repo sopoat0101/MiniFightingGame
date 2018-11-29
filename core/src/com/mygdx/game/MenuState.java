@@ -145,6 +145,15 @@ public class MenuState extends State {
 			Gdx.app.exit();
 
 		}
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_ESC)){
+
+			
+			gsm.setState(GameStateManager.START);
+
+		}
+		
+		
 
 	}
 
