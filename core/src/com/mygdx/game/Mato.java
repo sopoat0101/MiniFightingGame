@@ -365,7 +365,7 @@ public class Mato extends Actor {
 			isKick = true;
 			animationtime = 0.1f;
 
-		} else {
+		} else if(STATUS == JUMP) {
 			if (isPunch || isKick) {
 
 				setAnimationTimeLoop(0.1f);
@@ -489,6 +489,26 @@ public class Mato extends Actor {
 				Mdamage.setAlpha(1f);
 			}
 
+		} else if(HITType == KNOCKUPHIT) {
+			runframe(17, 17, 1);
+			
+			damage.setPosition(hitbox[2].getPoX() + hitbox[2].getWidth(), hitPOY  + 60);
+			Mdamage.setPosition(hitbox[2].getPoX() - 50, hitPOY + 60);
+			
+			if (!mirror) {
+				damage.setAlpha(1f);
+			} else if (mirror) {
+				Mdamage.setAlpha(1f);
+			}
+			
+			canCounter = false;
+			AIRDELAY = 0.1f;
+			beforeSTATUS = JUMP;
+			jump();
+			if(AIRDELAY <= 0) {
+				STATUS = JUMP;
+			}
+			
 		}
 
 		if (DELAY >= 0.28f) {
@@ -540,29 +560,35 @@ public class Mato extends Actor {
 	}
 
 	@Override
+	protected void skill() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	protected void movement(float movespeed, int type) {
 
 		if (type == 0) {
 			// moveFront
 			if (mirror) {
-				if (POX + SActor.getWidth() / 3 > 0) {
+				if (POX + SActor.getWidth()/3 > 0 + 200) {
 					POX -= movespeed * Gdx.graphics.getDeltaTime();
 				}
 			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 2 + 80 < PlayingState.WORLD_WIDTH) {
+				if (POX + SActor.getWidth()/2 + 80 < PlayingState.WORLD_WIDTH - 200) {
 					POX += movespeed * Gdx.graphics.getDeltaTime();
 				}
 			}
 		} else if (type == 1) {
 			// moveBack
 			if (mirror) {
-				if (POX + SActor.getWidth() - SActor.getWidth() / 3 < PlayingState.WORLD_WIDTH
+				if (POX + SActor.getWidth() - SActor.getWidth() / 3 < PlayingState.WORLD_WIDTH -200
 						&& POX + SActor.getWidth() - SActor.getWidth() / 3 < PlayingState.camera.position.x
 								+ PlayingState.WIDTH / 2) {
 					POX += movespeed * Gdx.graphics.getDeltaTime();
 				}
 			} else if (!mirror) {
-				if (POX + SActor.getWidth() / 3 > 0
+				if (POX + SActor.getWidth() / 3 > 0 + 200
 						&& POX + SActor.getWidth() / 3 > PlayingState.camera.position.x - PlayingState.WIDTH / 2) {
 					POX -= movespeed * Gdx.graphics.getDeltaTime();
 				}

@@ -65,6 +65,9 @@ public abstract class Actor {
 	protected final int DOWNHIT = 1;
 	protected final int TOPGUARD = 2;
 	protected final int DOWNGUARD = 3;
+	
+	protected final int KNOCKUPHIT = 4;
+	
 	protected int hitCount;
 	
 	protected Sprite damage;
@@ -74,6 +77,9 @@ public abstract class Actor {
 
 	protected Actor Anotherplayer;
 
+	
+	protected int skillNumber = 0;
+	
 	protected Actor(int bn_front, int bn_back, int bn_jump, int bn_kneel, int bn_punch, int bn_kick, boolean mirror,
 			int player) {
 
@@ -113,6 +119,8 @@ public abstract class Actor {
 	protected abstract void hit();
 
 	protected abstract void guard();
+	
+	protected abstract void skill();
 
 	protected abstract void movement(float movespeed, int type);
 	//Move Front = 0

@@ -495,12 +495,12 @@ public class PlayingState extends State {
 			TEXT[lable].setAlpha(1f);
 
 			if (DELAY <= 1) {
-				if (pointP1 >= 2) {
+				if (pointP1 == pointP2 && round == 3) {
+					lable = 6;
+				} else if (pointP1 >= 2) {
 					lable = 4;
 				} else if (pointP2 >= 2) {
 					lable = 5;
-				} else if (pointP1 == pointP2 && round == 3) {
-					lable = 6;
 				}
 			}
 
