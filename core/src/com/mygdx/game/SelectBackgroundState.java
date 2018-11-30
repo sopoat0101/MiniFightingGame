@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class SelectBackgroundState extends State{
 	public static int bgSelected = 0;
 	private Sprite bg;
-	private Texture bg0, bg1;
+	private Texture bg0, bg1, bg2;
 	private SpriteBatch batch;
 
 	public SelectBackgroundState(GameStateManager gsm) {
@@ -22,6 +20,7 @@ public class SelectBackgroundState extends State{
 		// TODO Auto-generated method stub
 		bg0 = new Texture("background/MAP.png");
 		bg1 = new Texture("background/background1.png");
+		bg2 = new Texture("background/background2.png");
 		bg = new Sprite(bg0);
 		bg.setScale(0.9f);
 		bg.setPosition(-550, -100);
@@ -52,7 +51,33 @@ public class SelectBackgroundState extends State{
 			bgSelected = 1;
 		}
 		
-		if (InputManager.keyIspressed(InputManager.KEY_D) || InputManager.keyIspressed(InputManager.KEY_RIGHT) && bgSelected == 0) {
+		else if (InputManager.keyIspressed(InputManager.KEY_A) || InputManager.keyIspressed(InputManager.KEY_LEFT) && bgSelected == 0) {
+			bg.setTexture(bg2);
+			bgSelected = 2;
+		}
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_D) || InputManager.keyIspressed(InputManager.KEY_RIGHT) && bgSelected == 1) {
+			bg.setTexture(bg2);
+			bgSelected = 2;
+		}
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_A) || InputManager.keyIspressed(InputManager.KEY_LEFT) && bgSelected == 1) {
+			bg.setTexture(bg0);
+			bgSelected = 0;
+		}
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_D) || InputManager.keyIspressed(InputManager.KEY_RIGHT) && bgSelected == 2) {
+			bg.setTexture(bg0);
+			bgSelected = 0;
+		}
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_A) || InputManager.keyIspressed(InputManager.KEY_LEFT) && bgSelected == 2) {
+			bg.setTexture(bg1);
+			bgSelected = 1;
+		}
+		
+		
+		else if (InputManager.keyIspressed(InputManager.KEY_SPACE)) {
 			bg.setScale(1);
 			gsm.setState(gsm.PLAYING);
 		}
