@@ -38,6 +38,8 @@ public class GameStateManager {
 			gameState = new CreditState(this);
 		} else if (state == PLAYING) {
 			gameState = new PlayingState(this);
+		} else if (state == BACKGROUND) {
+			gameState = new SelectBackgroundState(this);
 		}
 		gameState.init();
 	}
