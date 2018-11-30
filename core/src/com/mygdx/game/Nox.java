@@ -255,7 +255,7 @@ public class Nox extends Actor {
 			STATUS = JUMP;
 			cmdlog = "";
 			animationtime = 0.5f;
-			AIRDELAY = 0.5f;
+			AIRDELAY = 0.4f;
 		}
 		if (combo.equals("FJ") && STATUS != JUMP) {
 			STATUS = JUMP;

@@ -62,19 +62,21 @@ public class PlayingState extends State {
 	float stmP1;
 	float stmP2;
 
-	private int STATE = 0;
+	private int STATE = 5;
 	private int PLAY = 0;
 	private int PAUSE = 1;
 	private int REGAME = 2;
 	private int WAIT = 3;
 	private int GAMESTART = 4;
 
+	private int LOADING = 5;
+
 	private boolean menu = false;
 	private int round = 1;
 
 	private Sprite[] TEXT;
 
-	private int lable;
+	private int lable = 1;
 	//
 
 	private int pointP1 = 0;
@@ -89,6 +91,9 @@ public class PlayingState extends State {
 
 	private Sprite textHit2;
 
+	private PlayingMenu menuSprite;
+	private Loading loadingSprite;
+
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
 	}
@@ -97,6 +102,12 @@ public class PlayingState extends State {
 	public void init() {
 
 		batch = new SpriteBatch();
+
+		camera = new OrthographicCamera(WIDTH, HEIGHT);
+
+		camera.position.set(WORLD_WIDTH / 2, HEIGHT / 2, 0);
+
+		loadingSprite = new Loading(0.7f);
 
 		bg = new Sprite(new Texture(Gdx.files.internal("background/MAP.png")));
 
@@ -123,10 +134,6 @@ public class PlayingState extends State {
 		for (int i = 0; i < 9; i++) {
 			TEXT[i] = new Sprite(new Texture(Gdx.files.internal("gui/status/" + (i) + ".png")));
 		}
-
-		camera = new OrthographicCamera(WIDTH, HEIGHT);
-
-		camera.position.set(WORLD_WIDTH / 2, HEIGHT / 2, 0);
 
 		if (SelectState.select_P1 == 0) {
 			PLAYER1 = new Nox(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
@@ -166,6 +173,8 @@ public class PlayingState extends State {
 
 		TIME = 99;
 
+		menuSprite = new PlayingMenu(camera.position.x, camera.position.y);
+
 		spriteTime = new Number();
 
 		// hit
@@ -179,7 +188,11 @@ public class PlayingState extends State {
 		P2Hit = new Number();
 		P2Hit.setAlpha(0);
 
-		STATE = GAMESTART;
+		if(round == 1) {
+			STATE = LOADING;
+		}else {
+			STATE = GAMESTART;
+		}
 		DELAY = 3;
 
 	}
@@ -189,49 +202,62 @@ public class PlayingState extends State {
 
 		batch.begin();
 
-		bg.draw(batch);
-
-		batch.setProjectionMatrix(camera.combined);
-
-		spriteTime.draw(batch);
-
-		hpbar1.draw(batch);
-		hpbar2.draw(batch);
-
-		hpback1.draw(batch);
-		hpback1.setAlpha(0.7f);
-		hpback2.draw(batch);
-		hpback2.setAlpha(0.7f);
-
-		hp1.draw(batch);
-		hp2.draw(batch);
-
-		stmbar1.draw(batch);
-		stmbar2.draw(batch);
-
-		PLAYER2.draw(batch);
-		PLAYER1.draw(batch);
-
-		tagP1.draw(batch);
-		tagP2.draw(batch);
-
-		P1Hit.draw(batch);
-		P2Hit.draw(batch);
-
-		textHit1.draw(batch);
-		textHit2.draw(batch);
-
-		for (Sprite item : wintag) {
-			item.draw(batch);
-			item.setSize(30, 30);
-			item.setAlpha(0f);
+		if (STATE == LOADING) {
+			loadingSprite.draw(batch);
+			if (DELAY <= 0) {
+				STATE = GAMESTART;
+				DELAY = 3;
+			}
 		}
 
-		for (Sprite item : TEXT) {
-			item.draw(batch);
-			item.setAlpha(0f);
-		}
+		if (STATE != LOADING) {
+			bg.draw(batch);
 
+			batch.setProjectionMatrix(camera.combined);
+
+			spriteTime.draw(batch);
+
+			hpbar1.draw(batch);
+			hpbar2.draw(batch);
+
+			hpback1.draw(batch);
+			hpback1.setAlpha(0.7f);
+			hpback2.draw(batch);
+			hpback2.setAlpha(0.7f);
+
+			hp1.draw(batch);
+			hp2.draw(batch);
+
+			stmbar1.draw(batch);
+			stmbar2.draw(batch);
+
+			PLAYER2.draw(batch);
+			PLAYER1.draw(batch);
+
+			tagP1.draw(batch);
+			tagP2.draw(batch);
+
+			P1Hit.draw(batch);
+			P2Hit.draw(batch);
+
+			textHit1.draw(batch);
+			textHit2.draw(batch);
+
+			for (Sprite item : wintag) {
+				item.draw(batch);
+				item.setSize(30, 30);
+				item.setAlpha(0f);
+			}
+
+			for (Sprite item : TEXT) {
+				item.draw(batch);
+				item.setAlpha(0f);
+			}
+
+			menuSprite.draw(batch);
+
+		}
+		
 		batch.end();
 
 	}
@@ -388,32 +414,32 @@ public class PlayingState extends State {
 				P2Hitcount += PLAYER2.hitCount;
 
 				PLAYER2.hitCount = 0;
-				
+
 				hpbackP1 -= 100 * dt;
 
 			}
 			if (hpbackP2 > PLAYER2.HP && hpbackP2 >= 0) {
-				
+
 				P1Hitcount += PLAYER1.hitCount;
-				
+
 				PLAYER1.hitCount = 0;
-				
+
 				hpbackP2 -= 100 * dt;
 
 			}
 
 		}
-		
-		if(PLAYER1.hitCount <= 0) {
+
+		if (PLAYER1.hitCount <= 0) {
 			textHit1.setAlpha(0);
 			P1Hit.setAlpha(0);
 		}
-		
-		if(PLAYER2.hitCount <= 0) {
+
+		if (PLAYER2.hitCount <= 0) {
 			textHit2.setAlpha(0);
 			P2Hit.setAlpha(0);
 		}
-		
+
 		// STAMINA
 		if (stmP1 <= 0) {
 			stmP1 = 0;
@@ -455,7 +481,7 @@ public class PlayingState extends State {
 		for (Sprite item : TEXT) {
 			item.setPosition(camera.position.x - WIDTH / 2, camera.position.y - HEIGHT / 2);
 		}
-		if (STATE != GAMESTART && STATE != WAIT) {
+		if (STATE != GAMESTART && STATE != WAIT && STATE != LOADING) {
 			PLAYER2.update(dt);
 			PLAYER1.update(dt);
 		}
@@ -492,10 +518,8 @@ public class PlayingState extends State {
 		}
 		if (STATE == WAIT) {
 
-			TEXT[lable].setAlpha(1f);
-
 			if (DELAY <= 1) {
-				if (pointP1 == pointP2 && round == 3) {
+				if (pointP1 == 2 && pointP2 == 2) {
 					lable = 6;
 				} else if (pointP1 >= 2) {
 					lable = 4;
@@ -503,6 +527,8 @@ public class PlayingState extends State {
 					lable = 5;
 				}
 			}
+
+			TEXT[lable].setAlpha(1f);
 
 			if (DELAY <= 0) {
 				round += 1;
@@ -593,9 +619,36 @@ public class PlayingState extends State {
 		for (int i = 0; i < pointP2; i++) {
 			wintag[i + 2].setAlpha(1);
 		}
+		// menuPlaying
+		menuSprite.setPosition(camera.position.x, camera.position.y);
 
 		if (menu == true) {
+			menuSprite.setAlpha(1f);
+			menuSprite.setEnable(menu);
 
+			if (InputManager.keyIspressed(InputManager.KEY_SPACE)) {
+
+				if (menuSprite.getNowSelect() == 0) {
+
+					if (STATE == PAUSE) {
+						STATE = PLAY;
+						PLAYER1.STATUS = PLAYER1.STATUS_PAUSE_GAME;
+						PLAYER2.STATUS = PLAYER2.STATUS_PAUSE_GAME;
+						menu = false;
+
+					}
+				}
+				if (menuSprite.getNowSelect() == 1) {
+
+					gsm.setState(GameStateManager.MENU);
+				}
+
+			}
+
+		}
+		if (menu == false) {
+			menuSprite.setAlpha(0f);
+			menuSprite.setEnable(menu);
 		}
 
 	}
