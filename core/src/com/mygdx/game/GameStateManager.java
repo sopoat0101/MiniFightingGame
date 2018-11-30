@@ -12,6 +12,7 @@ public class GameStateManager {
 	public static final int TUTORIAL = 50;
 	public static final int PLAYING = 1000;
 	public static final int CREDIT = 99;
+	public static final int BACKGROUND = 98;
 
 	private static int select_P1;
 	private static int select_P2;

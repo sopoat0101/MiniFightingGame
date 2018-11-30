@@ -208,7 +208,7 @@ public class SelectState extends State {
 		else if (InputManager.keyIspressed(InputManager.KEY_SPACE) && P1_onready == true && P2_onready == true) {
 
 			
-			gsm.setState(GameStateManager.PLAYING);
+			gsm.setState(GameStateManager.BACKGROUND);
 
 		}
 		
