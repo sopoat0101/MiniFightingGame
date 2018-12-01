@@ -129,7 +129,19 @@ public class SelectState extends State {
 		
 		alpha += dt;
 		select.setAlpha((float)Math.abs(Math.sin(alpha)));
-		bg.setAlpha((float)Math.abs(Math.sin(alpha)));
+		if(P1_onready == true) {
+			ready1.setAlpha((float)Math.abs(Math.sin(alpha)));
+		}
+		else {
+			ready1.setAlpha(0);
+		}
+		
+		if(P2_onready == true) {
+			ready2.setAlpha((float)Math.abs(Math.sin(alpha)));
+		}
+		else {
+			ready2.setAlpha(0);
+		}
 
 	}
 

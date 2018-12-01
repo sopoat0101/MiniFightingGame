@@ -108,8 +108,16 @@ public class PlayingState extends State {
 		camera.position.set(WORLD_WIDTH / 2, HEIGHT / 2, 0);
 
 		loadingSprite = new Loading(0.7f);
-
-		bg = new Sprite(new Texture(Gdx.files.internal("background/MAP.png")));
+		
+		if(SelectBackgroundState.bgSelected == 0) {
+			bg = new Sprite(new Texture(Gdx.files.internal("background/MAP.png")));
+		}
+		else if(SelectBackgroundState.bgSelected == 1) {
+			bg = new Sprite(new Texture(Gdx.files.internal("background/background1.png")));
+		}
+		else {
+			bg = new Sprite(new Texture(Gdx.files.internal("background/background2.png")));
+		}
 
 		hpbar1 = new Sprite(new Texture(Gdx.files.internal("gui/playing/hpbar.png")));
 		hpbar2 = new Sprite(new Texture(Gdx.files.internal("gui/playing/hpbar.png")));
