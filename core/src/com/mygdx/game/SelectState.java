@@ -12,11 +12,12 @@ public class SelectState extends State {
 	public static int select_P2 = 0;
 	public static final int NOX = 0;
 	public static final int MATO = 1;
-	private Sprite bg, nox1, mato1, nox2, mato2, blank1, blank2, blank3, blank4, frame1, frame2, hero1, hero2, ready1, ready2, tutorial, exit;
+	private Sprite bg, nox1, mato1, nox2, mato2, blank1, blank2, blank3, blank4, frame1, frame2, hero1, hero2, ready1, ready2, tutorial, exit, select;
 	private SpriteBatch batch;
 	private Texture _nox, _mato, locked, noxMain, matoMain, ready;
 	private boolean P1_onready = false, P2_onready = false;
 	private Color P1, P2;
+	private float alpha = .0f;
 
 	public SelectState(GameStateManager gsm) {
 		super(gsm);
@@ -33,6 +34,7 @@ public class SelectState extends State {
 		ready = new Texture("gui/select/readyGUI.png");
 		hero1 = new Sprite(noxMain);
 		hero2 = new Sprite(noxMain);
+		select = new Sprite((new Texture(Gdx.files.internal("gui/select/selectGUI.png"))));
 		bg = new Sprite(new Texture(Gdx.files.internal("background/MenuBackground.png")));
 		nox1 = new Sprite(_nox);
 		mato1 = new Sprite(_mato);
@@ -50,6 +52,8 @@ public class SelectState extends State {
 		frame2 = new Sprite(new Texture(Gdx.files.internal("gui/select/frameP2.png")));
 		P1 = new Color(hero1.getColor());
 		P2 = new Color(hero2.getColor());
+		
+		select.setPosition(0, 525);
 		
 		nox1.setPosition(25, 100);
 		nox1.setScale(0.5f, 0.5f);
@@ -96,6 +100,7 @@ public class SelectState extends State {
 		batch = new SpriteBatch();
 		batch.begin();
 		bg.draw(batch);
+		select.draw(batch);
 		nox1.draw(batch);
 		mato1.draw(batch);
 		blank1.draw(batch);
@@ -119,8 +124,12 @@ public class SelectState extends State {
 
 	@Override
 	public void update(float dt) {
-
+		
 		handle();
+		
+		alpha += dt;
+		select.setAlpha((float)Math.abs(Math.sin(alpha)));
+		bg.setAlpha((float)Math.abs(Math.sin(alpha)));
 
 	}
 
