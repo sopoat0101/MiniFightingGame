@@ -42,6 +42,7 @@ public class GameStateManager {
 			gameState = new SelectBackgroundState(this);
 		}
 		gameState.init();
+		
 	}
 
 	public void darw() {

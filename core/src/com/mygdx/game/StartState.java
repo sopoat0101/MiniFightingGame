@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +11,8 @@ public class StartState extends State{
 	private Sprite bg, logo, startButton;
 	private float alpha = .0f;
 
+	private Sound bgsound;
+	
 	public StartState(GameStateManager gsm) {
 		super(gsm);
 	}
@@ -20,6 +23,11 @@ public class StartState extends State{
 		bg = new Sprite(new Texture(Gdx.files.internal("background/StartBackground.png")));
 		logo = new Sprite(new Texture(Gdx.files.internal("gui/logo/logo.png")));
 		startButton = new Sprite(new Texture(Gdx.files.internal("gui/logo/startButton.png")));
+		
+		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/2-NullField.mp3"));
+		
+		bgsound.loop(0.5f, 1.0f, 0f);
+		
 	}
 
 	@Override
@@ -53,6 +61,7 @@ public class StartState extends State{
 		
 		if(InputManager.keyIspressed(InputManager.KEY_SPACE)) {
 			
+			dispose();
 			gsm.setState(GameStateManager.MENU);
 			
 		}
@@ -62,6 +71,8 @@ public class StartState extends State{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+		
+		bgsound.dispose();
 		
 	}
 
