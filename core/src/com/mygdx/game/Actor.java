@@ -1,12 +1,16 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public abstract class Actor {
-
+	
+	protected Sound hitFX;
+	protected Sound deathFX;
+	
 	protected int BN_FRONT;
 	protected int BN_BACK;
 	protected int BN_JUMP;

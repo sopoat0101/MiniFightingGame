@@ -663,7 +663,11 @@ public class PlayingState extends State {
 					}
 				}
 				if (menuSprite.getNowSelect() == 1) {
-
+					
+					GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+					GameStateManager.bgsound.setVolume(0.5f);
+					GameStateManager.bgsound.play();
+					GameStateManager.bgsound.setLooping(true);
 					gsm.setState(GameStateManager.MENU);
 				}
 
@@ -716,7 +720,6 @@ public class PlayingState extends State {
 	public void dispose() {
 		PLAYER1.dispose();
 		PLAYER2.dispose();
-		GameStateManager.bgsound.dispose();
 
 	}
 
