@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -93,6 +95,9 @@ public class PlayingState extends State {
 
 	private PlayingMenu menuSprite;
 	private Loading loadingSprite;
+	
+	private Music bgsound;
+	private boolean isPlaying = false;
 
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
@@ -100,7 +105,15 @@ public class PlayingState extends State {
 
 	@Override
 	public void init() {
-
+		
+		if(isPlaying == false) {
+			isPlaying = true;
+			bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/1-ThisisWar.mp3"));
+			bgsound.play();
+			bgsound.setLooping(true);
+			bgsound.setVolume(0.5f);
+		}
+		
 		batch = new SpriteBatch();
 
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -631,6 +644,7 @@ public class PlayingState extends State {
 		menuSprite.setPosition(camera.position.x, camera.position.y);
 
 		if (menu == true) {
+			bgsound.pause();
 			menuSprite.setAlpha(1f);
 			menuSprite.setEnable(menu);
 
@@ -655,6 +669,7 @@ public class PlayingState extends State {
 
 		}
 		if (menu == false) {
+			bgsound.play();
 			menuSprite.setAlpha(0f);
 			menuSprite.setEnable(menu);
 		}
@@ -699,6 +714,7 @@ public class PlayingState extends State {
 	public void dispose() {
 		PLAYER1.dispose();
 		PLAYER2.dispose();
+		bgsound.dispose();
 
 	}
 

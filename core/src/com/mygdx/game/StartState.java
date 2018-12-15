@@ -24,10 +24,6 @@ public class StartState extends State{
 		logo = new Sprite(new Texture(Gdx.files.internal("gui/logo/logo.png")));
 		startButton = new Sprite(new Texture(Gdx.files.internal("gui/logo/startButton.png")));
 		
-		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/2-NullField.mp3"));
-		
-		bgsound.loop(0.5f, 1.0f, 0f);
-		
 	}
 
 	@Override
@@ -72,7 +68,6 @@ public class StartState extends State{
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
-		bgsound.dispose();
 		
 	}
 

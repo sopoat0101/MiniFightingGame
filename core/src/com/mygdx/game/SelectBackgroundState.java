@@ -108,7 +108,7 @@ public class SelectBackgroundState extends State{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+		GameStateManager.bgsound.dispose();
 	}
 
 }

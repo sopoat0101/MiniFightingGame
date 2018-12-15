@@ -1,5 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+
 public class GameStateManager {
 
 	private static State gameState;
@@ -13,11 +17,18 @@ public class GameStateManager {
 	public static final int PLAYING = 1000;
 	public static final int CREDIT = 99;
 	public static final int BACKGROUND = 98;
+	public static Music bgsound;
 
 	private static int select_P1;
 	private static int select_P2;
 
 	public GameStateManager() {
+		
+		bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+		bgsound.setVolume(0.5f);
+		bgsound.play();
+		bgsound.setLooping(true);
+		
 		setState(START);
 	}
 
