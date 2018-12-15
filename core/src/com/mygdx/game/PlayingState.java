@@ -64,14 +64,14 @@ public class PlayingState extends State {
 	float stmP1;
 	float stmP2;
 
-	private int STATE = 5;
-	private int PLAY = 0;
-	private int PAUSE = 1;
-	private int REGAME = 2;
-	private int WAIT = 3;
-	private int GAMESTART = 4;
+	public static int STATE = 5;
+	public int PLAY = 0;
+	public int PAUSE = 1;
+	public int REGAME = 2;
+	public int WAIT = 3;
+	public int GAMESTART = 4;
 
-	private int LOADING = 5;
+	public static int LOADING = 5;
 
 	private boolean menu = false;
 	private int round = 1;
@@ -96,8 +96,6 @@ public class PlayingState extends State {
 	private PlayingMenu menuSprite;
 	private Loading loadingSprite;
 	
-	private Music bgsound;
-	private boolean isPlaying = false;
 
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
@@ -105,14 +103,6 @@ public class PlayingState extends State {
 
 	@Override
 	public void init() {
-		
-		if(isPlaying == false) {
-			isPlaying = true;
-			bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/1-ThisisWar.mp3"));
-			bgsound.play();
-			bgsound.setLooping(true);
-			bgsound.setVolume(0.5f);
-		}
 		
 		batch = new SpriteBatch();
 
@@ -568,10 +558,22 @@ public class PlayingState extends State {
 					System.out.println("Hit Success : " + P2Hitcount + " time");
 
 					gsm.setState(GameStateManager.MENU);
+					GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+					GameStateManager.bgsound.setVolume(0.5f);
+					GameStateManager.bgsound.play();
+					GameStateManager.bgsound.setLooping(true);
 				} else if (pointP1 >= 2) {
 					gsm.setState(GameStateManager.MENU);
+					GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+					GameStateManager.bgsound.setVolume(0.5f);
+					GameStateManager.bgsound.play();
+					GameStateManager.bgsound.setLooping(true);
 				} else if (pointP2 >= 2) {
 					gsm.setState(GameStateManager.MENU);
+					GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+					GameStateManager.bgsound.setVolume(0.5f);
+					GameStateManager.bgsound.play();
+					GameStateManager.bgsound.setLooping(true);
 				} else {
 					STATE = REGAME;
 				}
@@ -644,7 +646,7 @@ public class PlayingState extends State {
 		menuSprite.setPosition(camera.position.x, camera.position.y);
 
 		if (menu == true) {
-			bgsound.pause();
+			GameStateManager.bgsound.pause();
 			menuSprite.setAlpha(1f);
 			menuSprite.setEnable(menu);
 
@@ -669,7 +671,7 @@ public class PlayingState extends State {
 
 		}
 		if (menu == false) {
-			bgsound.play();
+			GameStateManager.bgsound.play();
 			menuSprite.setAlpha(0f);
 			menuSprite.setEnable(menu);
 		}
@@ -714,7 +716,7 @@ public class PlayingState extends State {
 	public void dispose() {
 		PLAYER1.dispose();
 		PLAYER2.dispose();
-		bgsound.dispose();
+		GameStateManager.bgsound.dispose();
 
 	}
 

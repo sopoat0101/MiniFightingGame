@@ -10,8 +10,6 @@ public class StartState extends State{
 	private SpriteBatch batch;
 	private Sprite bg, logo, startButton;
 	private float alpha = .0f;
-
-	private Sound bgsound;
 	
 	public StartState(GameStateManager gsm) {
 		super(gsm);
