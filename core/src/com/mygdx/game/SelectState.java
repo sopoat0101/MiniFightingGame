@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,13 +20,18 @@ public class SelectState extends State {
 	private Color P1, P2;
 	private float alpha = .0f;
 
+	private Sound bgsound;
+	
 	public SelectState(GameStateManager gsm) {
 		super(gsm);
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
+		
+		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/Stranger_Danger.mp3"));
+		bgsound.loop(0.5f, 1.0f, 0.0f);
+		
 		_nox = new Texture(Gdx.files.internal("gui/select/NoxFrame.png"));
 		_mato = new Texture(Gdx.files.internal("gui/select/MatoFrame.png"));
 		locked = new Texture(Gdx.files.internal("gui/select/dlc.png"));
@@ -93,6 +99,7 @@ public class SelectState extends State {
 		tutorial.setPosition(0, 0f);
 		
 		exit.setPosition(0, 720-exit.getHeight()-10);
+		
 	}
 
 	@Override
@@ -245,7 +252,8 @@ public class SelectState extends State {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-
+		bgsound.dispose();
+		
 	}
 
 }

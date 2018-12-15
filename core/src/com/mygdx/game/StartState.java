@@ -11,13 +11,18 @@ public class StartState extends State{
 	private Sprite bg, logo, startButton;
 	private float alpha = .0f;
 	
+	private Sound bgsound;
+	
 	public StartState(GameStateManager gsm) {
 		super(gsm);
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
+		
+		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/2-NullField.mp3"));
+		bgsound.loop(0.5f, 1.0f, 0.0f);
+		
 		bg = new Sprite(new Texture(Gdx.files.internal("background/StartBackground.png")));
 		logo = new Sprite(new Texture(Gdx.files.internal("gui/logo/logo.png")));
 		startButton = new Sprite(new Texture(Gdx.files.internal("gui/logo/startButton.png")));
@@ -66,6 +71,7 @@ public class StartState extends State{
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
+		bgsound.dispose();
 		
 	}
 

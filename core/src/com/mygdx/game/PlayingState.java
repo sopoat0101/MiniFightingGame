@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -97,12 +96,18 @@ public class PlayingState extends State {
 	private Loading loadingSprite;
 	
 
+	private Sound bgsound;
+	
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
+		
 	}
 
 	@Override
 	public void init() {
+		
+		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/1-ThisisWar.mp3"));
+		bgsound.loop(0.5f, 1.0f, 0.0f);
 		
 		batch = new SpriteBatch();
 
@@ -198,14 +203,10 @@ public class PlayingState extends State {
 		textHit2.setAlpha(0);
 		P2Hit = new Number();
 		P2Hit.setAlpha(0);
-
-		if(round == 1) {
-			STATE = LOADING;
-		}else {
-			STATE = GAMESTART;
-		}
+		
+		STATE = LOADING;
 		DELAY = 3;
-
+		
 	}
 
 	@Override
@@ -357,7 +358,9 @@ public class PlayingState extends State {
 		}
 
 		// GUI update
-		DELAY -= dt;
+		if(STATE == PLAY || STATE == LOADING || STATE == WAIT || STATE == GAMESTART) {
+			DELAY -= dt;
+		}
 		if (DELAY <= 0) {
 			DELAY = 0;
 		}
@@ -525,6 +528,7 @@ public class PlayingState extends State {
 			}
 		}
 		if (STATE == REGAME) {
+			bgsound.dispose();
 			init();
 		}
 		if (STATE == WAIT) {
@@ -558,22 +562,6 @@ public class PlayingState extends State {
 					System.out.println("Hit Success : " + P2Hitcount + " time");
 
 					gsm.setState(GameStateManager.MENU);
-					GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
-					GameStateManager.bgsound.setVolume(0.5f);
-					GameStateManager.bgsound.play();
-					GameStateManager.bgsound.setLooping(true);
-				} else if (pointP1 >= 2) {
-					gsm.setState(GameStateManager.MENU);
-					GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
-					GameStateManager.bgsound.setVolume(0.5f);
-					GameStateManager.bgsound.play();
-					GameStateManager.bgsound.setLooping(true);
-				} else if (pointP2 >= 2) {
-					gsm.setState(GameStateManager.MENU);
-					GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
-					GameStateManager.bgsound.setVolume(0.5f);
-					GameStateManager.bgsound.play();
-					GameStateManager.bgsound.setLooping(true);
 				} else {
 					STATE = REGAME;
 				}
@@ -584,7 +572,7 @@ public class PlayingState extends State {
 
 		spriteTime.setPosition(camera.position.x - 50, camera.position.y + HEIGHT / 2 - 100);
 
-		if (STATE != PAUSE && STATE != GAMESTART && STATE != WAIT) {
+		if (STATE != PAUSE && STATE != GAMESTART && STATE != WAIT && STATE != LOADING) {
 			countDOWN += dt;
 			if (countDOWN >= 1) {
 				countDOWN = 0;
@@ -646,7 +634,6 @@ public class PlayingState extends State {
 		menuSprite.setPosition(camera.position.x, camera.position.y);
 
 		if (menu == true) {
-			GameStateManager.bgsound.pause();
 			menuSprite.setAlpha(1f);
 			menuSprite.setEnable(menu);
 
@@ -658,24 +645,23 @@ public class PlayingState extends State {
 						STATE = PLAY;
 						PLAYER1.STATUS = PLAYER1.STATUS_PAUSE_GAME;
 						PLAYER2.STATUS = PLAYER2.STATUS_PAUSE_GAME;
+						
+						bgsound.resume();
+						
 						menu = false;
 
 					}
 				}
 				if (menuSprite.getNowSelect() == 1) {
 					
-					GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
-					GameStateManager.bgsound.setVolume(0.5f);
-					GameStateManager.bgsound.play();
-					GameStateManager.bgsound.setLooping(true);
 					gsm.setState(GameStateManager.MENU);
+					
 				}
 
 			}
 
 		}
 		if (menu == false) {
-			GameStateManager.bgsound.play();
 			menuSprite.setAlpha(0f);
 			menuSprite.setEnable(menu);
 		}
@@ -688,12 +674,18 @@ public class PlayingState extends State {
 
 			if (STATE == PLAY) {
 				STATE = PAUSE;
+				
+				bgsound.pause();
+				
 				menu = true;
 
 			} else if (STATE == PAUSE) {
 				STATE = PLAY;
 				PLAYER1.STATUS = PLAYER1.STATUS_PAUSE_GAME;
 				PLAYER2.STATUS = PLAYER2.STATUS_PAUSE_GAME;
+				
+				bgsound.resume();
+				
 				menu = false;
 
 			}
@@ -718,6 +710,9 @@ public class PlayingState extends State {
 
 	@Override
 	public void dispose() {
+		
+		bgsound.dispose();
+		
 		PLAYER1.dispose();
 		PLAYER2.dispose();
 

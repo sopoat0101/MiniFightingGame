@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,20 +10,26 @@ public class TutorialState extends State{
 	private Sprite bg;
 	private SpriteBatch batch;
 
+	private Sound bgsound;
+	
 	public TutorialState(GameStateManager gsm) {
 		super(gsm);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
+		
+		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/Generations_Away.mp3"));
+		bgsound.loop(0.5f, 1.0f, 0.0f);
+		
 		bg = new Sprite(new Texture(Gdx.files.internal("background/tutorialBackground.png")));
+		
 	}
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
+		
 		batch = new SpriteBatch();
 		batch.begin();
 		bg.draw(batch);
@@ -32,13 +39,13 @@ public class TutorialState extends State{
 
 	@Override
 	public void update(float dt) {
-		// TODO Auto-generated method stub
+		
 		handle();
 	}
 
 	@Override
 	public void handle() {
-		// TODO Auto-generated method stub
+		
 		if (InputManager.keyIspressed(InputManager.KEY_ESC)){
 			gsm.setState(GameStateManager.MENU);
 		}
@@ -47,7 +54,9 @@ public class TutorialState extends State{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		
+		
+		bgsound.dispose();
 		
 	}
 

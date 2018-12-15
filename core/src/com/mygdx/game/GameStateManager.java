@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
 public class GameStateManager {
@@ -22,10 +21,6 @@ public class GameStateManager {
 	private static int select_P2;
 
 	public GameStateManager() {
-		GameStateManager.bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
-		GameStateManager.bgsound.setVolume(0.5f);
-		GameStateManager.bgsound.play();
-		GameStateManager.bgsound.setLooping(true);
 		setState(START);
 	}
 
@@ -46,10 +41,10 @@ public class GameStateManager {
 			gameState = new CreditState(this);
 		} else if (state == PLAYING) {
 			gameState = new PlayingState(this);
-			bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/1-ThisisWar.mp3"));
-			bgsound.play();
-			bgsound.setLooping(true);
-			bgsound.setVolume(0.5f);
+//			bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/1-ThisisWar.mp3"));
+//			bgsound.play();
+//			bgsound.setLooping(true);
+//			bgsound.setVolume(0.5f);
 		} else if (state == BACKGROUND) {
 			gameState = new SelectBackgroundState(this);
 		}
