@@ -10,6 +10,7 @@ public class SelectBackgroundState extends State{
 	private Sprite bg, gui1, guiName;
 	public static Texture bg0, bg1, bg2, name0, name1, name2;
 	private SpriteBatch batch;
+	private Sprite gui;
 	
 	public SelectBackgroundState(GameStateManager gsm) {
 		super(gsm);
@@ -18,7 +19,7 @@ public class SelectBackgroundState extends State{
 
 	@Override
 	public void init() {
-		
+
 		bg0 = new Texture(Gdx.files.internal("background/MAP.png"));
 		bg1 = new Texture(Gdx.files.internal("background/background1.png"));
 		bg2 = new Texture(Gdx.files.internal("background/background2.png"));
@@ -26,6 +27,9 @@ public class SelectBackgroundState extends State{
 		name1 = new Texture(Gdx.files.internal("gui/select/stageName/name1.png"));
 		name2 = new Texture(Gdx.files.internal("gui/select/stageName/name2.png"));
 		bg = new Sprite(bg0);
+		gui = new Sprite(new Texture(Gdx.files.internal("gui/select/selectBackgroundGUI.png")));
+		gui.setPosition(0, 0);
+		
 		bg.setScale(0.9f);
 		bg.setPosition(-550, -100);
 		
@@ -33,6 +37,7 @@ public class SelectBackgroundState extends State{
 		guiName = new Sprite(name0);
 		gui1.setPosition(0, 475);
 		guiName.setPosition(0, 0);
+		guiName.setScale(0.8f);
 	}
 
 	@Override
@@ -45,6 +50,7 @@ public class SelectBackgroundState extends State{
 		bg.draw(batch);
 		gui1.draw(batch);
 		guiName.draw(batch);
+		gui.draw(batch);
 		
 		batch.end();
 		
