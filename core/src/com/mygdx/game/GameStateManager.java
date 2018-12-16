@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
 public class GameStateManager {
@@ -9,47 +10,93 @@ public class GameStateManager {
 	public static int state;
 
 	public static final int START = 0;
-	public static final int MENU = 10;
-	public static final int SELECT = 100;
-	public static final int TUTORIAL = 50;
-	public static final int PLAYING = 1000;
-	public static final int CREDIT = 99;
-	public static final int BACKGROUND = 98;
-	public static Music bgsound;
+	public static final int MENU = 1;
+	public static final int SELECT = 2;
+	public static final int TUTORIAL = 3;
+	public static final int PLAYING = 4;
+	public static final int CREDIT = 5;
+	public static final int BACKGROUND = 6;
+	public static final int SCORE = 7;
+
+	private static Music bgMusic;
 
 	private static int select_P1;
 	private static int select_P2;
 
 	public GameStateManager() {
-		setState(START);
+		
+		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+		bgMusic.setLooping(true);
+		bgMusic.setVolume(0.5f);
+		
+		bgMusic.play();
+		
+		setState(SCORE);
 	}
 
 	public void setState(int state) {
-
+		
+		bgMusic.dispose();
+		
 		if (gameState != null)
 			gameState.dispose();
 
 		if (state == START) {
+			
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+			bgMusic.play();
+			bgMusic.setLooping(true);
+			bgMusic.setVolume(0.5f);
+
 			gameState = new StartState(this);
+
 		} else if (state == MENU) {
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Operatic_3.mp3"));
+			bgMusic.play();
+			bgMusic.setLooping(true);
+			bgMusic.setVolume(0.5f);
+
 			gameState = new MenuState(this);
 		} else if (state == SELECT) {
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Stranger_Danger.mp3"));
+			bgMusic.play();
+			bgMusic.setLooping(true);
+			bgMusic.setVolume(0.5f);
+
 			gameState = new SelectState(this);
 		} else if (state == TUTORIAL) {
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Generations_Away.mp3"));
+			bgMusic.play();
+			bgMusic.setLooping(true);
+			bgMusic.setVolume(0.5f);
+
 			gameState = new TutorialState(this);
 		} else if (state == CREDIT) {
 			gameState = new CreditState(this);
 		} else if (state == PLAYING) {
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/1-ThisisWar.mp3"));
+			bgMusic.play();
+			bgMusic.setLooping(true);
+			bgMusic.setVolume(0.5f);
+
 			gameState = new PlayingState(this);
-//			bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/1-ThisisWar.mp3"));
-//			bgsound.play();
-//			bgsound.setLooping(true);
-//			bgsound.setVolume(0.5f);
 		} else if (state == BACKGROUND) {
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Generations_Away.mp3"));
+			bgMusic.play();
+			bgMusic.setLooping(true);
+			bgMusic.setVolume(0.5f);
+
 			gameState = new SelectBackgroundState(this);
+		} else if (state == SCORE) {
+			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Inevitable.mp3"));
+			bgMusic.play();
+			bgMusic.setLooping(true);
+			bgMusic.setVolume(0.5f);
+
+			gameState = new ScoreState(this);
 		}
 		gameState.init();
-		
+
 	}
 
 	public void darw() {
@@ -62,6 +109,7 @@ public class GameStateManager {
 
 	public void dispose() {
 		gameState.dispose();
+		bgMusic.dispose();
 	}
 
 //
@@ -81,4 +129,20 @@ public class GameStateManager {
 		GameStateManager.select_P2 = select_P2;
 	}
 
+	public static void setVolum(float vol) {
+		
+		bgMusic.setVolume(vol);
+
+	}
+
+	public static void setSoundState(boolean state) {
+
+		if(state) {
+			bgMusic.play();
+		}
+		if(!state) {
+			bgMusic.pause();
+		}
+
+	}
 }

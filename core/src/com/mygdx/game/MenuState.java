@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,7 +11,6 @@ public class MenuState extends State {
 	private Texture playTexture1, playTexture12, tutorialTexture1, tutorialTexture12, exitTexture1, exitTexture12, creditTexture1, creditTexture12;
 	private boolean playSelected = true, tutorialSelected = false, exitSelected = false, creditSelected = false;
 
-	private Sound bgsound;
 	
 	public MenuState(GameStateManager gsm) {
 		super(gsm);
@@ -20,9 +18,6 @@ public class MenuState extends State {
 
 	@Override
 	public void init() {
-
-		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/Operatic_3.mp3"));
-		bgsound.loop(0.5f, 1.0f, 0.0f);
 		
 		bg = new Sprite(new Texture(Gdx.files.internal("background/MenuBackground.png")));
 		playOption = new Sprite(new Texture(Gdx.files.internal("gui/menu/battlemenu1-2.png")));
@@ -166,8 +161,6 @@ public class MenuState extends State {
 
 	@Override
 	public void dispose() {
-		
-		bgsound.dispose();
 
 	}
 

@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,8 +10,6 @@ public class SelectBackgroundState extends State{
 	private Sprite bg, gui1, guiName;
 	public static Texture bg0, bg1, bg2, name0, name1, name2;
 	private SpriteBatch batch;
-
-	private Sound bgsound;
 	
 	public SelectBackgroundState(GameStateManager gsm) {
 		super(gsm);
@@ -21,9 +18,6 @@ public class SelectBackgroundState extends State{
 
 	@Override
 	public void init() {
-		
-		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/Generations_Away.mp3"));
-		bgsound.loop(0.5f, 1.0f, 0.0f);
 		
 		bg0 = new Texture(Gdx.files.internal("background/MAP.png"));
 		bg1 = new Texture(Gdx.files.internal("background/background1.png"));
@@ -113,8 +107,6 @@ public class SelectBackgroundState extends State{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
-		bgsound.dispose();
 		
 	}
 

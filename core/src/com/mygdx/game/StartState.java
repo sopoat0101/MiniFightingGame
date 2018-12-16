@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,17 +10,12 @@ public class StartState extends State{
 	private Sprite bg, logo, startButton;
 	private float alpha = .0f;
 	
-	private Sound bgsound;
-	
 	public StartState(GameStateManager gsm) {
 		super(gsm);
 	}
 
 	@Override
 	public void init() {
-		
-		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/2-NullField.mp3"));
-		bgsound.loop(0.5f, 1.0f, 0.0f);
 		
 		bg = new Sprite(new Texture(Gdx.files.internal("background/StartBackground.png")));
 		logo = new Sprite(new Texture(Gdx.files.internal("gui/logo/logo.png")));
@@ -70,8 +64,6 @@ public class StartState extends State{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
-		bgsound.dispose();
 		
 	}
 

@@ -95,9 +95,6 @@ public class PlayingState extends State {
 	private PlayingMenu menuSprite;
 	private Loading loadingSprite;
 	
-
-	private Sound bgsound;
-	
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
 		
@@ -105,9 +102,6 @@ public class PlayingState extends State {
 
 	@Override
 	public void init() {
-		
-		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/1-ThisisWar.mp3"));
-		bgsound.loop(0.5f, 1.0f, 0.0f);
 		
 		batch = new SpriteBatch();
 
@@ -517,6 +511,7 @@ public class PlayingState extends State {
 			PLAYER2.STATUS = PLAYER2.STOP;
 		}
 		if (STATE == GAMESTART) {
+			
 			if (DELAY >= 1) {
 				TEXT[round].setAlpha(1f);
 			}
@@ -524,15 +519,19 @@ public class PlayingState extends State {
 				TEXT[0].setAlpha(1f);
 			}
 			if (DELAY <= 0) {
+				
+				GameStateManager.setVolum(0.5f);
+				
 				STATE = PLAY;
 			}
 		}
 		if (STATE == REGAME) {
-			bgsound.dispose();
 			init();
 		}
 		if (STATE == WAIT) {
-
+			
+			GameStateManager.setVolum(0.2f);
+			
 			if (DELAY <= 1) {
 				if (pointP1 == 2 && pointP2 == 2) {
 					lable = 6;
@@ -561,7 +560,8 @@ public class PlayingState extends State {
 					System.out.println("Pressed Kick  Button : " + P2Kickcount + " time");
 					System.out.println("Hit Success : " + P2Hitcount + " time");
 
-					gsm.setState(GameStateManager.MENU);
+					gsm.setState(GameStateManager.SCORE);
+					dispose();
 				} else {
 					STATE = REGAME;
 				}
@@ -646,7 +646,7 @@ public class PlayingState extends State {
 						PLAYER1.STATUS = PLAYER1.STATUS_PAUSE_GAME;
 						PLAYER2.STATUS = PLAYER2.STATUS_PAUSE_GAME;
 						
-						bgsound.resume();
+						GameStateManager.setSoundState(true);
 						
 						menu = false;
 
@@ -675,7 +675,7 @@ public class PlayingState extends State {
 			if (STATE == PLAY) {
 				STATE = PAUSE;
 				
-				bgsound.pause();
+				GameStateManager.setSoundState(false);
 				
 				menu = true;
 
@@ -684,7 +684,7 @@ public class PlayingState extends State {
 				PLAYER1.STATUS = PLAYER1.STATUS_PAUSE_GAME;
 				PLAYER2.STATUS = PLAYER2.STATUS_PAUSE_GAME;
 				
-				bgsound.resume();
+				GameStateManager.setSoundState(true);
 				
 				menu = false;
 
@@ -710,8 +710,6 @@ public class PlayingState extends State {
 
 	@Override
 	public void dispose() {
-		
-		bgsound.dispose();
 		
 		PLAYER1.dispose();
 		PLAYER2.dispose();
