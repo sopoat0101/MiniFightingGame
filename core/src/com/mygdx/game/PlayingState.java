@@ -96,6 +96,8 @@ public class PlayingState extends State {
 	private PlayingMenu menuSprite;
 	private Loading loadingSprite;
 	
+	private SoundManager smg;
+	
 	public PlayingState(GameStateManager gsm) {
 		super(gsm);
 		
@@ -103,6 +105,8 @@ public class PlayingState extends State {
 
 	@Override
 	public void init() {
+		
+		smg = new SoundManager();
 		
 		batch = new SpriteBatch();
 
@@ -213,6 +217,10 @@ public class PlayingState extends State {
 			loadingSprite.draw(batch);
 			if (DELAY <= 0) {
 				STATE = GAMESTART;
+				
+				smg.setCanPlay(true);
+				smg.play(round-1);
+				
 				DELAY = 3;
 			}
 		}
@@ -384,6 +392,10 @@ public class PlayingState extends State {
 			lable = 7;
 			pointP2 += 1;
 			DELAY = 2;
+			
+			smg.setCanPlay(true);
+			smg.play(SoundManager.KO);
+			
 			STATE = WAIT;
 		}
 		if (hpP2 <= 0 && STATE != REGAME && STATE != WAIT) {
@@ -391,6 +403,10 @@ public class PlayingState extends State {
 			lable = 7;
 			pointP1 += 1;
 			DELAY = 2;
+			
+			smg.setCanPlay(true);
+			smg.play(SoundManager.KO);
+			
 			STATE = WAIT;
 		}
 		if (hpbackP1 <= 0) {
@@ -522,6 +538,8 @@ public class PlayingState extends State {
 			if (DELAY <= 0) {
 				
 				GameStateManager.setVolum(0.5f);
+				smg.setCanPlay(true);
+				smg.play(SoundManager.FIGHT);
 				
 				STATE = PLAY;
 			}
