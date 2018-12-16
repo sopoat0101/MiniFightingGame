@@ -74,6 +74,9 @@ public abstract class Actor {
 	
 	protected int hitCount;
 	
+	protected int punchCount;
+	protected int kickCount;
+	
 	protected Sprite damage;
 	protected Sprite Mdamage;
 	protected Sprite guard;
@@ -149,4 +152,7 @@ public abstract class Actor {
 	protected abstract void setMIRROR(boolean b);
 
 	protected abstract void setAnotherPlayer(Actor Player);
+	
+	protected abstract int getPunchCount();
+	protected abstract int getKickCount();
 }

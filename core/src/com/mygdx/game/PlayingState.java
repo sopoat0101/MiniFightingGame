@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -29,13 +28,15 @@ public class PlayingState extends State {
 	private Actor PLAYER1;
 	private Actor PLAYER2;
 
-	private int P1Hitcount;
-	private int P2Hitcount;
-	private int P1Punchcount;
-	private int P2Punchcount;
-	private int P1Kickcount;
-	private int P2Kickcount;
+	public static int P1Hitcount;
+	public static int P2Hitcount;
+	public static int P1Punchcount;
+	public static int P2Punchcount;
+	public static int P1Kickcount;
+	public static int P2Kickcount;
 
+	private int winner;
+	
 	private float centerPX = 0;
 	private float centerPY = 0;
 	public static float cpox = 0;
@@ -535,10 +536,13 @@ public class PlayingState extends State {
 			if (DELAY <= 1) {
 				if (pointP1 == 2 && pointP2 == 2) {
 					lable = 6;
+					winner = 2;
 				} else if (pointP1 >= 2) {
 					lable = 4;
+					winner = 0;
 				} else if (pointP2 >= 2) {
 					lable = 5;
+					winner = 1;
 				}
 			}
 
@@ -548,19 +552,11 @@ public class PlayingState extends State {
 				round += 1;
 
 				if (pointP1 >= 2 || pointP2 >= 2) {
-					System.out.println("===========================");
-					System.out.println("PLAYER 1");
-					System.out.println("Pressed Punch Button : " + P1Punchcount + " time");
-					System.out.println("Pressed Kick  Button : " + P1Kickcount + " time");
-					System.out.println("Hit Success : " + P1Hitcount + " time");
-
-					System.out.println("===========================");
-					System.out.println("PLAYER 2");
-					System.out.println("Pressed Punch Button : " + P2Punchcount + " time");
-					System.out.println("Pressed Kick  Button : " + P2Kickcount + " time");
-					System.out.println("Hit Success : " + P2Hitcount + " time");
-
+					
+					ScoreState.setWinner(winner);
+					
 					gsm.setState(GameStateManager.SCORE);
+					
 					dispose();
 				} else {
 					STATE = REGAME;
@@ -714,6 +710,30 @@ public class PlayingState extends State {
 		PLAYER1.dispose();
 		PLAYER2.dispose();
 
+	}
+
+	public static int getP1Hitcount() {
+		return P1Hitcount;
+	}
+
+	public static int getP2Hitcount() {
+		return P2Hitcount;
+	}
+
+	public static int getP1Punchcount() {
+		return P1Punchcount;
+	}
+
+	public static int getP2Punchcount() {
+		return P2Punchcount;
+	}
+
+	public static int getP1Kickcount() {
+		return P1Kickcount;
+	}
+
+	public static int getP2Kickcount() {
+		return P2Kickcount;
 	}
 
 }

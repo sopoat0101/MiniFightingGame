@@ -81,8 +81,6 @@ public class Nox extends Actor {
 			item.draw(batch);
 			item.setAlpha(0f);
 		}
-//		hitbox[2].setAlpha(1f);
-//		hitbox[10].setAlpha(1f);
 		
 	}
 
@@ -301,12 +299,14 @@ public class Nox extends Actor {
 			STAMINA -= 20;
 			STMDELAY = 1.5f;
 			isPunch = true;
+			punchCount += 1;
 			// Kick
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch) && STAMINA >= 20 && canCounter) {
 
 			STAMINA -= 20;
 			STMDELAY = 1.5f;
 			isKick = true;
+			kickCount += 1;
 
 		} else if ((InputManager.keyIsdown(BN_FRONT) && InputManager.keyIspressed(BN_JUMP))
 				|| (InputManager.keyIspressed(BN_FRONT) && InputManager.keyIspressed(BN_JUMP))) {
@@ -370,6 +370,8 @@ public class Nox extends Actor {
 			STAMINA -= 40;
 			STMDELAY = 1.5f;
 			isPunch = true;
+			punchCount += 1;
+			
 			animationtime = 0.5f;
 
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick) && STAMINA >= 30 && canCounter) {
@@ -377,6 +379,7 @@ public class Nox extends Actor {
 			STAMINA -= 40;
 			STMDELAY = 1.5f;
 			isKick = true;
+			kickCount += 1;
 			animationtime = 0.5f;
 
 		} else if(STATUS == JUMP) {
@@ -427,12 +430,14 @@ public class Nox extends Actor {
 			STAMINA -= 10;
 			STMDELAY = 1.5f;
 			isPunch = true;
+			punchCount += 1;
 
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isPunch && !isKick) && STAMINA >= 10 && canCounter) {
 
 			STAMINA -= 10;
 			STMDELAY = 1.5f;
 			isKick = true;
+			kickCount += 1;
 
 		} else {
 			if (isPunch || isKick) {
@@ -463,6 +468,14 @@ public class Nox extends Actor {
 
 		if (Anotherplayer.DELAY <= 0) {
 			STATUS = beforeSTATUS;
+			if(isPunch) {
+				isPunch = false;
+				punchCount += 1;
+			}
+			if(isKick) {
+				isKick = false;
+				kickCount += 1;
+			}
 			isPunch = false;
 			isKick = false;
 		}
@@ -805,6 +818,16 @@ public class Nox extends Actor {
 
 		this.Anotherplayer = Player;
 
+	}
+
+	@Override
+	protected int getPunchCount() {
+		return punchCount;
+	}
+
+	@Override
+	protected int getKickCount() {
+		return kickCount;
 	}
 
 }

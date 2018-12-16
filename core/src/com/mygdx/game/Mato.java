@@ -464,6 +464,14 @@ public class Mato extends Actor {
 
 		if (Anotherplayer.DELAY <= 0) {
 			STATUS = beforeSTATUS;
+			if(isPunch) {
+				isPunch = false;
+				punchCount += 1;
+			}
+			if(isKick) {
+				isKick = false;
+				kickCount += 1;
+			}
 			isPunch = false;
 			isKick = false;
 		}
@@ -805,6 +813,16 @@ public class Mato extends Actor {
 
 		this.Anotherplayer = Player;
 
+	}
+
+	@Override
+	protected int getPunchCount() {
+		return punchCount;
+	}
+
+	@Override
+	protected int getKickCount() {
+		return kickCount;
 	}
 
 }
