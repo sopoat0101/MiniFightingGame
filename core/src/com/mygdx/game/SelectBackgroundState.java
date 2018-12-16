@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,7 +13,8 @@ public class SelectBackgroundState extends State{
 	public static Texture bg0, bg1, bg2, name0, name1, name2;
 	private SpriteBatch batch;
 
-	private Sound bgsound;
+	private Music bgsound;
+	private Sprite gui;
 	
 	public SelectBackgroundState(GameStateManager gsm) {
 		super(gsm);
@@ -22,8 +24,9 @@ public class SelectBackgroundState extends State{
 	@Override
 	public void init() {
 		
-		bgsound = Gdx.audio.newSound(Gdx.files.internal("sound/Generations_Away.mp3"));
-		bgsound.loop(0.5f, 1.0f, 0.0f);
+		bgsound = Gdx.audio.newMusic(Gdx.files.internal("sound/Generations_Away.mp3"));
+		bgsound.play();
+		bgsound.setLooping(true);
 		
 		bg0 = new Texture(Gdx.files.internal("background/MAP.png"));
 		bg1 = new Texture(Gdx.files.internal("background/background1.png"));
@@ -32,6 +35,9 @@ public class SelectBackgroundState extends State{
 		name1 = new Texture(Gdx.files.internal("gui/select/stageName/name1.png"));
 		name2 = new Texture(Gdx.files.internal("gui/select/stageName/name2.png"));
 		bg = new Sprite(bg0);
+		gui = new Sprite(new Texture(Gdx.files.internal("gui/select/selectBackgroundGUI.png")));
+		gui.setPosition(0, 0);
+		
 		bg.setScale(0.9f);
 		bg.setPosition(-550, -100);
 		
@@ -39,6 +45,7 @@ public class SelectBackgroundState extends State{
 		guiName = new Sprite(name0);
 		gui1.setPosition(0, 475);
 		guiName.setPosition(0, 0);
+		guiName.setScale(0.8f);
 	}
 
 	@Override
@@ -51,6 +58,7 @@ public class SelectBackgroundState extends State{
 		bg.draw(batch);
 		gui1.draw(batch);
 		guiName.draw(batch);
+		gui.draw(batch);
 		
 		batch.end();
 		
