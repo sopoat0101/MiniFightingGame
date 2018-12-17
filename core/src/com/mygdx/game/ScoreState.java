@@ -170,7 +170,7 @@ public class ScoreState extends State {
 
 	@Override
 	public void dispose() {
-		
+		GameStateManager.bgMusic.dispose();
 	}
 	
 	public static void setWinner(int winner) {

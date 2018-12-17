@@ -19,7 +19,7 @@ public class GameStateManager {
 	public static final int BACKGROUND = 6;
 	public static final int SCORE = 7;
 
-	private static Music bgMusic;
+	public static Music bgMusic;
 
 	private static int select_P1;
 	private static int select_P2;
@@ -58,11 +58,39 @@ public class GameStateManager {
 			}
 			gameState = new MenuState(this);
 		} else if (state == SELECT) {
+			
+			if(isPlaying == false) {
+				isPlaying = true;
+				bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+				bgMusic.setVolume(0.5f);
+				bgMusic.play();
+				bgMusic.setLooping(true);
+			}
+			
 			gameState = new SelectState(this);
 		} else if (state == TUTORIAL) {
+			
+			if(isPlaying == false) {
+				isPlaying = true;
+				bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+				bgMusic.setVolume(0.5f);
+				bgMusic.play();
+				bgMusic.setLooping(true);
+			}
+			
 			gameState = new TutorialState(this);
 		} else if (state == CREDIT) {
+			
+			if(isPlaying == false) {
+				isPlaying = true;
+				bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+				bgMusic.setVolume(0.5f);
+				bgMusic.play();
+				bgMusic.setLooping(true);
+			}
+			
 			gameState = new CreditState(this);
+			
 		} else if (state == PLAYING) {
 			bgMusic.dispose();
 			isPlaying = false;
@@ -74,6 +102,7 @@ public class GameStateManager {
 		} else if (state == BACKGROUND) {
 			gameState = new SelectBackgroundState(this);
 		} else if (state == SCORE) {
+			
 			bgMusic.dispose();
 			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Inevitable.mp3"));
 			bgMusic.play();
