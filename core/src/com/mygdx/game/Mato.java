@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,9 +12,6 @@ public class Mato extends Actor {
 			int player) {
 		super(bn_front, bn_back, bn_jump, bn_kneel, bn_punch, bn_kick, mirror, player);
 	}
-	
-	Sound jumpSlashFX;
-	Sound slashFX;
 
 	@Override
 	protected void init() {
@@ -28,10 +24,7 @@ public class Mato extends Actor {
 		Mdamage = new Sprite(new Texture(Gdx.files.internal("Actor/Mato/hitbox/MNoxDam.png")));
 		guard = new Sprite(new Texture(Gdx.files.internal("Actor/Mato/hitbox/NoxGu.png")));
 		
-		hitFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/hit.mp3"));
-		deathFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/death.mp3"));
-		jumpSlashFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/slash.mp3"));
-		slashFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/stand_slash.mp3"));
+		hitFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/slash.wav"));
 
 		damage.setAlpha(0f);
 		Mdamage.setAlpha(0f);
@@ -186,7 +179,6 @@ public class Mato extends Actor {
 		}
 
 		if (HP <= 0) {
-			deathFX.play();
 			HP = 0;
 			STATUS = KNOCKOUT;
 			
@@ -289,8 +281,6 @@ public class Mato extends Actor {
 	protected void stand() {
 		// Punch
 		if (InputManager.keyIspressed(BN_PUNCH) && (!isPunch && !isKick) && STAMINA >= 20 && canCounter) {
-			
-			slashFX.play(0.7f);
 			STAMINA -= 25;
 			STMDELAY = 1.5f;
 			isPunch = true;
@@ -298,8 +288,6 @@ public class Mato extends Actor {
 
 			// Kick
 		} else if (InputManager.keyIspressed(BN_KICK) && (!isKick && !isPunch) && STAMINA >= 20 && canCounter) {
-			
-			slashFX.play(0.7f);
 			STAMINA -= 25;
 			STMDELAY = 1.5f;
 			isKick = true;
@@ -364,8 +352,7 @@ public class Mato extends Actor {
 
 		if (InputManager.keyIspressed(BN_PUNCH) && canCounter && (!isPunch && !isKick) && STAMINA >= 30
 				&& AIRDELAY > 0) {
-
-			jumpSlashFX.play(0.7f);
+			
 			STAMINA -= 30;
 			STMDELAY = 1.5f;
 			isPunch = true;
@@ -474,6 +461,9 @@ public class Mato extends Actor {
 			}
 			isPunch = false;
 			isKick = false;
+			
+			hitFX.play();
+			
 		}
 
 	}
@@ -536,7 +526,6 @@ public class Mato extends Actor {
 		if (DELAY >= 0.28f) {
 			HP -= Anotherplayer.ATK;
 			Anotherplayer.hitCount += 1;
-			hitFX.play();
 		}
 
 		if (DELAY >= 0.2f) {
@@ -585,7 +574,6 @@ public class Mato extends Actor {
 	@Override
 	protected void skill() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override

@@ -31,7 +31,7 @@ public class GameStateManager {
 		
 		bgMusic.play();
 		
-		setState(SCORE);
+		setState(START);
 	}
 
 	public void setState(int state) {

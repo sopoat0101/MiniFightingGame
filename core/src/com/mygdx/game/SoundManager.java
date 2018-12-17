@@ -9,6 +9,7 @@ public class SoundManager {
 	public static final int ROUND3 = 2;
 	public static final int FIGHT = 3;
 	public static final int KO = 4;
+	public static final int TIMEOUT = 5;
 	
 	private static boolean canplay = false;
 	
@@ -16,13 +17,14 @@ public class SoundManager {
 	
 	public SoundManager() {
 		
-		Sound = new Sound[5];
+		Sound = new Sound[6];
 		
 		Sound[0] = Gdx.audio.newSound(Gdx.files.internal("sound/fx/round1.wav"));
 		Sound[1] = Gdx.audio.newSound(Gdx.files.internal("sound/fx/round2.wav"));
 		Sound[2] = Gdx.audio.newSound(Gdx.files.internal("sound/fx/finalround.wav"));
 		Sound[3] = Gdx.audio.newSound(Gdx.files.internal("sound/fx/fig.wav"));
 		Sound[4] = Gdx.audio.newSound(Gdx.files.internal("sound/fx/KO.wav"));
+		Sound[5] = Gdx.audio.newSound(Gdx.files.internal("sound/fx/timeout.wav"));
 		
 	}
 	

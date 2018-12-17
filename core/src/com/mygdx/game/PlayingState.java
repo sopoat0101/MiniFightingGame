@@ -600,7 +600,8 @@ public class PlayingState extends State {
 
 			if (TIME == 0 && STATE != WAIT & STATE != REGAME) {
 				lable = 8;
-
+				smg.setCanPlay(true);
+				smg.play(SoundManager.TIMEOUT);
 				if (PLAYER1.HP > PLAYER2.HP) {
 					pointP1 += 1;
 				} else if (PLAYER2.HP > PLAYER1.HP) {
@@ -667,6 +668,14 @@ public class PlayingState extends State {
 					}
 				}
 				if (menuSprite.getNowSelect() == 1) {
+					
+					PlayingState.P1Hitcount = 0;
+					PlayingState.P1Punchcount = 0;
+					PlayingState.P1Kickcount = 0;
+					
+					PlayingState.P2Hitcount = 0;
+					PlayingState.P2Punchcount = 0;
+					PlayingState.P2Kickcount = 0;
 					
 					gsm.setState(GameStateManager.MENU);
 					

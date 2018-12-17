@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,8 +12,6 @@ public class Nox extends Actor {
 			int player) {
 		super(bn_front, bn_back, bn_jump, bn_kneel, bn_punch, bn_kick, mirror, player);
 	}
-	
-	protected Sound uppercutFX;
 
 	@Override
 	protected void init() {
@@ -32,10 +29,8 @@ public class Nox extends Actor {
 		Mdamage.setAlpha(0f);
 		guard.setAlpha(0f);
 		
-		hitFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/hit.mp3"));
-		deathFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/death.mp3"));
-		uppercutFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/super_uppercut.mp3"));
-
+		hitFX = Gdx.audio.newSound(Gdx.files.internal("sound/fx/punch.wav"));
+		
 		SActor.setFlip(mirror, false);
 		
 		if (mirror == false) {
@@ -189,7 +184,6 @@ public class Nox extends Actor {
 		}
 
 		if (HP <= 0) {
-			deathFX.play();
 			HP = 0;
 			STATUS = KNOCKOUT;
 
@@ -278,7 +272,6 @@ public class Nox extends Actor {
 			JUMPTYPE = 2;
 		}
 		if (combo.equals("CFP") && STATUS != JUMP && STAMINA >= 10 && STATUS == STAND) {
-			uppercutFX.play(0.7f);
 			STATUS = SKILL;
 			STAMINA -= 10;
 			STMDELAY = 1.5f;
@@ -478,6 +471,7 @@ public class Nox extends Actor {
 			}
 			isPunch = false;
 			isKick = false;
+			hitFX.play();
 		}
 
 	}
@@ -534,7 +528,6 @@ public class Nox extends Actor {
 		if (DELAY >= 0.28f) {
 			HP -= Anotherplayer.ATK;
 			Anotherplayer.hitCount += 1;
-			hitFX.play();
 		}
 
 		if (DELAY >= 0.2f) {
