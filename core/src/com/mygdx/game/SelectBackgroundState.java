@@ -107,6 +107,11 @@ public class SelectBackgroundState extends State{
 			gsm.setState(GameStateManager.PLAYING);
 		}
 		
+		else if(InputManager.keyIspressed(InputManager.KEY_ESC)) {
+			gsm.setState(GameStateManager.SELECT);
+		}
+
+		
 	}
 	
 

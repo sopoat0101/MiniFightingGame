@@ -59,6 +59,10 @@ public class StartState extends State{
 			
 		}
 		
+		if(InputManager.keyIspressed(InputManager.KEY_ESC)) {
+			Gdx.app.exit();
+		}
+		
 	}
 
 	@Override
