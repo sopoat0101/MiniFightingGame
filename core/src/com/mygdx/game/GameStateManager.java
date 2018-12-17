@@ -8,6 +8,7 @@ public class GameStateManager {
 	private static State gameState;
 
 	public static int state;
+	public static boolean isPlaying = false;
 
 	public static final int START = 0;
 	public static final int MENU = 1;
@@ -25,69 +26,55 @@ public class GameStateManager {
 
 	public GameStateManager() {
 		
-		bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
-		bgMusic.setLooping(true);
-		bgMusic.setVolume(0.5f);
-		
-		bgMusic.play();
-		
 		setState(START);
 	}
 
 	public void setState(int state) {
 		
-		bgMusic.dispose();
 		
 		if (gameState != null)
 			gameState.dispose();
 
 		if (state == START) {
 			
-			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
-			bgMusic.play();
-			bgMusic.setLooping(true);
-			bgMusic.setVolume(0.5f);
+			if(isPlaying == false) {
+				isPlaying = true;
+				bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+				bgMusic.setVolume(0.5f);
+				bgMusic.play();
+				bgMusic.setLooping(true);
+			}
 
 			gameState = new StartState(this);
 
 		} else if (state == MENU) {
-			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Operatic_3.mp3"));
-			bgMusic.play();
-			bgMusic.setLooping(true);
-			bgMusic.setVolume(0.5f);
-
+			
+			if(isPlaying == false) {
+				isPlaying = true;
+				bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/2-NullField.mp3"));
+				bgMusic.setVolume(0.5f);
+				bgMusic.play();
+				bgMusic.setLooping(true);
+			}
 			gameState = new MenuState(this);
 		} else if (state == SELECT) {
-			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Stranger_Danger.mp3"));
-			bgMusic.play();
-			bgMusic.setLooping(true);
-			bgMusic.setVolume(0.5f);
-
 			gameState = new SelectState(this);
 		} else if (state == TUTORIAL) {
-			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Generations_Away.mp3"));
-			bgMusic.play();
-			bgMusic.setLooping(true);
-			bgMusic.setVolume(0.5f);
-
 			gameState = new TutorialState(this);
 		} else if (state == CREDIT) {
 			gameState = new CreditState(this);
 		} else if (state == PLAYING) {
+			bgMusic.dispose();
+			isPlaying = false;
 			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/1-ThisisWar.mp3"));
 			bgMusic.play();
 			bgMusic.setLooping(true);
 			bgMusic.setVolume(0.5f);
-
 			gameState = new PlayingState(this);
 		} else if (state == BACKGROUND) {
-			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Generations_Away.mp3"));
-			bgMusic.play();
-			bgMusic.setLooping(true);
-			bgMusic.setVolume(0.5f);
-
 			gameState = new SelectBackgroundState(this);
 		} else if (state == SCORE) {
+			bgMusic.dispose();
 			bgMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/Inevitable.mp3"));
 			bgMusic.play();
 			bgMusic.setLooping(true);
