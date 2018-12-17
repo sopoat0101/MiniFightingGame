@@ -150,18 +150,18 @@ public class PlayingState extends State {
 			TEXT[i] = new Sprite(new Texture(Gdx.files.internal("gui/status/" + (i) + ".png")));
 		}
 
-		if (SelectState.select_P1 == 0) {
+		if (SelectState.select_P1 == SelectState.NOX) {
 			PLAYER1 = new Nox(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
 					InputManager.KEY_V, InputManager.KEY_B, false, 1);
-		} else if (SelectState.select_P1 == 1) {
+		} else if (SelectState.select_P1 == SelectState.MATO) {
 			PLAYER1 = new Mato(InputManager.KEY_D, InputManager.KEY_A, InputManager.KEY_W, InputManager.KEY_S,
 					InputManager.KEY_V, InputManager.KEY_B, false, 1);
 		}
 
-		if (SelectState.select_P2 == 0) {
+		if (SelectState.select_P2 == SelectState.NOX) {
 			PLAYER2 = new Nox(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP, InputManager.KEY_DOWN,
 					InputManager.KEY_I, InputManager.KEY_O, true, 2);
-		} else if (SelectState.select_P2 == 1) {
+		} else if (SelectState.select_P2 == SelectState.MATO) {
 			PLAYER2 = new Mato(InputManager.KEY_LEFT, InputManager.KEY_RIGHT, InputManager.KEY_UP,
 					InputManager.KEY_DOWN, InputManager.KEY_I, InputManager.KEY_O, true, 2);
 		}

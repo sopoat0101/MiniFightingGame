@@ -94,6 +94,9 @@ public class SelectState extends State {
 		
 		exit.setPosition(0, 720-exit.getHeight()-10);
 		
+		select_P1 = 0;
+		select_P2 = 0;
+		
 	}
 
 	@Override

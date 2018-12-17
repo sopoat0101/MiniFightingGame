@@ -13,6 +13,10 @@ public class Mato extends Actor {
 		super(bn_front, bn_back, bn_jump, bn_kneel, bn_punch, bn_kick, mirror, player);
 	}
 
+	private SkillTornado skill1;
+	
+	private float SkillDelay;
+	
 	@Override
 	protected void init() {
 
@@ -59,7 +63,7 @@ public class Mato extends Actor {
 		hitbox[8].setSize(170, 60);
 
 		SActor.setPosition(POX, POY);
-
+		
 	}
 
 	@Override
@@ -80,6 +84,14 @@ public class Mato extends Actor {
 		}
 
 		hitbox[1].setAlpha(0f);
+		
+		if(skillNumber == 1) {
+			skill1.draw(batch);
+		}
+		
+		if(skillNumber ==  1 && STATUS != STOP) {
+			skill1.update();
+		}
 
 	}
 
@@ -165,6 +177,9 @@ public class Mato extends Actor {
 		}
 		if (STATUS == GUARD) {
 			guard();
+		}
+		if (STATUS == SKILL) {
+			skill();
 		}
 		if (STATUS == STOP) {
 
@@ -269,7 +284,9 @@ public class Mato extends Actor {
 		}
 		if (combo.equals("CFP") && STATUS == STAND) {
 			STATUS = SKILL;
-			System.out.println("WIND");
+			skillNumber = 1;
+			SkillDelay = 0.3f;
+			skill1 = new SkillTornado(this, Anotherplayer);
 			cmdlog = "";
 		}
 
@@ -573,7 +590,13 @@ public class Mato extends Actor {
 
 	@Override
 	protected void skill() {
-		// TODO Auto-generated method stub
+		SkillDelay -= Gdx.graphics.getDeltaTime();
+		
+		if(SkillDelay <= 0) {
+			isPunch = false;
+			STATUS = STAND;
+//			skillNumber = 0;
+		}
 	}
 	
 	@Override
@@ -700,23 +723,7 @@ public class Mato extends Actor {
 			}
 
 			// JUMP KICK
-		} // else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]) ||
-			// (hitbox[9].hitwith(Anotherplayer.hitbox[2])))
-//				&& isKick && NOWframe == 25 && Anotherplayer.STATUS != GUARD) {
-//
-//			Anotherplayer.AIRDELAY = 0;
-//
-//			if ((hitbox[9].hitwith(Anotherplayer.hitbox[2]))) {
-//
-//				HitWithAnotherPlayer(Anotherplayer.TOPHIT, 0.3f, 25, hitbox[9].getPoY());
-//
-//			} else if ((hitbox[9].hitwith(Anotherplayer.hitbox[3]))) {
-//
-//				HitWithAnotherPlayer(Anotherplayer.DOWNHIT, 0.3f, 25, hitbox[9].getPoY());
-//
-//			}
-//
-//		}
+		}
 
 	}
 
